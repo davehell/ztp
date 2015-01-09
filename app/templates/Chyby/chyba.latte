@@ -1,0 +1,19 @@
+{block content}
+<h1 n:inner-block="title">{if $chyba}Editace chyby{else}Nová chyba{/if}</h1>
+
+<ol class="breadcrumb">
+  <li><a n:href="Verze:zmeny $verze->id">Verze {$verze->nazev}</a></li>
+	<li><a n:href="Verze:zmeny#z$zmena->id $verze->id">Změna od {$zmena->autor->jmeno}</a></li>
+  <li class="active">{if $chyba}Editace chyby{else}Nová chyba{/if}</li>
+</ol>
+
+<p>
+	{!$zmena->text|nl2br}
+</p>
+<p n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
+	{!$zmena->detail|nl2br}
+</p>
+
+<hr>
+
+{control chybaForm}

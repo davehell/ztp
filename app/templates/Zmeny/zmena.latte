@@ -1,0 +1,12 @@
+{block content}
+<h1 n:inner-block="title">{if $zmena}Editace změny{else}Nová změna{/if}</h1>
+
+<ol class="breadcrumb">
+	<li><a n:href="Verze:zmeny $verze->id">Verze {$verze->nazev}</a></li>
+	{if $zmena}
+  <li><a n:href="Verze:zmeny#z$zmena->id $verze->id">Změna od {$zmena->autor->jmeno}</a></li>
+  {/if}
+  <li class="active">{if $zmena}Editace změny{else}Nová změna{/if}</li>
+</ol>
+
+{control zmenaForm}

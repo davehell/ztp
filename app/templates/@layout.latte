@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{block title}ZTP{/block}</title>
+  <link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{$basePath}/css/screen.css">
+  <link rel="shortcut icon" href="{$basePath}/favicon.ico">
+  <link href='https://fonts.googleapis.com/css?family=Lato|Roboto+Slab:700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  {block head}{/block}
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3" id="sidebar">
+        <form id="menuForm" action="{link Verze:zmeny}" method="get">
+        Verze: <a n:href="Verze:info, null" title="Vytvořit novou verzi" class="pull-right btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+        <select name="verze" id="VyberVerze">
+          <option value="">--- Vyber verzi ---</option>
+          <optgroup label="Bez data vydání">
+          {foreach $nevydaneVerze as $v}
+            <option value="{$v->id}" {if $v->id == $verzeId}selected{/if}>{$v->nazev}</option>
+          {/foreach}
+          </optgroup>
+          <optgroup label="Vydané">
+          {foreach $vydaneVerze as $v}
+            <option value="{$v->id}" {if $v->id == $verzeId}selected{/if}>{$v->nazev}</option>
+          {/foreach}
+          </optgroup>
+        </select>
+
+        {if $verzeId}
+          Pohled:
+          <select name="pohled" id="VyberPohledu">
+            <option value="dev" {if $pohled == 'dev'}selected{/if}>Vývojář</option>
+            <option value="test" {if $pohled == 'test'}selected{/if}>Tester</option>
+            <option value="boss" {if $pohled == 'boss'}selected{/if}>Boss</option>
+          </select>
+
+          Osoba:
+          <select name="uziv" id="VyberUzivatele">
+            <option value="">--- Vyber osobu ---</option>
+            {foreach $lide as $id => $jmeno}
+            <option value="{$jmeno}" {if $jmeno == $uziv}selected{/if}>{$jmeno}</option>
+            {/foreach}
+          </select>
+          </form>
+
+          Protokol:
+          <ul>
+            <li><a n:href="Verze:zmeny">Změnový</a></li>
+            <li><a n:href="Verze:testy">Testovací</a></li>
+          </ul>
+        {/if}
+      </div>
+      <div class="col-sm-9" id="main">
+        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+        {include content}
+      </div>
+    </div>
+  </div>
+
+  {block scripts}
+  <script src="{$basePath}/js/jquery.js"></script>
+  <script src="{$basePath}/js/nette.ajax.js"></script>
+  <script src="{$basePath}/js/bootstrap.min.js"></script>
+  <script src="{$basePath}/js/netteForms.js"></script>
+  <script src="{$basePath}/js/main.js"></script>
+  {/block}
+</body>
+</html>

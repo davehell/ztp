@@ -1,0 +1,72 @@
+.container {
+	margin-left: 0;
+}
+body {
+	background-color: #efefef;
+  color: #404040;
+  font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
+  font-weight: normal;
+}
+#main {
+	background-color: #fcfcfc;
+	padding-bottom: 15px;
+	padding-top: 15px;
+}
+#sidebar {
+	background-color: #343131;
+	color: #b3b3b3;
+	padding: 10px;
+}
+#sidebar select {
+	color: #000;
+}
+#sidebar ul a {
+	color: #b3b3b3;
+}
+#sidebar select {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding: 5px;
+}
+h1, h2, h3, h4, h5, h6, legend {
+  font-family: "Roboto Slab","Georgia",Arial,sans-serif;
+  font-weight: 700;
+}
+
+/* texty, které se nezveřejňují ve finálním změnovém/testovacím protokolu */
+.skryteInfo {
+	background-color: #eee;
+	border-left: 5px solid #ccc !important;
+	/*color: #999;*/
+	padding: 10px;
+}
+
+.zmena {
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+.zmena .head {
+	text-align: center;
+}
+.zmena .head .moje {
+	background-color: #d9edf7;
+}
+.zmena .btn-toolbar {
+	float: right;
+}
+.zmena hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+/* znázornění stavu změny/chyby - funguje, nefunguje, čeká na otestování */
+.zmena .stav {
+	font-size: 250%;
+}
+
+h2 a.btn {
+	float: right;
+}

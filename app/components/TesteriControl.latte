@@ -1,0 +1,14 @@
+{**
+ * Výpis testerů změny
+ *
+ * @param         	 $zmena
+ * @param  array     $testeri
+ *}
+
+<div class="btn-toolbar">
+	<div class="btn-group">
+	{foreach $testeri as $id => $jmeno}
+		<a n:href="prirazeni!, $id, $zmena->id" title="Testovat bude {$jmeno}" class="ajax btn btn-primary {if $zmena->tester && $jmeno == $zmena->tester->jmeno}active{/if}">{$jmeno}</a>
+	{/foreach}
+	</div>
+</div>

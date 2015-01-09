@@ -1,0 +1,86 @@
+{block title}Testovací protokol - Verze {$verze->nazev}{/block}
+
+{block content}
+<h1>Testovací protokol</h1>
+
+<h2>
+	Verze {$verze->nazev}
+</h2>
+
+
+<dl class="dl-horizontal">
+	<dt>Datum</dt>
+	<dd>{$verze->datum|date:'%d.%m.%Y'}</dd>
+	{if $verze->pozn_verejna}
+		<dt>Veřejné poznámky</dt>
+		<dd>{!$verze->pozn_verejna|nl2br}</dd>
+	{/if}
+	{if $verze->pozn_skryta}
+		<dt>Skryté poznámky</dt>
+		<dd class="skryteInfo">{!$verze->pozn_skryta|nl2br}</dd>
+	{/if}
+</dl>
+
+<h2>
+	Změny
+</h2>
+
+{snippet zmeny}
+{foreach $zmeny as $zmena}
+
+<a name="z{$zmena->id}"></a>
+<div class="zmena {if !$zmena->je_verejna}skryteInfo{/if}">
+	<div class="row head">
+		<div class="col-md-1">{control stav, $zmena->je_ok}</div>
+	  <div class="col-md-2"><div class="autor {if $pohled == 'dev' && $zmena->autor->jmeno == $uziv}moje{/if}">autor<br>{$zmena->autor->jmeno}</div></div>
+	  <div class="col-md-2">{if $zmena->task}task<br>{$zmena->task}{/if}</div>
+		{if $pohled == 'boss'}
+			<div class="col-md-7">
+				{control testeri, $testeri, $zmena}
+			</div>
+		{else}
+		  <div class="col-md-2"><div n:if="$zmena->tester" class="tester  {if $pohled == 'test' && $zmena->tester->jmeno == $uziv}moje{/if}">tester<br>{$zmena->tester->jmeno}</div></div>
+		  <div class="col-md-5">
+		  	<div n:if="$pohled == 'test'" class="btn-toolbar">
+					<div class="btn-group">
+						<a n:href="Chyby:chyba, null, $zmena->id" title="Je tam chyba" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+						<a n:href="Zmeny:test, $zmena->id" title="Je to cajk" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+					</div>
+				</div>
+		  </div>
+	  {/if}
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-12">
+			<p>
+				{$zmena->typy_zmen->nazev}: {!$zmena->text|nl2br}
+			</p>
+			<p n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
+				{!$zmena->detail|nl2br}
+			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-12">
+			{!$zmena->uloha|nl2br}
+		</div>
+	</div>
+	{control chyby, $zmena->id}
+</div>
+
+
+<div class="test">
+
+
+</div>
+
+{*
+	<p>
+		{control testeri, $testeri, $zmena}
+	</p>
+*}
+
+{/foreach}
+{/snippet}
