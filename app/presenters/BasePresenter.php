@@ -24,6 +24,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
    */
   public $verze;
 
+
   /** @persistent */
   public $pohled;
 
@@ -36,16 +37,23 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
   public function beforeRender()
   {
-  	$this->template->lide = $this->lide->seznamLidi();
-    $this->template->testeri = $this->lide->seznamTesteru();
-  	$this->template->vydaneVerze = $this->verze->vydane();
-  	$this->template->nevydaneVerze = $this->verze->nevydane();
-    $this->template->uziv = $this->uziv;
-    $this->template->pohled = $this->pohled ? $this->pohled : "dev";
-    $this->template->verzeId = $this->verzeId;
+    $this->uziv = strtolower($this->uziv);
+    $this->pohled = strtolower($this->pohled);
 
     if($this->uziv) {
-      $this->uzivId = $this->lide->getBy(array('jmeno' => $this->uziv));
+      $this->uzivId = $this->lide->getBy(array('jmeno' => $this->uziv))->id;
     }
+
+  	$this->template->lide          = $this->lide->seznamLidi();
+    $this->template->testeri       = $this->lide->seznamTesteru();
+  	$this->template->vydaneVerze   = $this->verze->vydane();
+  	$this->template->nevydaneVerze = $this->verze->nevydane();
+
+    $this->template->uziv    = $this->uziv;
+    $this->template->uzivId  = $this->uzivId;
+    $this->template->pohled  = $this->pohled ? $this->pohled : 'dev';
+    $this->template->verzeId = $this->verzeId;
+
+
   }
 }

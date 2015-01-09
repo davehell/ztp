@@ -9,7 +9,7 @@ $(function () {
 	/**
 	 * Potvrzovací dialog při kliknutí na odkaz.
 	 */
-	$(".btn-danger").click(function(event) {
+	$('.btn-danger').click(function(event) {
 		event.preventDefault();
 	  var url = $(this).attr('href');
 	  var confirm_box = confirm('Opravdu?');
@@ -21,9 +21,9 @@ $(function () {
 	/**
 	 * Po výběru verze v select boxu v menu se otevře stránka s danou verzí.
 	 */
-	$("#menuForm #VyberVerze, #menuForm #VyberPohledu, #menuForm #VyberUzivatele").change(function(event) {
+	$('#menuForm #vyberVerze, #menuForm #vyberPohledu, #menuForm #vyberUzivatele, #menuForm #vyberProtokolu').change(function(event) {
 		var id = $( this ).val();
 	  if(!id) return;
-	  $("#menuForm").submit();
+	  $('#menuForm').submit();
 	});
 });

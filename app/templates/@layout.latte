@@ -17,9 +17,10 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-3" id="sidebar">
-        <form id="menuForm" action="{link Verze:zmeny}" method="get">
-        Verze: <a n:href="Verze:info, null" title="Vytvořit novou verzi" class="pull-right btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
-        <select name="verze" id="VyberVerze">
+
+        <form id="menuForm" action="{ifCurrent Verze:zmeny}{link Verze:zmeny}{else}{link Verze:testy}{/ifCurrent}" method="get">
+        Verze: <a n:if="$pohled == 'dev'" n:href="Verze:info, null" title="Vytvořit novou verzi" class="pull-right btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+        <select name="verze" id="vyberVerze">
           <option value="">--- Vyber verzi ---</option>
           <optgroup label="Bez data vydání">
           {foreach $nevydaneVerze as $v}
@@ -35,25 +36,38 @@
 
         {if $verzeId}
           Pohled:
-          <select name="pohled" id="VyberPohledu">
+          <select name="pohled" id="vyberPohledu">
             <option value="dev" {if $pohled == 'dev'}selected{/if}>Vývojář</option>
             <option value="test" {if $pohled == 'test'}selected{/if}>Tester</option>
             <option value="boss" {if $pohled == 'boss'}selected{/if}>Boss</option>
           </select>
 
           Osoba:
-          <select name="uziv" id="VyberUzivatele">
+          <select name="uziv" id="vyberUzivatele">
             <option value="">--- Vyber osobu ---</option>
             {foreach $lide as $id => $jmeno}
-            <option value="{$jmeno}" {if $jmeno == $uziv}selected{/if}>{$jmeno}</option>
+            <option value="{$jmeno}" {if $jmeno == $uziv}selected{/if}>{$jmeno|upper}</option>
             {/foreach}
           </select>
           </form>
 
           Protokol:
           <ul>
-            <li><a n:href="Verze:zmeny">Změnový</a></li>
-            <li><a n:href="Verze:testy">Testovací</a></li>
+            <li>
+              <a n:href="Verze:zmeny" title="Zobrazit změnový protokol">Změnový</a>
+              <div n:if="$uziv" class="labels">
+                <span class="label label-info" title="Počet změn od {$uziv|upper}">2</span>
+              </div>
+            </li>
+            <li>
+              <a n:href="Verze:testy" title="Zobrazit testovací protokol">Testovací</a>
+              <div class="labels">
+                <span class="label label-info" title="Nepřiřazený tester"><span class="glyphicon glyphicon-user"></span> 2</span>
+                <span class="label label-default" title="Zatím netestováno"><span class="glyphicon glyphicon-ban-circle"></span> 3</span>
+                <span class="label label-danger" title="Nefunguje"><span class="glyphicon glyphicon-remove"></span> 4</span>
+                <span class="label label-success" title="V pořádku"><span class="glyphicon glyphicon-ok"></span> 5</span>
+              </div>
+            </li>
           </ul>
         {/if}
       </div>

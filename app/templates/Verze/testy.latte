@@ -32,14 +32,14 @@
 <div class="zmena {if !$zmena->je_verejna}skryteInfo{/if}">
 	<div class="row head">
 		<div class="col-md-1">{control stav, $zmena->je_ok}</div>
-	  <div class="col-md-2"><div class="autor {if $pohled == 'dev' && $zmena->autor->jmeno == $uziv}moje{/if}">autor<br>{$zmena->autor->jmeno}</div></div>
+	  <div class="col-md-2"><div class="autor {if $pohled == 'dev' && $zmena->autor->jmeno == $uziv}moje{/if}">autor<br>{$zmena->autor->jmeno|upper}</div></div>
 	  <div class="col-md-2">{if $zmena->task}task<br>{$zmena->task}{/if}</div>
 		{if $pohled == 'boss'}
 			<div class="col-md-7">
 				{control testeri, $testeri, $zmena}
 			</div>
 		{else}
-		  <div class="col-md-2"><div n:if="$zmena->tester" class="tester  {if $pohled == 'test' && $zmena->tester->jmeno == $uziv}moje{/if}">tester<br>{$zmena->tester->jmeno}</div></div>
+		  <div class="col-md-2"><div n:if="$zmena->tester" class="tester  {if $pohled == 'test' && $zmena->tester->jmeno == $uziv}moje{/if}">tester<br>{$zmena->tester->jmeno|upper}</div></div>
 		  <div class="col-md-5">
 		  	<div n:if="$pohled == 'test'" class="btn-toolbar">
 					<div class="btn-group">

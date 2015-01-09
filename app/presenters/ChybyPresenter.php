@@ -75,7 +75,7 @@ final class ChybyPresenter extends BasePresenter
       $this->redirect('this');
     }
 
-    $this->redirect('Verze:zmeny#z' . $chyba->zmeny_id, $this->verzeId);
+    $this->redirect('Verze:testy#z' . $chyba->zmeny_id, $this->verzeId);
   }
 
  /**
