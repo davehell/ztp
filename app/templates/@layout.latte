@@ -50,7 +50,6 @@
             {/foreach}
           </select>
           </form>
-
           Protokol:
           <ul>
             <li>
@@ -70,13 +69,13 @@
             </li>
           </ul>
         {/if}
-      </div>
+      </div> <!-- #sidebar -->
       <div class="col-sm-9" id="main">
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
         {include content}
-      </div>
-    </div>
-  </div>
+      </div> <!-- #main -->
+    </div> <!-- .row -->
+  </div> <!-- .container -->
 
   {block scripts}
   <script src="{$basePath}/js/jquery.js"></script>

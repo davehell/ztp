@@ -2,7 +2,7 @@
 <h1 n:inner-block="title">{if $verze}Editace verze{else}Nová verze{/if}</h1>
 
 <ol class="breadcrumb">
-	{if $verze}
+  {if $verze}
   <li><a n:href="Verze:zmeny $verze->id">Verze {$verze->nazev}</a></li>
   {else}
   <li><a n:href="Verze:default">Seznam verzí</a></li>
