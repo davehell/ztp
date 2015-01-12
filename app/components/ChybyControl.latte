@@ -29,7 +29,7 @@
 							<a n:href="opraveno!, $chyba->id, 1" title="Je to cajk" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
 						</div>
 					{/if}
-					{if $pohled == 'dev'}
+					{if $pohled == 'dev' && $chyba->je_ok === 0}
 						<div class="btn-group">
 							<a n:href="opraveno!, $chyba->id, 1" title="Je to cajk" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
 						</div>

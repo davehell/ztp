@@ -5,6 +5,7 @@ namespace App\Presenters;
 use App\Model\VerzeRepository,
     App\Model\ZmenyRepository,
     App\Model\ChybyRepository,
+    App\Model\LideRepository,
     Nette\Application\UI\Form,
     Nextras\Forms\Rendering\Bs3FormRenderer,
     ZTPException;
@@ -34,6 +35,11 @@ final class VerzePresenter extends BasePresenter
    */
   public $chyby;
 
+  /**
+   * @var LideRepository
+   * @inject
+   */
+  public $lide;
 
   /**
    *
@@ -60,7 +66,11 @@ final class VerzePresenter extends BasePresenter
     $verze = $this->verze->get($verzeId);
     if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
     $this->template->verze = $verze;
-    $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId);
+    $this->template->filtr = $this->getParameter('filtr');
+
+    $autor = $this->getParameter('filtr') == 'autor' ? $this->uzivId : null;
+    if(!$autor) $this->template->filtr = '';
+    $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId, $autor);
   }
 
   /**
@@ -71,7 +81,33 @@ final class VerzePresenter extends BasePresenter
     $verze = $this->verze->get($verzeId);
     if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
     $this->template->verze = $verze;
-    $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId);
+    $this->template->filtr = $this->getParameter('filtr');
+
+    $autor  = $this->getParameter('filtr') == 'autor'  ? $this->uzivId : null;
+    $tester = $this->getParameter('filtr') == 'tester' ? $this->uzivId : null;
+
+    if($this->getParameter('filtr') == 'autor-chyby') {
+      $this->template->zmeny = $this->zmeny->neotestovane($verzeId, $this->uzivId);
+    }
+    else if($this->getParameter('filtr') == 'tester-chyby') {
+      $this->template->zmeny = $this->zmeny->neotestovane($verzeId, null, $this->uzivId);
+    }
+    else if($this->getParameter('filtr') == 'boss-chyby') {
+      $this->template->zmeny = $this->zmeny->neotestovane($verzeId);
+    }
+    else if($this->getParameter('filtr') == 'bez-testera') {
+      $this->template->zmeny = $this->zmeny->bezTestera($verzeId);
+    }
+    else {
+      $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId, $autor, $tester);
+      if(!$autor && !$tester) $this->template->filtr = '';
+    }
+
+    $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
+
+    if($this->pohled == 'boss') {
+      $this->template->testeri = $this->lide->seznamTesteru();
+    }
   }
 
   /**
@@ -108,22 +144,6 @@ final class VerzePresenter extends BasePresenter
     $this->redirect('Verze:seznam', array('verzeId' => null));
   }
 
-
-  /**
-   *
-   */
-  public function handleZmenaFunguje($id)
-  {
-    try {
-      $this->zmeny->nastavOk($id, true);
-    } catch (\Exception $e) {
-      $this->flashMessage('Chyba při úpravě změny.', 'danger');
-    }
-
-    if ($this->isAjax()) {
-      $this->invalidateControl('zmeny');
-    }
-  }
 
   /**
    * Továrnička na vytvoření komponenty pro výpis stavu chyby / změny
@@ -178,6 +198,7 @@ final class VerzePresenter extends BasePresenter
 
     if ($this->isAjax()) {
       $this->invalidateControl('zmeny');
+      $this->invalidateControl('menu');
     }
   }
 
@@ -203,6 +224,7 @@ final class VerzePresenter extends BasePresenter
 
     if ($this->isAjax()) {
       $this->invalidateControl('zmeny');
+      $this->invalidateControl('menu');
     }
   }
 

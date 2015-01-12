@@ -50,24 +50,35 @@
             {/foreach}
           </select>
           </form>
+
           Protokol:
+          {snippet menu}
           <ul>
             <li>
-              <a n:href="Verze:zmeny" title="Zobrazit změnový protokol">Změnový</a>
-              <div n:if="$uziv" class="labels">
-                <span class="label label-info" title="Počet změn od {$uziv|upper}">2</span>
+              <a n:href="Verze:zmeny, 'filtr' => null" title="Zobrazit změnový protokol">Změnový</a>
+              <div class="labels">
+                <a n:if="$autorovyZmeny !== null" n:href="Verze:zmeny, 'filtr' => 'autor'"><span class="label label-info" title="Změny autora {$uziv|upper}"><span class="glyphicon glyphicon-user"></span> {$autorovyZmeny}</span></a>
               </div>
             </li>
             <li>
-              <a n:href="Verze:testy" title="Zobrazit testovací protokol">Testovací</a>
+              <a n:href="Verze:testy, 'filtr' => null" title="Zobrazit testovací protokol">Testovací</a>
               <div class="labels">
-                <span class="label label-info" title="Nepřiřazený tester"><span class="glyphicon glyphicon-user"></span> 2</span>
-                <span class="label label-default" title="Zatím netestováno"><span class="glyphicon glyphicon-ban-circle"></span> 3</span>
-                <span class="label label-danger" title="Nefunguje"><span class="glyphicon glyphicon-remove"></span> 4</span>
-                <span class="label label-success" title="V pořádku"><span class="glyphicon glyphicon-ok"></span> 5</span>
+                {if $pohled == 'dev'}
+                  <a n:href="Verze:testy, 'filtr' => 'autor'" n:if="$uziv"><span class="label label-info" title="Změny autora {$uziv|upper}"><span class="glyphicon glyphicon-user"></span> {$autorovyZmeny}</span></a>
+                  <a n:href="Verze:testy, 'filtr' => 'autor-chyby'" n:if="$neotestovaneZmeny !== null"><span class="label label-info" title="Změny autora {$uziv|upper}, které neprošly testováním"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</span></a>
+                {/if}
+                {if $pohled == 'test'}
+                  <a n:href="Verze:testy, 'filtr' => 'tester'" n:if="$uziv"><span class="label label-info" title="Změny, které testuje {$uziv|upper}"><span class="glyphicon glyphicon-user"></span> {$testerovyZmeny}</span></a>
+                  <a n:href="Verze:testy, 'filtr' => 'tester-chyby'" n:if="$neotestovaneZmeny !== null"><span class="label label-info" title="Změny, které neprošly testováním a testuje je {$uziv|upper}"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</span></a>
+                {/if}
+                {if $pohled == 'boss'}
+                  <a n:href="Verze:testy, 'filtr' => 'bez-testera'" n:if="$zmenyBezTestera !== null"><span class="label label-info" title="Změny, které nemají přiřazeného testera"><span class="glyphicon glyphicon-asterisk"></span> {$zmenyBezTestera}</span></a>
+                  <a n:href="Verze:testy, 'filtr' => 'boss-chyby'" n:if="$neotestovaneZmeny !== null" ><span class="label label-info" title="Změny, které neprošly testováním"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</span></a>
+                {/if}
               </div>
             </li>
           </ul>
+          {/snippet}
         {/if}
       </div> <!-- #sidebar -->
       <div class="col-sm-9" id="main">

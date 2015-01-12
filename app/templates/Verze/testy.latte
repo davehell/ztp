@@ -19,11 +19,27 @@
     <dt>Skryté poznámky</dt>
     <dd class="skryteInfo">{!$verze->pozn_skryta|nl2br}</dd>
   {/if}
+  <dt>Testováno na</dt>
+  <dd>
+    <ul n:inner-foreach="$testeriVeVerzi as $tester">
+      <li>{$tester->tester->jmeno|upper} - {$tester->tester->prostredi}</li>
+    </ul>
+  </dd>
 </dl>
 
-<h2>
-  Změny
-</h2>
+
+<h2>Změny</h2>
+
+<div n:if="$filtr" class="alert alert-info">
+  Zobrazeny pouze změny
+  {if $filtr == 'autor'} autora {$uziv|upper}
+  {elseif $filtr == 'autor-chyby'} autora {$uziv|upper}, které neprošly testováním
+  {elseif $filtr == 'tester'}, které testuje {$uziv|upper}
+  {elseif $filtr == 'tester-chyby'}, které neprošly testováním a testuje je {$uziv|upper}
+  {elseif $filtr == 'boss-chyby'}, které neprošly testováním
+  {elseif $filtr == 'bez-testera'}, které nemají přiřazeného testera
+  {/if}
+</div>
 
 {snippet zmeny}
 {foreach $zmeny as $zmena}
@@ -39,8 +55,15 @@
         {control testeri, $testeri, $zmena}
       </div>
     {else}
-      <div class="col-md-2"><div n:if="$zmena->tester" class="tester  {if $pohled == 'test' && $zmena->tester->jmeno == $uziv}moje{/if}">tester<br>{$zmena->tester->jmeno|upper}</div></div>
-      <div class="col-md-5">
+      <div class="col-md-2">
+        <div n:if="$zmena->tester" class="tester  {if $pohled == 'test' && $zmena->tester->jmeno == $uziv}moje{/if}">
+          tester<br>{$zmena->tester->jmeno|upper}
+        </div>
+      </div>
+      <div class="col-md-3">
+        {$zmena->vysledek_testu}
+      </div>
+      <div class="col-md-2">
         <div n:if="$pohled == 'test'" class="btn-toolbar">
           <div class="btn-group">
             <a n:href="Chyby:chyba, null, $zmena->id" title="Je tam chyba" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
@@ -67,20 +90,10 @@
       {!$zmena->uloha|nl2br}
     </div>
   </div>
-  {control chyby, $zmena->id}
+  {if $pohled == 'dev' || $pohled == 'test'}
+    {control chyby, $zmena->id}
+  {/if}
 </div>
-
-
-<div class="test">
-
-
-</div>
-
-{*
-  <p>
-    {control testeri, $testeri, $zmena}
-  </p>
-*}
 
 {/foreach}
 {/snippet}

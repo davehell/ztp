@@ -33,9 +33,39 @@ class ZmenyRepository extends Repository
    * Všechny změny v dané verzi
    * @return \Nette\Database\Table\Selection
    */
-  public function zmenyVeVerzi($verze)
+  public function zmenyVeVerzi($verze, $autor = null, $tester = null)
   {
-    return $this->findAll()->where('verze_id', $verze);
+    $zmeny = $this->findAll()->where('verze_id', $verze);
+    if($autor) $zmeny = $zmeny->where('autor_id', $autor);
+    if($tester) $zmeny = $zmeny->where('tester_id', $tester);
+    return $zmeny;
+  }
+
+  /**
+   * Změny ve verzi, které ještě nejsou otestované (buď je v nich chyba, nebo ještě testování nezačalo)
+   * @return \Nette\Database\Table\Selection
+   */
+  public function neotestovane($verze, $autor = null, $tester = null)
+  {
+    return $this->zmenyVeVerzi($verze, $autor, $tester)->where('je_ok = 0 OR je_ok IS NULL');
+  }
+
+  /**
+   * Počet změn ve verzi, které nemají přiřazeného testera
+   * @return \Nette\Database\Table\Selection
+   */
+  public function bezTestera($verze)
+  {
+    return $this->zmenyVeVerzi($verze)->where('tester_id IS NULL');
+  }
+
+  /**
+   * Jména testerů, kteří testovali změny v dané verzi
+   * @return \Nette\Database\Table\Selection
+   */
+  public function testeriVeVerzi($verze)
+  {
+    return $this->zmenyVeVerzi($verze)->select('DISTINCT tester_id')->where('tester_id IS NOT NULL');
   }
 
   /**

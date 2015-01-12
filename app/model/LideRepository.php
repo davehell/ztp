@@ -15,7 +15,7 @@ class LideRepository extends Repository
    * Všechny aktivní osoby
    * @return \Nette\Database\Table\Selection
    */
-  public function aktivniLidi()
+  public function aktivniLide()
   {
     return $this->findAll()->where('je_aktivni', 1)->order('jmeno');
   }
@@ -26,7 +26,7 @@ class LideRepository extends Repository
    */
   public function seznamLidi()
   {
-    return $this->aktivniLidi()->fetchPairs('id', 'jmeno');
+    return $this->aktivniLide()->fetchPairs('id', 'jmeno');
   }
 
   /**
@@ -35,6 +35,6 @@ class LideRepository extends Repository
    */
   public function seznamTesteru()
   {
-    return $this->aktivniLidi()->where('je_tester', 1)->fetchPairs('id', 'jmeno');
+    return $this->aktivniLide()->where('je_tester', 1)->fetchPairs('id', 'jmeno');
   }
 }

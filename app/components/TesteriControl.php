@@ -22,7 +22,7 @@ class TesteriControl extends UI\Control
 		$this->onPrirazeni($tester, $zmena);
 	}
 
-	public function render($testeri, $zmena)
+	public function render($testeri = null, $zmena = null)
 	{
 		$template = $this->template;
 		$template->testeri = $testeri;

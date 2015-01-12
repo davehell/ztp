@@ -24,6 +24,12 @@
   <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena" title="Přidat novou změnu" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
 </h2>
 
+<div n:if="$filtr" class="alert alert-info">
+  Zobrazeny pouze změny
+  {if $filtr == 'autor'} autora {$uziv|upper}
+  {/if}
+</div>
+
 {snippet zmeny}
 {foreach $zmeny as $zmena}
 
