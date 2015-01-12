@@ -8,25 +8,25 @@ use Nette\Application\UI;
 class TesteriControl extends UI\Control
 {
 
-	/** @var array of function ($tester, $zmena) */
-	public $onPrirazeni;
+  /** @var array of function ($tester, $zmena) */
+  public $onPrirazeni;
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+  public function __construct()
+  {
+    parent::__construct();
+  }
 
 
-	public function handlePrirazeni($tester, $zmena)
-	{
-		$this->onPrirazeni($tester, $zmena);
-	}
+  public function handlePrirazeni($tester, $zmena)
+  {
+    $this->onPrirazeni($tester, $zmena);
+  }
 
-	public function render($testeri = null, $zmena = null)
-	{
-		$template = $this->template;
-		$template->testeri = $testeri;
-		$template->zmena = $zmena;
-		$template->render(__DIR__ . '/TesteriControl.latte');
-	}
+  public function render($testeri = null, $zmena = null)
+  {
+    $template = $this->template;
+    $template->testeri = $testeri;
+    $template->zmena = $zmena;
+    $template->render(__DIR__ . '/TesteriControl.latte');
+  }
 }

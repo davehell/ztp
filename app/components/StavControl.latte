@@ -1,13 +1,13 @@
 {**
  * Výpis stavu změny / chyby
  *
- * @param         	 $stav
+ * @param            $stav
  *}
 
 {if $stav === 1}
-	<span class="stav glyphicon glyphicon-ok-circle text-success" title="V pořádku"></span>
+  <span class="stav glyphicon glyphicon-ok-circle text-success" title="V pořádku"></span>
 {elseif $stav === 0}
-	<span class="stav glyphicon glyphicon-remove-circle text-danger" title="Nefunguje"></span>
+  <span class="stav glyphicon glyphicon-remove-circle text-danger" title="Nefunguje"></span>
 {else}
-	<span class="stav glyphicon glyphicon-ban-circle" title="Zatím netestováno"></span>
+  <span class="stav glyphicon glyphicon-ban-circle" title="Zatím netestováno"></span>
 {/if}

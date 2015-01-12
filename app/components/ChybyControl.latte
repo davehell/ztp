@@ -8,36 +8,36 @@
 {if $chyby->count()}
 <hr>
 <div class="row">
-	<div class="col-md-11 col-md-offset-1">
-	{foreach $chyby as $chyba}
-		<div class="row">
-			<div class="col-md-1">{control stav, $chyba->je_ok}</div>
-			<div class="col-md-7">
-				<p>
-				{!$chyba->text|nl2br}
-				</p>
-			</div>
-			<div class="col-md-4">
-				<div class="btn-toolbar">
-					{if $pohled == 'test'}
-						<div class="btn-group">
-							<a href="{plink Chyby:chyba, $chyba->id}" title="Upravit chybu" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-							<a href="{plink Chyby:smazat, $chyba->id}" title="Smazat chybu" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
-						</div>
-						<div class="btn-group">
-							<a n:href="opraveno!, $chyba->id, 0" title="Chyba není opravena" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-							<a n:href="opraveno!, $chyba->id, 1" title="Je to cajk" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-						</div>
-					{/if}
-					{if $pohled == 'dev' && $chyba->je_ok === 0}
-						<div class="btn-group">
-							<a n:href="opraveno!, $chyba->id, 1" title="Je to cajk" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-						</div>
-					{/if}
-				</div>
-			</div>
-		</div>
-	{/foreach}
-	</div>
+  <div class="col-md-11 col-md-offset-1">
+  {foreach $chyby as $chyba}
+    <div class="row">
+      <div class="col-md-1">{control stav, $chyba->je_ok}</div>
+      <div class="col-md-7">
+        <p>
+        {!$chyba->text|nl2br}
+        </p>
+      </div>
+      <div class="col-md-4">
+        <div class="btn-toolbar">
+          {if $pohled == 'test'}
+            <div class="btn-group">
+              <a href="{plink Chyby:chyba, $chyba->id}" title="Upravit chybu" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+              <a href="{plink Chyby:smazat, $chyba->id}" title="Smazat chybu" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+            </div>
+            <div class="btn-group">
+              <a n:href="opraveno!, $chyba->id, 0" title="Chyba není opravena" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+              <a n:href="opraveno!, $chyba->id, 1" title="Je to cajk" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+            </div>
+          {/if}
+          {if $pohled == 'dev' && $chyba->je_ok === 0}
+            <div class="btn-group">
+              <a n:href="opraveno!, $chyba->id, 1" title="Je to cajk" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+            </div>
+          {/if}
+        </div>
+      </div>
+    </div>
+  {/foreach}
+  </div>
 </div>
 {/if}

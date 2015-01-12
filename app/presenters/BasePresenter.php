@@ -54,9 +54,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
       $this->uzivId = $clovek->id;
     }
 
-  	$this->template->lide          = $this->lide->seznamLidi();
-  	$this->template->vydaneVerze   = $this->verze->vydane();
-  	$this->template->nevydaneVerze = $this->verze->nevydane();
+    $this->template->lide          = $this->lide->seznamLidi();
+    $this->template->vydaneVerze   = $this->verze->vydane();
+    $this->template->nevydaneVerze = $this->verze->nevydane();
 
     $this->template->uziv    = $this->uziv;
     $this->template->uzivId  = $this->uzivId;
