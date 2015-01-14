@@ -11,9 +11,13 @@ class TesteriControl extends UI\Control
   /** @var array of function ($tester, $zmena) */
   public $onPrirazeni;
 
-  public function __construct()
+  private $lide = null;
+
+  public function __construct($lide)
   {
     parent::__construct();
+    barDump($lide);
+    $this->lide = $lide;
   }
 
 
@@ -22,10 +26,10 @@ class TesteriControl extends UI\Control
     $this->onPrirazeni($tester, $zmena);
   }
 
-  public function render($testeri = null, $zmena = null)
+  public function render($zmena = null)
   {
     $template = $this->template;
-    $template->testeri = $testeri;
+    $template->lide = $this->lide;
     $template->zmena = $zmena;
     $template->render(__DIR__ . '/TesteriControl.latte');
   }

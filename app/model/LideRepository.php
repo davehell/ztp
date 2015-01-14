@@ -28,13 +28,4 @@ class LideRepository extends Repository
   {
     return $this->aktivniLide()->fetchPairs('id', 'jmeno');
   }
-
-  /**
-   * Senam všech aktivních testerů ve firmě.
-   * @return array
-   */
-  public function seznamTesteru()
-  {
-    return $this->aktivniLide()->where('je_tester', 1)->fetchPairs('id', 'jmeno');
-  }
 }

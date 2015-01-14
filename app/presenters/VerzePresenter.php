@@ -63,6 +63,8 @@ final class VerzePresenter extends BasePresenter
    */
   public function renderZmeny($verzeId)
   {
+    if(!$verzeId) $this->redirect('Verze:seznam');
+
     $verze = $this->verze->get($verzeId);
     if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
     $this->template->verze = $verze;
@@ -78,6 +80,8 @@ final class VerzePresenter extends BasePresenter
    */
   public function renderTesty($verzeId)
   {
+    if(!$verzeId) $this->redirect('Verze:seznam');
+
     $verze = $this->verze->get($verzeId);
     if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
     $this->template->verze = $verze;
@@ -104,14 +108,10 @@ final class VerzePresenter extends BasePresenter
     }
 
     $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
-
-    if($this->pohled == 'boss') {
-      $this->template->testeri = $this->lide->seznamTesteru();
-    }
   }
 
   /**
-   * Editace informací o verzi
+   * Vytvoření nové verze / Editace informací o verzi
    */
   public function renderInfo($verzeId)
   {
@@ -125,6 +125,17 @@ final class VerzePresenter extends BasePresenter
         $this['infoForm']['datum']->setDefaultValue($verze->datum->format('d.m.Y'));
       }
     }
+  }
+
+  /**
+   * Editace testovacího prostředí u testera
+   */
+  public function renderOsoba($id)
+  {
+    $osoba = $this->lide->get($id);
+    if(!$osoba) throw new \Nette\Application\BadRequestException("Neexistující osoba");
+    $this->template->osoba = $osoba;
+    $this['osobaForm']->setDefaults($osoba);
   }
 
 
@@ -208,7 +219,9 @@ final class VerzePresenter extends BasePresenter
    */
   protected function createComponentTesteri()
   {
-    $testeri = new \TesteriControl();
+    $lide = $this->lide->aktivniLide();
+
+    $testeri = new \TesteriControl($lide);
     $testeri->onPrirazeni[] = $this->prirazeniTestera;
     $testeri->redrawControl();
     return $testeri;
@@ -291,4 +304,44 @@ final class VerzePresenter extends BasePresenter
     }
   }
 
+
+  /**
+   * Formulář pro úpravu informace o testerově prostředí
+   * @return Form
+   */
+  protected function createComponentOsobaForm()
+  {
+    $form = new Form;
+
+    $form->addText('prostredi', 'Prostředí');
+    $form->addSubmit('ok', 'Uložit');
+
+    $form->onSuccess[] = $this->osobaFormSuccess;
+
+    $form->setRenderer(new Bs3FormRenderer);
+
+    return $form;
+  }
+
+
+  /**
+   * Zpracování formuláře s informacemi o testerově prostředí
+   * @param Form $form
+   */
+  public function osobaFormSuccess($form)
+  {
+    $values = $form->getValues();
+
+    $id = $this->getParameter('id');
+
+    try {
+      $this->lide->update($id, $values);
+    } catch (\Exception $e) {
+      $this->flashMessage('Chyba při ukládání.', 'danger');
+      $this->redirect('this');
+    }
+
+    $this->flashMessage('Uloženo.', 'success');
+    $this->redirect('Verze:testy');
+  }
 }

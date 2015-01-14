@@ -19,23 +19,23 @@ body {
 }
 #sidebar select {
   color: #000;
-}
-#sidebar ul a {
-  color: #b3b3b3;
-}
-#sidebar select {
-  display: block;
   width: 100%;
   margin-bottom: 10px;
-  margin-top: 10px;
   padding: 5px;
 }
-#sidebar ul li {
-  line-height: 30px;
+#sidebar #vyberPohledu, #sidebar #vyberProtokolu li {
+  margin-bottom: 10px;
 }
-#sidebar ul li .labels {
+#sidebar #vyberProtokolu a {
+  color: #fff;
+}
+#sidebar #vyberProtokolu a.btn {
+  color: #fff;
+}
+#sidebar #vyberProtokolu .filtry {
   float: right;
 }
+
 h1, h2, h3, h4, h5, h6, legend {
   font-family: "Roboto Slab","Georgia",Arial,sans-serif;
   font-weight: 700;
@@ -67,12 +67,20 @@ h1, h2, h3, h4, h5, h6, legend {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-
+h2 a.btn {
+  float: right;
+}
 /* znázornění stavu změny/chyby - funguje, nefunguje, čeká na otestování */
 .zmena .stav {
   font-size: 250%;
 }
-
-h2 a.btn {
-  float: right;
+#frm-zmenaForm .radio {
+  float: left;
+  margin-right: 10px;
+}
+textarea.form-control {
+  height: 100px;
+}
+.testeri .dropdown-menu a.active  {
+  font-weight: bold;
 }

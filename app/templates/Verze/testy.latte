@@ -3,9 +3,7 @@
 {block content}
 <h1>Testovací protokol</h1>
 
-<h2>
-  Verze {$verze->nazev}
-</h2>
+<h2>Verze {$verze->nazev}</h2>
 
 
 <dl class="dl-horizontal">
@@ -19,14 +17,18 @@
     <dt>Skryté poznámky</dt>
     <dd class="skryteInfo">{!$verze->pozn_skryta|nl2br}</dd>
   {/if}
-  <dt>Testováno na</dt>
-  <dd>
-    <ul n:inner-foreach="$testeriVeVerzi as $tester">
-      <li>{$tester->tester->jmeno|upper} - {$tester->tester->prostredi}</li>
-    </ul>
-  </dd>
 </dl>
 
+<h2>Testováno na</h2>
+<dl n:inner-foreach="$testeriVeVerzi as $tester"  class="dl-horizontal">
+  <dt>
+    {$tester->tester->jmeno|upper}
+  </dt>
+  <dd>
+    <a n:if="$pohled == 'test'" n:href="Verze:osoba $tester->tester_id" title="Upravit testovací prostředí u {$tester->tester->jmeno|upper}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+    {$tester->tester->prostredi}
+  </dd>
+</dl>
 
 <h2>Změny</h2>
 
@@ -52,7 +54,7 @@
     <div class="col-md-2">{if $zmena->task}task<br>{$zmena->task}{/if}</div>
     {if $pohled == 'boss'}
       <div class="col-md-7">
-        {control testeri, $testeri, $zmena}
+        {control testeri, $zmena}
       </div>
     {else}
       <div class="col-md-2">

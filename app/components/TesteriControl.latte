@@ -2,13 +2,18 @@
  * Výpis testerů změny
  *
  * @param            $zmena
- * @param  array     $testeri
  *}
 
-<div class="btn-toolbar">
+<div class="testeri btn-toolbar">
   <div class="btn-group">
-  {foreach $testeri as $id => $jmeno}
-    <a n:href="prirazeni!, $id, $zmena->id" title="Testovat bude {$jmeno|upper}" class="ajax btn btn-primary {if $zmena->tester_id && $id == $zmena->tester_id}btn-success{/if}">{$jmeno|upper}</a>
-  {/foreach}
+    {foreach $lide as $osoba}
+      <a n:if="$osoba->je_tester" n:href="prirazeni!, $osoba->id, $zmena->id" title="Testovat bude {$osoba->jmeno|upper}" class="ajax btn btn-primary {if $osoba->id == $zmena->tester_id}active{/if}">{$osoba->jmeno|upper}</a>
+    {/foreach}
+    <button class="btn btn-primary {if $zmena->tester_id && !$zmena->tester->je_tester}active{/if} dropdown-toggle" type="button" data-toggle="dropdown">další <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      {foreach $lide as $osoba}
+        <li n:if="!$osoba->je_tester"><a n:href="prirazeni!, $osoba->id, $zmena->id" class="ajax {if $osoba->id == $zmena->tester_id}alert-info{/if}">{$osoba->jmeno|upper}</a></li>
+      {/foreach}
+    </ul>
   </div>
 </div>

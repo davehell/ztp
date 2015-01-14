@@ -17,69 +17,72 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-3" id="sidebar">
+        <form id="menuForm" action="{link this}" method="get">
+          <input type="hidden" name="pohled" value="{$pohled}">
+          <input type="hidden" name="filtr" value="{$filtr}">
 
-        <form id="menuForm" action="{ifCurrent Verze:zmeny}{link Verze:zmeny}{else}{link Verze:testy}{/ifCurrent}" method="get">
-        Verze: <a n:if="$pohled == 'dev'" n:href="Verze:info, null" title="Vytvořit novou verzi" class="pull-right btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
-        <select name="verze" id="vyberVerze">
-          <option value="">--- Vyber verzi ---</option>
-          <optgroup label="Bez data vydání">
-          {foreach $nevydaneVerze as $v}
-            <option value="{$v->id}" {if $v->id == $verzeId}selected{/if}>{$v->nazev}</option>
-          {/foreach}
-          </optgroup>
-          <optgroup label="Vydané">
-          {foreach $vydaneVerze as $v}
-            <option value="{$v->id}" {if $v->id == $verzeId}selected{/if}>{$v->nazev}</option>
-          {/foreach}
-          </optgroup>
-        </select>
-
-        {if $verzeId}
-          Pohled:
-          <select name="pohled" id="vyberPohledu">
-            <option value="dev" {if $pohled == 'dev'}selected{/if}>Vývojář</option>
-            <option value="test" {if $pohled == 'test'}selected{/if}>Tester</option>
-            <option value="boss" {if $pohled == 'boss'}selected{/if}>Boss</option>
+          <label>Verze:</label>
+          <a n:if="$pohled == 'dev'" n:href="Verze:info, null" title="Vytvořit novou verzi" class="pull-right btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+          <select name="verze" id="vyberVerze">
+            <option value="">--- Vyber verzi ---</option>
+            <optgroup label="Bez data vydání">
+            {foreach $nevydaneVerze as $v}
+              <option value="{$v->id}" {if $v->id == $verzeId}selected{/if}>{$v->nazev}</option>
+            {/foreach}
+            </optgroup>
+            <optgroup label="Vydané">
+            {foreach $vydaneVerze as $v}
+              <option value="{$v->id}" {if $v->id == $verzeId}selected{/if}>{$v->nazev}</option>
+            {/foreach}
+            </optgroup>
           </select>
 
-          Osoba:
+          <label>Osoba:</label>
           <select name="uziv" id="vyberUzivatele">
             <option value="">--- Vyber osobu ---</option>
             {foreach $lide as $id => $jmeno}
             <option value="{$jmeno}" {if $jmeno == $uziv}selected{/if}>{$jmeno|upper}</option>
             {/foreach}
           </select>
-          </form>
 
-          Protokol:
+          <label>Pohled:</label>
+          <div class="btn-toolbar" id="vyberPohledu">
+            <div class="btn-group btn-group-justified">
+              <a n:href="this, 'pohled' => 'dev', 'filtr' => null"  title="Pohled pro vývojáře" class="btn btn-primary {if $pohled == 'dev'}active{/if}">Vývojář</a>
+              <a n:href="this, 'pohled' => 'test', 'filtr' => null" title="Pohled pro testera" class="btn btn-primary {if $pohled == 'test'}active{/if}">Tester</a>
+              <a n:href="this, 'pohled' => 'boss', 'filtr' => null" title="Pohled pro bosse" class="btn btn-primary {if $pohled == 'boss'}active{/if}">Boss</a>
+            </div>
+          </div>
+
+          <label>Protokol:</label>
           {snippet menu}
-          <ul>
+          <ul id="vyberProtokolu">
             <li>
-              <a n:href="Verze:zmeny, 'filtr' => null" title="Zobrazit změnový protokol">Změnový</a>
-              <div class="labels">
-                <a n:if="$autorovyZmeny !== null" n:href="Verze:zmeny, 'filtr' => 'autor'"><span class="label label-info" title="Změny autora {$uziv|upper}"><span class="glyphicon glyphicon-user"></span> {$autorovyZmeny}</span></a>
+              <a n:href="Verze:zmeny, 'filtr' => null" title="Kompletní změnový protokol">Změnový</a>
+              <div class="filtry">
+                <a n:if="$autorovyZmeny !== null" n:href="Verze:zmeny, 'filtr' => 'autor'"  title="Změny autora {$uziv|upper}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> {$autorovyZmeny}</a>
               </div>
             </li>
             <li>
-              <a n:href="Verze:testy, 'filtr' => null" title="Zobrazit testovací protokol">Testovací</a>
-              <div class="labels">
+              <a n:href="Verze:testy, 'filtr' => null" title="Kompletní testovací protokol">Testovací</a>
+              <div class="filtry">
                 {if $pohled == 'dev'}
-                  <a n:href="Verze:testy, 'filtr' => 'autor'" n:if="$uziv"><span class="label label-info" title="Změny autora {$uziv|upper}"><span class="glyphicon glyphicon-user"></span> {$autorovyZmeny}</span></a>
-                  <a n:href="Verze:testy, 'filtr' => 'autor-chyby'" n:if="$neotestovaneZmeny !== null"><span class="label label-info" title="Změny autora {$uziv|upper}, které neprošly testováním"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</span></a>
+                  <a n:href="Verze:testy, 'filtr' => 'autor'" n:if="$uziv" title="Změny autora {$uziv|upper}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> {$autorovyZmeny}</a>
+                  <a n:href="Verze:testy, 'filtr' => 'autor-chyby'" n:if="$neotestovaneZmeny !== null" title="Změny autora {$uziv|upper}, které neprošly testováním" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</a>
                 {/if}
                 {if $pohled == 'test'}
-                  <a n:href="Verze:testy, 'filtr' => 'tester'" n:if="$uziv"><span class="label label-info" title="Změny, které testuje {$uziv|upper}"><span class="glyphicon glyphicon-user"></span> {$testerovyZmeny}</span></a>
-                  <a n:href="Verze:testy, 'filtr' => 'tester-chyby'" n:if="$neotestovaneZmeny !== null"><span class="label label-info" title="Změny, které neprošly testováním a testuje je {$uziv|upper}"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</span></a>
+                  <a n:href="Verze:testy, 'filtr' => 'tester'" n:if="$uziv" title="Změny, které testuje {$uziv|upper}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> {$testerovyZmeny}</a>
+                  <a n:href="Verze:testy, 'filtr' => 'tester-chyby'" n:if="$neotestovaneZmeny !== null" title="Změny, které neprošly testováním a testuje je {$uziv|upper}" class="btn btn-primary btn-xs"><span ><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</a>
                 {/if}
                 {if $pohled == 'boss'}
-                  <a n:href="Verze:testy, 'filtr' => 'bez-testera'" n:if="$zmenyBezTestera !== null"><span class="label label-info" title="Změny, které nemají přiřazeného testera"><span class="glyphicon glyphicon-asterisk"></span> {$zmenyBezTestera}</span></a>
-                  <a n:href="Verze:testy, 'filtr' => 'boss-chyby'" n:if="$neotestovaneZmeny !== null" ><span class="label label-info" title="Změny, které neprošly testováním"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</span></a>
+                  <a n:href="Verze:testy, 'filtr' => 'bez-testera'" n:if="$zmenyBezTestera !== null" title="Změny, které nemají přiřazeného testera" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-asterisk"></span> {$zmenyBezTestera}</a>
+                  <a n:href="Verze:testy, 'filtr' => 'boss-chyby'" n:if="$neotestovaneZmeny !== null" title="Změny, které neprošly testováním" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</a>
                 {/if}
               </div>
             </li>
           </ul>
           {/snippet}
-        {/if}
+        </form>
       </div> <!-- #sidebar -->
       <div class="col-sm-9" id="main">
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>

@@ -31,13 +31,15 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
    */
   public $zmeny;
 
+  /** @persistent */
+  public $pohled = 'dev';
 
   /** @persistent */
-  public $pohled;
-  /** @persistent */
   public $verzeId;
+
   /** @persistent */
   public $uziv;
+
   /** @persistent */
   public $filtr;
 
@@ -60,8 +62,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     $this->template->uziv    = $this->uziv;
     $this->template->uzivId  = $this->uzivId;
-    $this->template->pohled  = $this->pohled ? $this->pohled : 'dev';
+    $this->template->pohled  = $this->pohled;
     $this->template->verzeId = $this->verzeId;
+    $this->template->filtr = $this->filtr;
 
     $this->template->zmenyBezTestera   = null;
     $this->template->neotestovaneZmeny = null;
