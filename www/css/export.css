@@ -1,0 +1,23 @@
+.dl-horizontal dt {
+  clear: left;
+  float: left;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+}
+.dl-horizontal dd {
+  margin-left: 120px;
+}
+.dl-horizontal dd:after {
+  clear: both;
+}
+.dl-horizontal dd:after {
+  content: " ";
+  display: table;
+}
+
+.vysledekTestu {
+  text-align: right;
+}

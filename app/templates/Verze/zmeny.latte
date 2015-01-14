@@ -6,6 +6,7 @@
 <h2>
   Verze {$verze->nazev}
   <a n:if="$pohled == 'dev'" n:href="info $verze->id" title="Upravit informace o verzi" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+  <a n:if="$pohled == 'boss'" n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a>
 </h2>
 
 
@@ -14,7 +15,7 @@
   <dd>{$verze->datum|date:'%d.%m.%Y'}</dd>
     <dt>Veřejné poznámky</dt>
     <dd>{!$verze->pozn_verejna|nl2br}</dd>
-    <dt>Skryté poznámky</dt>
+    <dt class="noPrint">Skryté poznámky</dt>
     <dd {if $verze->pozn_skryta} class="skryteInfo"{/if}>{!$verze->pozn_skryta|nl2br}</dd>
 </dl>
 

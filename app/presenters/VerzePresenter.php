@@ -67,6 +67,23 @@ final class VerzePresenter extends BasePresenter
     $this->template->seznamVerzi = $this->verze->vsechny();
   }
 
+
+  /**
+   *
+   */
+  public function renderExport($verzeId)
+  {
+    if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol')));
+
+    $verze = $this->verze->get($verzeId);
+    if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
+
+    $this->template->verze = $verze;
+    $this->template->testovaci = ($this->getParameter('protokol') == 'testy');
+    $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($verzeId);
+    $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
+  }
+
   /**
    * Změnový protokol
    */
@@ -77,7 +94,6 @@ final class VerzePresenter extends BasePresenter
     $verze = $this->verze->get($verzeId);
     if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
     $this->template->verze = $verze;
-    $this->template->filtr = $this->filtr;
 
     $autor = $this->filtr == 'autor' ? $this->uzivId : null;
     if(!$autor) $this->template->filtr = '';

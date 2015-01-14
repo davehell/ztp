@@ -31,6 +31,9 @@ class ZmenyRepository extends Repository
 
   /**
    * Všechny změny v dané verzi
+   * @param  [type] $verze  ID verze
+   * @param  [type] $autor  ID autora. Pouze ty změny, kterých je autorem.
+   * @param  [type] $tester ID testera. Pouze ty změny, které testuje.
    * @return \Nette\Database\Table\Selection
    */
   public function zmenyVeVerzi($verze, $autor = null, $tester = null)
@@ -39,6 +42,16 @@ class ZmenyRepository extends Repository
     if($autor) $zmeny = $zmeny->where('autor_id', $autor);
     if($tester) $zmeny = $zmeny->where('tester_id', $tester);
     return $zmeny;
+  }
+
+  /**
+   * Pouze veřejné změny v dané verzi
+   * @param  [type] $verze  ID verze
+   * @return \Nette\Database\Table\Selection
+   */
+  public function verejneZmenyVeVerzi($verze)
+  {
+    return $this->zmenyVeVerzi($verze)->where('je_verejna', true);
   }
 
   /**

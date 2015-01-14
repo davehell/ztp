@@ -1,0 +1,41 @@
+{layout "../@export.latte"}
+
+{block title}Export {if $testovaci}testovacího{else}změnového{/if} protokolu - Verze {$verze->nazev}{/block}
+
+{block content}
+<h1>{if $testovaci}Testovací{else}Změnový{/if} protokol</h1>
+
+<dl class="dl-horizontal">
+  <dt>Verze: </dt>
+  <dd>{$verze->nazev}</dd>
+  <dt>Datum: </dt>
+  <dd>{$verze->datum|date:'%d.%m.%Y'}</dd>
+</dl>
+
+{if $testovaci}
+<h2>Testováno na:</h2>
+
+<dl n:inner-foreach="$testeriVeVerzi as $tester" class="dl-horizontal">
+  <dt>{$tester->tester->jmeno|upper}</dt>
+  <dd>{$tester->tester->prostredi}</dd>
+</dl>
+{/if}
+
+<h2>Změny</h2>
+
+<ul>
+{foreach $zmeny as $zmena}
+  <li>
+    <div>
+      {$zmena->task}
+      {!$zmena->text|nl2br}
+    </div>
+    <div>
+      {!$zmena->uloha|nl2br}
+    </div>
+    <p n:if="$testovaci && $zmena->tester" class="vysledekTestu">
+      {$zmena->vysledek_testu} {$zmena->tester->jmeno|upper}
+    </p>
+  </li>
+{/foreach}
+</ul>

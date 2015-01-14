@@ -3,7 +3,7 @@
 {block content}
 <h1>Testovací protokol</h1>
 
-<h2>Verze {$verze->nazev}</h2>
+<h2>Verze {$verze->nazev} <a n:if="$pohled == 'boss'" n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a></h2>
 
 
 <dl class="dl-horizontal">
