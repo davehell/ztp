@@ -1,0 +1,43 @@
+{block content}
+<div id="uvodniStrana">
+<h1 n:inner-block="title">Změnové a testovací protokoly</h1>
+
+<h2>Kdo jsem</h2>
+
+<div class="row">
+  <div class="col-sm-4 alert-success">
+    <h3>vývojář</h3>
+  </div>
+  <div class="col-sm-4 alert-info">
+    <h3>tester</h3>
+  </div>
+  <div class="col-sm-4 alert-danger">
+    <h3>boss</h3>
+  </div>
+</div>
+
+<h2>Co chci</h2>
+
+<div class="row">
+  <div class="col-sm-4">
+    <ul>
+      <li><a n:href="Verze:info, 'pohled' => 'dev'">založit nový změnový protokol</a></li>
+      <li><a n:href="Verze:zmeny, 'pohled' => 'dev'">zapisovat do změnového protokolu</a></li>
+      <li><a n:href="Verze:testy, 'pohled' => 'dev'">opravit nalezenou chybu</a></li>
+    </ul>
+  </div>
+  <div class="col-sm-4">
+    <ul>
+      <li><a n:href="Verze:testy, 'pohled' => 'test'">zapisovat do testovacího protokolu</a></li>
+    </ul>
+  </div>
+  <div class="col-sm-4">
+    <ul>
+      <li><a n:href="Verze:testy, 'filtr' => 'bez-testera', 'pohled' => 'boss'">vidět nově přidané změny v testovacím protokolu</a></li>
+      <li><a n:href="Verze:testy, 'filtr' => 'boss-chyby', 'pohled' => 'boss'">vidět neotestované změny</a></li>
+      <li><a n:href="Verze:testy, 'pohled' => 'boss'">exportovat změnový nebo testovací protokol</a></li>
+    </ul>
+  </div>
+</div>
+
+</div>

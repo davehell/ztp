@@ -5,6 +5,7 @@ body {
   background-color: #efefef;
   color: #404040;
   font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
+  font-size: 15px;
   font-weight: normal;
 }
 #main {
@@ -83,4 +84,15 @@ textarea.form-control {
 }
 .testeri .dropdown-menu a.active  {
   font-weight: bold;
+}
+
+#uvodniStrana h1, #uvodniStrana h2, #uvodniStrana h3 {
+  text-align: center;
+}
+#uvodniStrana h2, #uvodniStrana li {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+#uvodniStrana ul {
+  padding-left: 20px;
 }

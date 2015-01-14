@@ -64,7 +64,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     $this->template->uzivId  = $this->uzivId;
     $this->template->pohled  = $this->pohled;
     $this->template->verzeId = $this->verzeId;
-    $this->template->filtr = $this->filtr;
+    $this->template->filtr   = $this->filtr;
 
     $this->template->zmenyBezTestera   = null;
     $this->template->neotestovaneZmeny = null;

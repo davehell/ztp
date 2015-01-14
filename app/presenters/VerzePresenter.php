@@ -53,8 +53,17 @@ final class VerzePresenter extends BasePresenter
   /**
    *
    */
+  public function renderDefault()
+  {
+  }
+
+
+  /**
+   *
+   */
   public function renderSeznam()
   {
+    $this->template->protokol = $this->getParameter('protokol');
     $this->template->seznamVerzi = $this->verze->vsechny();
   }
 
@@ -68,9 +77,9 @@ final class VerzePresenter extends BasePresenter
     $verze = $this->verze->get($verzeId);
     if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
     $this->template->verze = $verze;
-    $this->template->filtr = $this->getParameter('filtr');
+    $this->template->filtr = $this->filtr;
 
-    $autor = $this->getParameter('filtr') == 'autor' ? $this->uzivId : null;
+    $autor = $this->filtr == 'autor' ? $this->uzivId : null;
     if(!$autor) $this->template->filtr = '';
     $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId, $autor);
   }
@@ -80,26 +89,25 @@ final class VerzePresenter extends BasePresenter
    */
   public function renderTesty($verzeId)
   {
-    if(!$verzeId) $this->redirect('Verze:seznam');
+    if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => 'testy'));
 
     $verze = $this->verze->get($verzeId);
     if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
     $this->template->verze = $verze;
-    $this->template->filtr = $this->getParameter('filtr');
 
-    $autor  = $this->getParameter('filtr') == 'autor'  ? $this->uzivId : null;
-    $tester = $this->getParameter('filtr') == 'tester' ? $this->uzivId : null;
+    $autor  = $this->filtr == 'autor'  ? $this->uzivId : null;
+    $tester = $this->filtr == 'tester' ? $this->uzivId : null;
 
-    if($this->getParameter('filtr') == 'autor-chyby') {
+    if($this->filtr == 'autor-chyby') {
       $this->template->zmeny = $this->zmeny->neotestovane($verzeId, $this->uzivId);
     }
-    else if($this->getParameter('filtr') == 'tester-chyby') {
+    else if($this->filtr == 'tester-chyby') {
       $this->template->zmeny = $this->zmeny->neotestovane($verzeId, null, $this->uzivId);
     }
-    else if($this->getParameter('filtr') == 'boss-chyby') {
+    else if($this->filtr == 'boss-chyby') {
       $this->template->zmeny = $this->zmeny->neotestovane($verzeId);
     }
-    else if($this->getParameter('filtr') == 'bez-testera') {
+    else if($this->filtr == 'bez-testera') {
       $this->template->zmeny = $this->zmeny->bezTestera($verzeId);
     }
     else {

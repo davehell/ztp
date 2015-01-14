@@ -19,7 +19,7 @@ class RouterFactory
   {
     $router = new RouteList();
     //$router[] = new Route('<presenter>[/<verzeId>]/<action>[/<id>]', 'Verze:seznam');
-    $router[] = new Route('<presenter>/<action> ? verze=<verzeId>', 'Verze:seznam');
+    $router[] = new Route('<presenter>/<action> ? verze=<verzeId>', 'Verze:default');
     return $router;
   }
 

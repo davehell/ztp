@@ -1,10 +1,14 @@
-{block title}Změnové a testovací protokoly{/block}
-
 {block content}
-<h1>Seznam verzí</h1>
+<h1 n:inner-block="title">Seznam {if $protokol == 'testy'}testovacích{else}změnových{/if} protokolů</h1>
 
 <ul>
   {foreach $seznamVerzi as $v}
-    <li><a n:href="Verze:zmeny, $v->id">{$v->nazev}</a></li>
+    <li>
+      {if $protokol == 'testy'}
+        <a n:href="Verze:testy, $v->id">{$v->nazev}</a>
+      {else}
+        <a n:href="Verze:zmeny, $v->id">{$v->nazev}</a>
+      {/if}
+    </li>
   {/foreach}
 </ul>
