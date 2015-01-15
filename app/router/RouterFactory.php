@@ -19,7 +19,7 @@ class RouterFactory
   {
     $flags = ($isSecured ? Route::SECURED : 0);
     $router = new RouteList();
-    //$router[] = new Route('<presenter>[/<verzeId>]/<action>[/<id>]', 'Verze:seznam');
+    $router[] = new Route('<uziv [a-z]{3}>/<presenter>/<verzeId>/<action>', 'Verze:default', $flags);
     $router[] = new Route('<presenter>/<action> ? verze=<verzeId>', 'Verze:default', $flags);
     return $router;
   }
