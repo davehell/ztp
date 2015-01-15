@@ -64,6 +64,7 @@ final class VerzePresenter extends BasePresenter
   public function renderSeznam()
   {
     $this->template->protokol = $this->getParameter('protokol');
+    $this->template->export = $this->getParameter('export');
     $this->template->seznamVerzi = $this->verze->vsechny();
   }
 
@@ -73,7 +74,7 @@ final class VerzePresenter extends BasePresenter
    */
   public function renderExport($verzeId)
   {
-    if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol')));
+    if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
 
     $verze = $this->verze->get($verzeId);
     if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");

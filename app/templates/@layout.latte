@@ -14,10 +14,13 @@
   {block head}{/block}
 </head>
 
-<body>
+<body {ifCurrent Verze:default}class="uvodniStrana"{/ifCurrent}>
   <div class="container">
     <div class="row">
-      <div class="col-sm-3" id="sidebar">
+      <div class="col-sm-3">
+      <div id="sidebar">
+        <h4><a n:href="Verze:default" title="Úvodní stránka">Změnové a Testovací Protokoly</a></h4>
+
         <form id="menuForm" action="{link this}" method="get">
           <input type="hidden" name="pohled" value="{$pohled}">
           <input type="hidden" name="filtr" value="{$filtr}">
@@ -85,6 +88,7 @@
           {/snippet}
         </form>
       </div> <!-- #sidebar -->
+      </div> <!-- .col-md-3 -->
       <div class="col-sm-9" id="main">
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
         {include content}

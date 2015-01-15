@@ -32,7 +32,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
   public $zmeny;
 
   /** @persistent */
-  public $pohled = 'dev';
+  public $pohled;
 
   /** @persistent */
   public $verzeId;
@@ -44,6 +44,33 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
   public $filtr;
 
   public $uzivId;
+
+  protected $request;
+  protected $response;
+
+  public function __construct(\Nette\Http\IRequest $request, \Nette\Http\Response $response)
+  {
+    $this->request = $request;
+    $this->response = $response;
+  }
+
+  public function startup()
+  {
+    parent::startup();
+
+    //pokud nejsou parametry v url, načtou se z cookie
+    if(!$this->uziv)    $this->uziv    = $this->request->getCookie('uziv');
+    if(!$this->pohled)  $this->pohled  = $this->request->getCookie('pohled');
+    if(!$this->verzeId) $this->verzeId = $this->request->getCookie('verzeId');
+
+    //výchozí hodnota pro pohled
+    if(!$this->pohled) $this->pohled = 'dev';
+
+    //uložení parametrů do cookie
+    $this->response->setCookie('uziv', $this->uziv, '100 days');
+    $this->response->setCookie('pohled', $this->pohled, '100 days');
+    $this->response->setCookie('verzeId', $this->verzeId, '100 days');
+  }
 
   public function beforeRender()
   {

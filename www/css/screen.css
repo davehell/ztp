@@ -13,9 +13,31 @@ body {
   padding-bottom: 15px;
   padding-top: 15px;
 }
+/* odkaz na uvodni stranku */
+#sidebar h4 {
+  margin-bottom: 30px;
+}
+#sidebar h4 a {
+  background: url("../images/logo.png") no-repeat;
+  padding-left: 30px;
+  display: block;
+  text-align: center;
+  color: #e6e6e6;
+}
+#sidebar h4 a:hover, #sidebar h4 a:active, #sidebar h4 a:focus {
+  text-decoration: none;
+}
+
+#sidebar {
+  position: fixed;
+  background-color: #343131;
+  width: 292.5px;
+  left: 0;
+  top: 0;
+}
 #sidebar {
   background-color: #343131;
-  color: #b3b3b3;
+  color: #e6e6e6;
   padding: 10px;
 }
 #sidebar select {
@@ -84,13 +106,16 @@ textarea.form-control {
   font-weight: bold;
 }
 
-#uvodniStrana h1, #uvodniStrana h2, #uvodniStrana h3 {
+.uvodniStrana #sidebar form {
+  display: none;
+}
+.uvodniStrana h1, .uvodniStrana h2 {
   text-align: center;
 }
-#uvodniStrana h2, #uvodniStrana li {
-  margin-bottom: 20px;
-  margin-top: 20px;
+.uvodniStrana h2, .uvodniStrana li {
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
-#uvodniStrana ul {
+.uvodniStrana ul {
   padding-left: 20px;
 }

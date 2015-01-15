@@ -16,7 +16,6 @@ class TesteriControl extends UI\Control
   public function __construct($lide)
   {
     parent::__construct();
-    barDump($lide);
     $this->lide = $lide;
   }
 
