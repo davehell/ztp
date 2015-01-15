@@ -5,7 +5,7 @@
 # http://nette.org/security-warning
 #
 parameters:
-
+  ssl: false
 
 php:
 	date.timezone: Europe/Prague
@@ -24,7 +24,7 @@ nette:
 
 services:
 	- App\RouterFactory
-	router: @App\RouterFactory::createRouter
+	router: @App\RouterFactory::createRouter(%ssl%)
 	- App\Model\LideRepository
 	- App\Model\ZmenyRepository
 	- App\Model\ChybyRepository
