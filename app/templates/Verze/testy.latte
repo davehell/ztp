@@ -45,57 +45,12 @@
 
 {snippet zmeny}
 {foreach $zmeny as $zmena}
-
-<a name="z{$zmena->id}"></a>
-<div class="zmena {if !$zmena->je_verejna}skryteInfo{/if}">
-  <div class="row head">
-    <div class="col-md-1">{control stav, $zmena->je_ok}</div>
-    <div class="col-md-2"><div class="autor {if $pohled == 'dev' && $zmena->autor->jmeno == $uziv}moje{/if}">autor<br>{$zmena->autor->jmeno|upper}</div></div>
-    <div class="col-md-2">{if $zmena->task}task<br>{$zmena->task}{/if}</div>
-    {if $pohled == 'boss'}
-      <div class="col-md-7">
-        {control testeri, $zmena}
-      </div>
-    {else}
-      <div class="col-md-2">
-        <div n:if="$zmena->tester" class="tester  {if $pohled == 'test' && $zmena->tester->jmeno == $uziv}moje{/if}">
-          tester<br>{$zmena->tester->jmeno|upper}
-        </div>
-      </div>
-      <div class="col-md-3">
-        {$zmena->vysledek_testu}
-      </div>
-      <div class="col-md-2">
-        <div n:if="$pohled == 'test'" class="btn-toolbar">
-          <div class="btn-group">
-            <a n:href="Chyby:chyba, null, $zmena->id" title="Je tam chyba" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-            <a n:href="Zmeny:test, $zmena->id" title="Je to cajk" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-          </div>
-        </div>
-      </div>
-    {/if}
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-12">
-      <p>
-        {$zmena->typy_zmen->nazev}: {!$zmena->text|nl2br}
-      </p>
-      <p n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
-        {!$zmena->detail|nl2br}
-      </p>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-12">
-      {!$zmena->uloha|nl2br}
-    </div>
-  </div>
-  {if $pohled == 'dev' || $pohled == 'test'}
-    {control chyby, $zmena->id}
+  {if $zmena->nadpis == 1}
+    <h2>{$zmena->text}</h2>
+  {elseif $zmena->nadpis == 2}
+    <h3>{$zmena->text}</h3>
+  {else}
+    {include 'testy-zmena.latte', zmena => $zmena}
   {/if}
-</div>
-
 {/foreach}
 {/snippet}

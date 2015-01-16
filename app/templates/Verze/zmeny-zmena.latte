@@ -1,0 +1,33 @@
+<a name="z{$zmena->id}"></a>
+<div class="zmena {if !$zmena->je_verejna}skryteInfo{/if}">
+  <div class="row head">
+    <div class="col-md-2"><div class="autor {if $pohled == 'dev' && $zmena->autor->jmeno == $uziv}moje{/if}">autor<br>{$zmena->autor->jmeno|upper}</div></div>
+    <div class="col-md-2">{if $zmena->task}task<br>{$zmena->task}{/if}</div>
+    <div class="col-md-8">
+      <div n:if="$pohled == 'dev'" class="btn-toolbar">
+        <div class="btn-group">
+          <a n:href="Zmeny:zmena, $zmena->id" title="Upravit změnu" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+          <a n:href="Zmeny:zmena" title="Přidat novou změnu" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
+          <a n:href="Zmeny:smazat, $zmena->id" title="Smazat tuto změnu" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <p>
+        {$zmena->typy_zmen->nazev}: {!$zmena->text|nl2br}
+      </p>
+      <p n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
+        {!$zmena->detail|nl2br}
+      </p>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      {!$zmena->uloha|nl2br}
+    </div>
+  </div>
+</div>
