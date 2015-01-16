@@ -44,9 +44,22 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
   public $filtr;
 
   public $uzivId;
+  public $texy;
 
   protected $request;
   protected $response;
+
+
+
+  public function injectTexy(\Texy $texy) {
+    $this->texy = $texy;
+  }
+
+  protected function createTemplate($class = NULL) {
+    $template = parent::createTemplate($class);
+    $template->registerHelper('texy', callback($this->texy, 'process'));
+    return $template;
+  }
 
   public function __construct(\Nette\Http\IRequest $request, \Nette\Http\Response $response)
   {

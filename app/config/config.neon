@@ -29,3 +29,4 @@ services:
 	- App\Model\ZmenyRepository
 	- App\Model\ChybyRepository
 	- App\Model\VerzeRepository
+	texy: Texy

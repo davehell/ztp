@@ -16,18 +16,18 @@
   <hr>
   <div class="row">
     <div class="col-md-12">
-      <p>
-        {$zmena->typy_zmen->nazev}: {!$zmena->text|nl2br}
-      </p>
-      <p n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
-        {!$zmena->detail|nl2br}
-      </p>
+      <div>
+        {!$zmena->text|texy}
+      </div>
+      <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
+        {!$zmena->detail|texy}
+      </div>
     </div>
   </div>
   <hr>
   <div class="row">
     <div class="col-md-12">
-      {!$zmena->uloha|nl2br}
+      {!$zmena->uloha|texy}
     </div>
   </div>
 </div>

@@ -21,21 +21,25 @@
 </dl>
 {/if}
 
-<h2>Změny</h2>
-
 <ul>
 {foreach $zmeny as $zmena}
-  <li>
+  <li {if $zmena->nadpis}class="nadpis"{/if}>
+    {if $zmena->nadpis == 1}
+      <h2>{$zmena->text}</h2>
+    {elseif $zmena->nadpis == 2}
+      <h3>{$zmena->text}</h3>
+    {else}
     <div>
       {$zmena->task}
-      {!$zmena->text|nl2br}
+      {!$zmena->text|texy}
     </div>
     <div>
-      {!$zmena->uloha|nl2br}
+      {!$zmena->uloha|texy}
     </div>
     <p n:if="$testovaci && $zmena->tester" class="vysledekTestu">
       {$zmena->vysledek_testu} {$zmena->tester->jmeno|upper}
     </p>
+    {/if}
   </li>
 {/foreach}
 </ul>
