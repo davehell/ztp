@@ -32,10 +32,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
   public $zmeny;
 
   /** @persistent */
-  public $pohled;
-
-  /** @persistent */
-  public $verzeId;
+  public $pohled = 'dev';
 
   /** @persistent */
   public $uziv;
@@ -43,6 +40,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
   /** @persistent */
   public $filtr;
 
+  public $verzeId;
   public $uzivId;
   public $texy;
 
@@ -72,33 +70,48 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     parent::startup();
 
     //pokud nejsou parametry v url, načtou se z cookie
-    if(!$this->uziv)    $this->uziv    = $this->request->getCookie('uziv');
-    if(!$this->pohled)  $this->pohled  = $this->request->getCookie('pohled');
-    if(!$this->verzeId) $this->verzeId = $this->request->getCookie('verzeId');
+    if(!$this->uziv) $this->uziv    = $this->request->getCookie('uziv');
+    $this->uziv = strtolower($this->uziv);
+    if($this->uziv) {
+      $clovek = $this->lide->getBy(array('jmeno' => $this->uziv));
+      if(!$clovek) {
+        $this->response->setCookie('uziv', '', '-1');
+        throw new \Nette\Application\BadRequestException('Neexistující osoba');
+      }
+      $this->uzivId = $clovek->id;
+      $this->response->setCookie('uziv', $this->uziv, '100 days');
+    }
+  }
 
-    //výchozí hodnota pro pohled
-    if(!$this->pohled) $this->pohled = 'dev';
-
-    //uložení parametrů do cookie
-    $this->response->setCookie('uziv', $this->uziv, '100 days');
-    $this->response->setCookie('pohled', $this->pohled, '100 days');
+  /**
+   *
+   */
+  public function vybratVerzi($id)
+  {
+    $verze = $this->verze->get($id);
+    if(!$verze) {
+      $this->response->setCookie('verzeId', '', '-1');
+      throw new \Nette\Application\BadRequestException('Neexistující verze');
+    }
+    $this->verzeId = $id;
+    $this->aktualizaceMenu();
     $this->response->setCookie('verzeId', $this->verzeId, '100 days');
+
+    return $verze;
   }
 
   public function beforeRender()
   {
-    $this->uziv   = strtolower($this->uziv);
-    $this->pohled = strtolower($this->pohled);
-
-    if($this->uziv) {
-      $clovek = $this->lide->getBy(array('jmeno' => $this->uziv));
-      if(!$clovek) throw new \Nette\Application\BadRequestException("Neexistující osoba");
-      $this->uzivId = $clovek->id;
-    }
-
     $this->template->lide          = $this->lide->seznamLidi();
     $this->template->vydaneVerze   = $this->verze->vydane();
     $this->template->nevydaneVerze = $this->verze->nevydane();
+
+    $this->aktualizaceMenu();
+  }
+
+  public function aktualizaceMenu()
+  {
+    $this->pohled = strtolower($this->pohled);
 
     $this->template->uziv    = $this->uziv;
     $this->template->uzivId  = $this->uzivId;

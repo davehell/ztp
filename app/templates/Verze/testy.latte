@@ -25,7 +25,7 @@
     {$tester->tester->jmeno|upper}
   </dt>
   <dd>
-    <a n:if="$pohled == 'test'" n:href="Verze:osoba $tester->tester_id" title="Upravit testovací prostředí u {$tester->tester->jmeno|upper}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a n:if="$pohled == 'test'" n:href="Verze:osoba, $tester->tester_id, $verzeId" title="Upravit testovací prostředí u {$tester->tester->jmeno|upper}" class="editaceTestera btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
     {$tester->tester->prostredi}
   </dd>
 </dl>

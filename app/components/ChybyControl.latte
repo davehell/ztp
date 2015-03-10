@@ -21,17 +21,17 @@
         <div class="btn-toolbar">
           {if $pohled == 'test'}
             <div class="btn-group">
-              <a href="{plink Chyby:chyba, $chyba->id}" title="Upravit chybu" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-              <a href="{plink Chyby:smazat, $chyba->id}" title="Smazat chybu" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+              <a href="{plink Chyby:chyba, $chyba->id}" title="Upravit chybu" class="editaceChyby btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+              <a href="{plink Chyby:smazat, $chyba->id}" title="Smazat chybu" class="smazaniChyby btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
             </div>
             <div class="btn-group">
-              <a n:href="opraveno!, $chyba->id, 0" title="Chyba není opravena" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-              <a n:href="opraveno!, $chyba->id, 1" title="Je to cajk" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+              <a n:href="opraveno!, $chyba->id, 0" title="Chyba není opravena" class="chybaNefunguje ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+              <a n:href="opraveno!, $chyba->id, 1" title="Chyba už je v cajku" class="chybaFunguje ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
             </div>
           {/if}
           {if $pohled == 'dev' && $chyba->je_ok === 0}
             <div class="btn-group">
-              <a n:href="opraveno!, $chyba->id, 1" title="Je to cajk" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+              <a n:href="opraveno!, $chyba->id, 1" title="Chyba už je v cajku" class="ajax btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
             </div>
           {/if}
         </div>

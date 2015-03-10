@@ -41,6 +41,7 @@ final class VerzePresenter extends BasePresenter
    */
   public $lide;
 
+
   /**
    *
    */
@@ -53,8 +54,12 @@ final class VerzePresenter extends BasePresenter
   /**
    *
    */
-  public function renderDefault()
+  public function renderDefault($verzeId = null, $uziv = null)
   {
+    if($verzeId == null) {
+      $verzeId = $this->request->getCookie('verzeId');
+    }
+    $this->template->verze = ($verzeId == null) ? "" : $this->vybratVerzi($verzeId);
   }
 
 
@@ -75,11 +80,8 @@ final class VerzePresenter extends BasePresenter
   public function renderExport($verzeId)
   {
     if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
+    $this->template->verze = $this->vybratVerzi($verzeId);
 
-    $verze = $this->verze->get($verzeId);
-    if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
-
-    $this->template->verze = $verze;
     $this->template->testovaci = ($this->getParameter('protokol') == 'testy');
     $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($verzeId);
     $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
@@ -91,10 +93,7 @@ final class VerzePresenter extends BasePresenter
   public function renderZmeny($verzeId)
   {
     if(!$verzeId) $this->redirect('Verze:seznam');
-
-    $verze = $this->verze->get($verzeId);
-    if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
-    $this->template->verze = $verze;
+    $this->template->verze = $this->vybratVerzi($verzeId);
 
     $autor = $this->filtr == 'autor' ? $this->uzivId : null;
     if(!$autor) $this->template->filtr = '';
@@ -107,10 +106,7 @@ final class VerzePresenter extends BasePresenter
   public function renderTesty($verzeId)
   {
     if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => 'testy'));
-
-    $verze = $this->verze->get($verzeId);
-    if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
-    $this->template->verze = $verze;
+    $this->template->verze = $this->vybratVerzi($verzeId);
 
     $autor  = $this->filtr == 'autor'  ? $this->uzivId : null;
     $tester = $this->filtr == 'tester' ? $this->uzivId : null;
@@ -142,8 +138,7 @@ final class VerzePresenter extends BasePresenter
   {
     $this->template->verze = null;
     if($verzeId) { //editace
-      $verze = $this->verze->get($verzeId);
-      if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
+      $verze = $this->vybratVerzi($verzeId);
       $this->template->verze = $verze;
       $this['infoForm']->setDefaults($verze);
       if($verze->datum) {
@@ -155,12 +150,17 @@ final class VerzePresenter extends BasePresenter
   /**
    * Editace testovacího prostředí u testera
    */
-  public function renderOsoba($id)
+  public function renderOsoba($id, $verzeId = null)
   {
     $osoba = $this->lide->get($id);
     if(!$osoba) throw new \Nette\Application\BadRequestException("Neexistující osoba");
     $this->template->osoba = $osoba;
     $this['osobaForm']->setDefaults($osoba);
+
+    //zapamatuju si verzi, abych se po odeslání formuláře mohl vrátit do správného protokolu
+    if($verzeId) {
+      $this->response->setCookie('verzeId', $verzeId, '');
+    }
   }
 
 
@@ -275,6 +275,7 @@ final class VerzePresenter extends BasePresenter
     $form = new Form;
 
     $form->addText('nazev', 'Název')
+      ->setAttribute('placeholder', '11.00 P1')
       ->setRequired('Zadej název verze');
 
     $form->addText('datum', 'Datum');
@@ -367,6 +368,6 @@ final class VerzePresenter extends BasePresenter
     }
 
     $this->flashMessage('Uloženo.', 'success');
-    $this->redirect('Verze:testy');
+    $this->redirect('Verze:testy', $this->request->getCookie('verzeId'));
   }
 }

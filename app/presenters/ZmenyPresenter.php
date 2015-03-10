@@ -37,20 +37,21 @@ final class ZmenyPresenter extends BasePresenter
   /**
    *
    */
-  public function renderZmena($id)
+  public function renderZmena($id = null, $verzeId = null)
   {
-    $verze = $this->verze->get($this->verzeId);
-    if(!$verze) throw new \Nette\Application\BadRequestException("Neexistující verze");
-    $this->template->verze = $verze;
-    $this->template->zmena = null;
-    $this['zmenaForm']['verze_id']->setDefaultValue($this->verzeId);
-    if($this->uzivId) $this['zmenaForm']['autor_id']->setDefaultValue($this->uzivId);
 
-    if($id) { //editace změny
+    if($verzeId) { //nová změna - zadáno jen ID verze, do které má změna patřit
+      $this['zmenaForm']['verze_id']->setDefaultValue($verzeId);
+      $this->template->zmena = null;
+      $this->template->verze = $this->vybratVerzi($verzeId);
+      if($this->uzivId) $this['zmenaForm']['autor_id']->setDefaultValue($this->uzivId);
+    }
+    else if($id) { //editace změny - zadáno přímo ID změny
       $zmena = $this->zmeny->get($id);
       if(!$zmena) throw new \Nette\Application\BadRequestException("Neexistující změna");
       $this['zmenaForm']->setDefaults($zmena);
       $this->template->zmena = $zmena;
+      $this->template->verze = $this->vybratVerzi($zmena->verze_id);
     }
   }
 
@@ -62,7 +63,7 @@ final class ZmenyPresenter extends BasePresenter
     $zmena = $this->zmeny->get($id);
     if(!$zmena) throw new \Nette\Application\BadRequestException("Neexistující změna");
     $this->template->zmena = $zmena;
-    $this->template->verze = $zmena->verze;
+    $this->template->verze = $this->vybratVerzi($zmena->verze_id);
     if($zmena->vysledek_testu) $this['testForm']['vysledek_testu']->setDefaultValue($zmena->vysledek_testu);
     $this->template->neopraveneChyby = $this->chyby->neopraveneChyby($id);
   }
@@ -79,11 +80,11 @@ final class ZmenyPresenter extends BasePresenter
       $this->zmeny->delete($id);
     } catch (\Exception $e) {
       $this->flashMessage('Chyba při mazání.', 'danger');
-      $this->redirect('Verze:zmeny', $this->verzeId);
+      $this->redirect('Verze:zmeny', $zmena->verze_id);
     }
 
     $this->flashMessage('Smazáno.' , 'success');
-    $this->redirect('Verze:zmeny', $this->verzeId);
+    $this->redirect('Verze:zmeny', $zmena->verze_id);
   }
 
   /**
@@ -119,6 +120,9 @@ final class ZmenyPresenter extends BasePresenter
     $values = $form->getValues();
 
     $zmenaId = $this->getParameter('id');
+    $zmena = $this->zmeny->get($zmenaId);
+    if(!$zmena) throw new \Nette\Application\BadRequestException("Neexistující změna");
+    $verzeId = $zmena->verze_id;
 
     try {
       $this->zmeny->update($zmenaId, $values);
@@ -127,7 +131,7 @@ final class ZmenyPresenter extends BasePresenter
       $this->redirect('this');
     }
 
-    $this->redirect('Verze:testy#z' . $zmenaId, $this->verzeId);
+    $this->redirect('Verze:testy#z' . $zmenaId, $verzeId);
   }
 
   /**
@@ -186,6 +190,7 @@ final class ZmenyPresenter extends BasePresenter
     unset($values['tagy']);
 
     $zmenaId = $this->getParameter('id');
+    $verzeId = $values['verze_id'];
 
     if($zmenaId) { //editace
       try {
@@ -195,7 +200,7 @@ final class ZmenyPresenter extends BasePresenter
         $this->redirect('this');
       }
 
-      $this->redirect('Verze:zmeny#z' . $zmenaId, $this->verzeId);
+      $this->redirect('Verze:zmeny#z' . $zmenaId, $verzeId);
     }
     else { //nový záznam
       try {
@@ -205,7 +210,7 @@ final class ZmenyPresenter extends BasePresenter
         $this->redirect('this');
       }
 
-      $this->redirect('Verze:zmeny#z' . $z->id, $this->verzeId);
+      $this->redirect('Verze:zmeny#z' . $z->id, $verzeId);
     }
   }
 

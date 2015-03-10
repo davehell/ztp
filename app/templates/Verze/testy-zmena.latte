@@ -21,8 +21,8 @@
       <div class="col-md-2">
         <div n:if="$pohled == 'test'" class="btn-toolbar">
           <div class="btn-group">
-            <a n:href="Chyby:chyba, null, $zmena->id" title="Je tam chyba" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-            <a n:href="Zmeny:test, $zmena->id" title="Je to cajk" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+            <a n:href="Chyby:chyba, null, $zmena->id" title="Změna nefunguje správně" class="novaChyba btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+            <a n:href="Zmeny:test, $zmena->id" title="Bravo! Změna je v pořádku." class="zmenaFunguje btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
           </div>
         </div>
       </div>
@@ -32,6 +32,7 @@
   <div class="row">
     <div class="col-md-12">
       <div>
+        {$zmena->typy_zmen->nazev}
         {!$zmena->text|texy}
       </div>
       <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">

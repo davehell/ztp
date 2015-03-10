@@ -5,7 +5,7 @@
 
 <h2>
   Verze {$verze->nazev}
-  <a n:if="$pohled == 'dev'" n:href="info $verze->id" title="Upravit informace o verzi" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+  <a n:if="$pohled == 'dev'" n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
   <a n:if="$pohled == 'boss'" n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a>
 </h2>
 
@@ -20,7 +20,7 @@
 
 <h2>
   Změny
-  <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena" title="Přidat novou změnu" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
+  <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
 </h2>
 
 <div n:if="$filtr" class="alert alert-info">
