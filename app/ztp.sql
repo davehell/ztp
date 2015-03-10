@@ -31,7 +31,7 @@ CREATE TABLE `lide` (
 INSERT INTO `lide` (`id`, `jmeno`, `prostredi`, `je_aktivni`, `je_tester`) VALUES
 (1,	'dhe',	'FF ESR 24.7.0',	1,	0),
 (2,	'mma',	'Internet Explorer 8 a 11, Mozilla FF ESR 31.2',	1,	1),
-(3,	'dku',	'',	1,	1),
+(3,	'dku',	'testerovo-prostredi',	1,	1),
 (4,	'jbo',	'',	1,	0),
 (5,	'jsv',	'',	1,	0),
 (6,	'tmo',	'',	1,	0),
@@ -43,7 +43,7 @@ INSERT INTO `lide` (`id`, `jmeno`, `prostredi`, `je_aktivni`, `je_tester`) VALUE
 (12,	'mha',	'',	1,	1),
 (13,	'jpe',	'',	1,	1),
 (14,	'mpi',	'',	1,	1),
-(15,	'bpi',	'',	1,	1),
+(15,	'bpi',	'testerovo-prostredi2',	1,	1),
 (16,	'mvo',	'',	1,	0);
 
 DROP TABLE IF EXISTS `sekce`;
@@ -101,11 +101,10 @@ CREATE TABLE `zmeny` (
   `verze_id` int(11) NOT NULL,
   `typy_zmen_id` int(11) NOT NULL,
   `sekce_id` int(11) NOT NULL DEFAULT '2',
-  `pořadí` int(11) DEFAULT NULL COMMENT 'pořadí v rámci sekce',
-  `predchudce` int(11) DEFAULT NULL,
+  `poradi` int(11) DEFAULT NULL COMMENT 'pořadí v rámci protokolu',
   `commit` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'hash při importu z gitu, null při ručním zadání',
   `je_ok` tinyint(4) DEFAULT NULL COMMENT '1 - funguje správně, 0 - existuje neopravená chyba, null - zatím netestováno',
-  `autor_id` int(11) NOT NULL,
+  `autor_id` int(11) DEFAULT NULL,
   `tester_id` int(11) DEFAULT NULL COMMENT 'null - tester ještě není přiřazený',
   `je_verejna` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 - objeví se výsledném změnovém protokolu, 0 - neveřejná změna která se musí otestovat',
   `text` text COLLATE utf8_czech_ci NOT NULL COMMENT 'popis změny, který se objeví ve změnovém i testovacím protokolu',
@@ -141,4 +140,4 @@ CREATE TABLE `zmeny_tagy` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2015-01-15 13:46:26
+-- 2015-03-10 07:53:02

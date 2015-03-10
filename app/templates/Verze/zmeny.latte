@@ -31,12 +31,6 @@
 
 {snippet zmeny}
 {foreach $zmeny as $zmena}
-  {if $zmena->nadpis == 1}
-    <h2>{$zmena->text}</h2>
-  {elseif $zmena->nadpis == 2}
-    <h3>{$zmena->text}</h3>
-  {else}
-    {include 'zmeny-zmena.latte', zmena => $zmena}
-  {/if}
+  {include 'zmeny-zmena.latte', zmena => $zmena}
 {/foreach}
 {/snippet}
