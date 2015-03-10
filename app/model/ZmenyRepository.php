@@ -31,14 +31,14 @@ class ZmenyRepository extends Repository
 
   /**
    * Všechny změny v dané verzi
-   * @param  [type] $verze  ID verze
-   * @param  [type] $autor  ID autora. Pouze ty změny, kterých je autorem.
-   * @param  [type] $tester ID testera. Pouze ty změny, které testuje.
+   * @param  $verze  ID verze
+   * @param  $autor  ID autora. Pouze ty změny, kterých je autorem.
+   * @param  $tester ID testera. Pouze ty změny, které testuje.
    * @return \Nette\Database\Table\Selection
    */
   public function zmenyVeVerzi($verze, $autor = null, $tester = null)
   {
-    $zmeny = $this->findAll()->where('verze_id', $verze);
+    $zmeny = $this->findAll()->where('verze_id', $verze)->order('poradi ASC');
     if($autor) $zmeny = $zmeny->where('autor_id', $autor);
     if($tester) $zmeny = $zmeny->where('tester_id', $tester);
     return $zmeny;
@@ -46,12 +46,47 @@ class ZmenyRepository extends Repository
 
   /**
    * Pouze veřejné změny v dané verzi
-   * @param  [type] $verze  ID verze
+   * @param  $verze  ID verze
    * @return \Nette\Database\Table\Selection
    */
   public function verejneZmenyVeVerzi($verze)
   {
     return $this->zmenyVeVerzi($verze)->where('je_verejna', true);
+  }
+
+  /**
+   * Seznam ID změn v pořadí v jakém mají být v protokolu
+   * @param  $verze  ID verze
+   * @return array
+   */
+  public function poradiZmenVeVerzi($verze)
+  {
+    $zmeny = $this->zmenyVeVerzi($verze);
+    $poradi = array();
+    foreach ($zmeny as $zmena) {
+      $poradi[] = $zmena->id;
+    }
+    return $poradi;
+  }
+
+  /**
+   * Změnám se nastaví pořadí, v jakém mají být v protokolu
+   * @param  array $poradi Seřazené pole s ID změn
+   */
+  public function aktualizovatPoradiZmen($poradi)
+  {
+    $index = 0;
+    try {
+      $this->beginTransaction();
+      foreach ($poradi as $id) {
+        $this->update($id, array('poradi' => ++$index));
+      }
+      $this->commitTransaction();
+    }
+    catch(\Exception $e) {
+      $this->rollbackTransaction();
+      throw $e;
+    }
   }
 
   /**
@@ -64,7 +99,7 @@ class ZmenyRepository extends Repository
   }
 
   /**
-   * Počet změn ve verzi, které nemají přiřazeného testera
+   * Změny ve verzi, které nemají přiřazeného testera
    * @return \Nette\Database\Table\Selection
    */
   public function bezTestera($verze)

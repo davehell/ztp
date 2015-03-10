@@ -101,7 +101,7 @@ CREATE TABLE `zmeny` (
   `verze_id` int(11) NOT NULL,
   `typy_zmen_id` int(11) NOT NULL,
   `sekce_id` int(11) NOT NULL DEFAULT '2',
-  `poradi` int(11) DEFAULT NULL COMMENT 'pořadí v rámci protokolu',
+  `poradi` int(11) NOT NULL DEFAULT '0' COMMENT 'pořadí v rámci protokolu',
   `commit` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'hash při importu z gitu, null při ručním zadání',
   `je_ok` tinyint(4) DEFAULT NULL COMMENT '1 - funguje správně, 0 - existuje neopravená chyba, null - zatím netestováno',
   `autor_id` int(11) DEFAULT NULL,
@@ -140,4 +140,4 @@ CREATE TABLE `zmeny_tagy` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2015-03-10 07:53:02
+-- 2015-03-10 10:50:02

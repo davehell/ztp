@@ -37,7 +37,7 @@ final class ZmenyPresenter extends BasePresenter
   /**
    *
    */
-  public function renderZmena($id = null, $verzeId = null)
+  public function renderZmena($id = null, $verzeId = null, $predchudce = null)
   {
 
     if($verzeId) { //nová změna - zadáno jen ID verze, do které má změna patřit
@@ -191,6 +191,7 @@ final class ZmenyPresenter extends BasePresenter
 
     $zmenaId = $this->getParameter('id');
     $verzeId = $values['verze_id'];
+    $predchudce = $this->getParameter('predchudce');
 
     if($zmenaId) { //editace
       try {
@@ -203,11 +204,27 @@ final class ZmenyPresenter extends BasePresenter
       $this->redirect('Verze:zmeny#z' . $zmenaId, $verzeId);
     }
     else { //nový záznam
+      //pokud se nová změna má umístit za nějakou existující, potřebujeme znát pořadí změn ve verzi
+      if($predchudce) {
+        $poradi = $this->zmeny->poradiZmenVeVerzi($verzeId);
+      }
+
       try {
         $z = $this->zmeny->insert($values);
       } catch (\Exception $e) {
         $this->flashMessage('Chyba při ukládání.', 'danger');
         $this->redirect('this');
+      }
+
+      if($predchudce) {
+        //umístěni nové změny za jejího předchůdce
+        array_splice($poradi, array_search($predchudce, $poradi) + 1, 0, $z->id);
+        try {
+          $this->zmeny->aktualizovatPoradiZmen($poradi);
+        } catch (\Exception $e) {
+          $this->flashMessage('Chyba při nastavení pořadí změn v protokolu.', 'danger');
+          $this->redirect('this');
+        }
       }
 
       $this->redirect('Verze:zmeny#z' . $z->id, $verzeId);
