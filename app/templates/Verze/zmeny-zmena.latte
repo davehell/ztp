@@ -2,8 +2,7 @@
   <a name="z{$zmena->id}"></a>
   <div class="row head">
     <div class="col-md-2"><div class="autor {if $pohled == 'dev' && $zmena->autor->jmeno == $uziv}moje{/if}">autor<br>{$zmena->autor->jmeno|upper}</div></div>
-    <div class="col-md-2">{if $zmena->task}task<br>{$zmena->task}{/if}</div>
-    <div class="col-md-8">
+    <div class="col-md-10">
       <div n:if="$pohled == 'dev'" class="btn-toolbar">
         <div class="btn-group">
           <a n:href="Zmeny:zmena, $zmena->id" title="Upravit změnu" class="editaceZmeny btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -18,19 +17,11 @@
   <hr>
   <div class="row">
     <div class="col-md-12">
-      <div>
-        {$zmena->typy_zmen->nazev}
-        {!$zmena->text|texy}
-      </div>
+      <p>{if $zmena->task}({$zmena->task}) {/if}{$zmena->typy_zmen->nazev}: {$zmena->uloha}</p>
+      {!$zmena->text|texy}
       <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
         {!$zmena->detail|texy}
       </div>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-12">
-      {!$zmena->uloha|texy}
     </div>
   </div>
 </div>

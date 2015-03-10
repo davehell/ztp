@@ -148,11 +148,17 @@ final class ZmenyPresenter extends BasePresenter
       ->setPrompt('Vyber autora změny')
       ->setRequired('Vyber autora změny');
 
-    $form->addRadioList('typy_zmen_id', 'Typ', $this->zmeny->seznamTypuZmen())
-      ->setDefaultValue(1);
-
     $form->addCheckbox('je_verejna', 'Veřejná změna')
       ->setDefaultValue(true);
+
+    $form->addText('task', 'Číslo tasku')
+      ->addRule(Form::MAX_LENGTH, 'Task musí mít maximálně %d znaků', 50);
+
+    $form->addTextArea('uloha', 'Úloha')
+      ->addRule(Form::MAX_LENGTH, 'Úloha musí mít maximálně %d znaků', 1000);
+
+    $form->addRadioList('typy_zmen_id', 'Typ', $this->zmeny->seznamTypuZmen())
+      ->setDefaultValue(1);
 
     $form->addTextArea('text', 'Popis změny')
       ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 1000)
@@ -161,14 +167,8 @@ final class ZmenyPresenter extends BasePresenter
     $form->addTextArea('detail', 'Skryté info')
       ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 1000);
 
-    $form->addTextArea('uloha', 'Úloha')
-      ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 1000);
-
-    $form->addText('task', 'Číslo tasku')
-      ->addRule(Form::MAX_LENGTH, 'Task musí mít maximálně %d znaků', 50);
-
-    $form->addMultiSelect('tagy', 'Štítky', $this->zmeny->seznamTagu())
-      ->setDefaultValue("energis");
+    // $form->addMultiSelect('tagy', 'Štítky', $this->zmeny->seznamTagu())
+    //   ->setDefaultValue("energis");
 
     $form->addSubmit('ok', 'Uložit');
 

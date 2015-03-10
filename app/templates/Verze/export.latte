@@ -24,14 +24,8 @@
 <ul>
 {foreach $zmeny as $zmena}
   <li>
-    <div>
-      {$zmena->task}
-      {$zmena->typy_zmen->nazev}
-      {!$zmena->text|texy}
-    </div>
-    <div>
-      {!$zmena->uloha|texy}
-    </div>
+    <p>{if $zmena->task}({$zmena->task}) {/if}{$zmena->typy_zmen->nazev}: <strong>{$zmena->uloha}</strong></p>
+    {!$zmena->text|texy}
     <p n:if="$testovaci && $zmena->tester" class="vysledekTestu">
       {$zmena->vysledek_testu} {$zmena->tester->jmeno|upper}
     </p>
