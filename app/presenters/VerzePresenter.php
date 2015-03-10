@@ -163,6 +163,22 @@ final class VerzePresenter extends BasePresenter
     }
   }
 
+  /**
+   * Uložení pořadí změn v protokolu
+   */
+  public function handlePoradi($seznam)
+  {
+    $poradi = explode(",", $seznam);
+    try {
+      $this->zmeny->aktualizovatPoradiZmen($poradi);
+    } catch (\Exception $e) {
+      $this->flashMessage('Chyba při nastavení pořadí změn v protokolu.', 'danger');
+    }
+
+    if ($this->isAjax()) {
+      $this->invalidateControl('zmeny');
+    }
+  }
 
   /**
    * Smazání verze

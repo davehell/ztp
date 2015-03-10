@@ -18,7 +18,7 @@
     <dd {if $verze->pozn_skryta} class="skryteInfo"{/if}>{!$verze->pozn_skryta|nl2br}</dd>
 </dl>
 
-<h2>
+<h2 id="zmeny" data-url="{link poradi!}">
   Změny
   <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
 </h2>
@@ -34,3 +34,4 @@
   {include 'zmeny-zmena.latte', zmena => $zmena}
 {/foreach}
 {/snippet}
+

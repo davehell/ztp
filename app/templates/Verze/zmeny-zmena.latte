@@ -1,5 +1,5 @@
-<a name="z{$zmena->id}"></a>
-<div class="zmena {if !$zmena->je_verejna}skryteInfo{/if}">
+<div class="zmena {if !$zmena->je_verejna}skryteInfo{/if}" data-id="{$zmena->id}">
+  <a name="z{$zmena->id}"></a>
   <div class="row head">
     <div class="col-md-2"><div class="autor {if $pohled == 'dev' && $zmena->autor->jmeno == $uziv}moje{/if}">autor<br>{$zmena->autor->jmeno|upper}</div></div>
     <div class="col-md-2">{if $zmena->task}task<br>{$zmena->task}{/if}</div>
@@ -8,6 +8,8 @@
         <div class="btn-group">
           <a n:href="Zmeny:zmena, $zmena->id" title="Upravit změnu" class="editaceZmeny btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
           <a n:href="Zmeny:zmena, 'verzeId' => $verzeId, 'predchudce' => $zmena->id" title="Přidat další změnu hned za tuto" class="novaZmenaDalsi btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
+          <button type="button" title="Posunout změnu nahoru" class="posunNahoru btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
+          <button type="button" title="Posunout změnu dolů" class="posunDolu btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></button>
           <a n:href="Zmeny:smazat, $zmena->id" title=" Smazat tuto změnu" class="smazaniZmeny btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
         </div>
       </div>

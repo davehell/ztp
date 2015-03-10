@@ -76,6 +76,7 @@ class ZmenyRepository extends Repository
   public function aktualizovatPoradiZmen($poradi)
   {
     $index = 0;
+    if(count($poradi) == 0) return;
     try {
       $this->beginTransaction();
       foreach ($poradi as $id) {
