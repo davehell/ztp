@@ -56,7 +56,7 @@ $(function () {
    */
   function ulozitPoradi() {
     var poradi = new Array();
-    var url = $('h2#zmeny').data('url')
+    var url = $('ul#zmeny').data('url')
     $( '.zmena' ).each(function() {
       poradi.push($(this).data('id'));
     });

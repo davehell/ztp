@@ -1,24 +1,24 @@
 {block title}Změnový protokol - Verze {$verze->nazev}{/block}
 
 {block content}
-<h1>Změnový protokol</h1>
-
-<h2>
-  Verze {$verze->nazev}
+<h1>
+  Změnový protokol
   <a n:if="$pohled == 'dev'" n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
   <a n:if="$pohled == 'boss'" n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a>
-</h2>
+</h1>
 
 <dl class="dl-horizontal">
+  <dt>Verze</dt>
+  <dd>{$verze->nazev}</dd>
   <dt>Datum</dt>
   <dd>{$verze->datum|date:'%d.%m.%Y'}</dd>
-    <dt>Veřejné poznámky</dt>
-    <dd>{!$verze->pozn_verejna|nl2br}</dd>
-    <dt class="noPrint">Skryté poznámky</dt>
-    <dd {if $verze->pozn_skryta} class="skryteInfo"{/if}>{!$verze->pozn_skryta|nl2br}</dd>
+  <dt>Veřejné poznámky</dt>
+  <dd>{!$verze->pozn_verejna|texy}</dd>
+  <dt>Skryté poznámky</dt>
+  <dd {if $verze->pozn_skryta} class="skryteInfo"{/if}>{!$verze->pozn_skryta|texy}</dd>
 </dl>
 
-<h2 id="zmeny" data-url="{link poradi!}">
+<h2>
   Změny
   <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
 </h2>
@@ -30,8 +30,10 @@
 </div>
 
 {snippet zmeny}
+<ul id="zmeny" data-url="{link poradi!}">
 {foreach $zmeny as $zmena}
   {include 'zmeny-zmena.latte', zmena => $zmena}
 {/foreach}
+</ul>
 {/snippet}
 

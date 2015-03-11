@@ -68,28 +68,26 @@ h1, h2, h3, h4, h5, h6, legend {
 .skryteInfo {
   background-color: #eee;
   border-left: 5px solid #ccc !important;
-  /*color: #999;*/
-  padding: 10px;
+  padding-left: 10px;
 }
 
+ul#zmeny {
+  padding-left: 20px;
+}
 .zmena {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
-.zmena .head {
-  text-align: center;
-}
-.zmena .head .moje {
-  background-color: #d9edf7;
+.zmena .moje {
+  color: #a94442;
+  margin-right: 5px;
 }
 .zmena .btn-toolbar {
   float: right;
 }
-.zmena hr {
-  margin-top: 5px;
-  margin-bottom: 5px;
+.zmena p {
+  margin: 0;
 }
+
 
 /* znázornění stavu změny/chyby - funguje, nefunguje, čeká na otestování */
 .zmena .stav {

@@ -12,6 +12,8 @@
   <dd>{$verze->datum|date:'%d.%m.%Y'}</dd>
 </dl>
 
+<div n:if="$verze->pozn_verejna">{!$verze->pozn_verejna|texy}</div>
+
 {if $testovaci}
 <h2>Testováno na:</h2>
 
