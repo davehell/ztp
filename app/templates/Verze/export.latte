@@ -23,14 +23,17 @@
 </dl>
 {/if}
 
-<ul>
-{foreach $zmeny as $zmena}
-  <li>
-    <p>{if $zmena->task}({$zmena->task}) {/if}{$zmena->typy_zmen->nazev}: <strong>{$zmena->uloha}</strong></p>
-    {!$zmena->text|texy}
-    <p n:if="$testovaci && $zmena->tester" class="vysledekTestu">
-      {$zmena->tester->jmeno|upper}: {$zmena->vysledek_testu}
-    </p>
-  </li>
+{foreach $typyZmen as $typId => $typNazev}
+  <h2>{$typNazev}</h2>
+  <ul>
+  {foreach $zmeny as $zmena}
+    <li n:if="$zmena->typy_zmen->id == $typId">
+      <p>{if $zmena->task}({$zmena->task}) {/if}<strong>{$zmena->uloha}</strong></p>
+      {!$zmena->text|texy}
+      <p n:if="$testovaci && $zmena->tester" class="vysledekTestu">
+        {$zmena->tester->jmeno|upper}: {$zmena->vysledek_testu}
+      </p>
+    </li>
+  {/foreach}
+  </ul>
 {/foreach}
-</ul>

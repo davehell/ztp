@@ -84,6 +84,7 @@ final class VerzePresenter extends BasePresenter
 
     $this->template->testovaci = ($this->getParameter('protokol') == 'testy');
     $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($verzeId);
+    $this->template->typyZmen = $this->zmeny->seznamTypuZmen();
     $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
   }
 
