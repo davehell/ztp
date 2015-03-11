@@ -29,7 +29,7 @@
     <p>{if $zmena->task}({$zmena->task}) {/if}{$zmena->typy_zmen->nazev}: <strong>{$zmena->uloha}</strong></p>
     {!$zmena->text|texy}
     <p n:if="$testovaci && $zmena->tester" class="vysledekTestu">
-      {$zmena->vysledek_testu} {$zmena->tester->jmeno|upper}
+      {$zmena->tester->jmeno|upper}: {$zmena->vysledek_testu}
     </p>
   </li>
 {/foreach}

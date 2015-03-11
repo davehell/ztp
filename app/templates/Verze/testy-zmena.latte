@@ -1,43 +1,32 @@
 <a name="z{$zmena->id}"></a>
-<div class="zmena {if !$zmena->je_verejna}skryteInfo{/if}">
-  <div class="row head">
-
-    <div class="col-md-1">{control stav, $zmena->je_ok}</div>
-    <div class="col-md-2"><div class="autor {if $pohled == 'dev' && $zmena->autor->jmeno == $uziv}moje{/if}">autor<br>{$zmena->autor->jmeno|upper}</div></div>
-    {if $pohled == 'boss'}
-      <div class="col-md-9">
-        {control testeri, $zmena}
-      </div>
-    {else}
-      <div class="col-md-2">
-        <div n:if="$zmena->tester" class="tester  {if $pohled == 'test' && $zmena->tester->jmeno == $uziv}moje{/if}">
-          tester<br>{$zmena->tester->jmeno|upper}
-        </div>
-      </div>
-      <div class="col-md-5">
-        {$zmena->vysledek_testu}
-      </div>
-      <div class="col-md-2">
-        <div n:if="$pohled == 'test'" class="btn-toolbar">
-          <div class="btn-group">
-            <a n:href="Chyby:chyba, null, $zmena->id" title="Změna nefunguje správně" class="novaChyba btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-            <a n:href="Zmeny:test, $zmena->id" title="Bravo! Změna je v pořádku." class="zmenaFunguje btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-          </div>
-        </div>
-      </div>
-    {/if}
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-12">
-      <p>{if $zmena->task}({$zmena->task}) {/if}{$zmena->typy_zmen->nazev}: {$zmena->uloha}</p>
-      {!$zmena->text|texy}
-      <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
-        {!$zmena->detail|texy}
-      </div>
+<li class="zmena {if !$zmena->je_verejna}skryteInfo{/if}" data-id="{$zmena->id}">
+  <div n:if="$pohled == 'test'" class="btn-toolbar pull-right">
+    <div class="btn-group">
+      <a n:href="Chyby:chyba, null, $zmena->id" title="Změna nefunguje správně" class="novaChyba btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+      <a n:href="Zmeny:test, $zmena->id" title="Bravo! Změna je v pořádku." class="zmenaFunguje btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
     </div>
   </div>
-  {if $pohled == 'dev' || $pohled == 'test'}
+
+  <p>
+    {control stav, $zmena->je_ok}
+    <span n:if="$pohled == 'dev' && $zmena->autor->jmeno == $uziv" class="moje glyphicon glyphicon-user"></span>
+    {$zmena->autor->jmeno|upper} -
+    {if $zmena->task}({$zmena->task}) {/if}{$zmena->typy_zmen->nazev}: <strong>{$zmena->uloha}</strong>
+  </p>
+
+  {!$zmena->text|texy}
+  <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
+    {!$zmena->detail|texy}
+  </div>
+
+  {if $pohled == 'boss'}
+    {control testeri, $zmena}
+  {else}
+    <p>
+      {if $zmena->tester}<span n:if="$pohled == 'test' && $zmena->tester->jmeno == $uziv" class="moje glyphicon glyphicon-user"></span>{/if}
+      {if $zmena->tester}{$zmena->tester->jmeno|upper}: {/if}{$zmena->vysledek_testu}
+    </p>
+
     {control chyby, $zmena->id}
   {/if}
-</div>
+</li>

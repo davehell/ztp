@@ -1,23 +1,20 @@
 {block title}Testovací protokol - Verze {$verze->nazev}{/block}
 
 {block content}
-<h1>Testovací protokol</h1>
-
-<h2>Verze {$verze->nazev} <a n:if="$pohled == 'boss'" n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a></h2>
-
+<h1>
+  Testovací protokol
+  <a n:if="$pohled == 'boss'" n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a>
+</h1>
 
 <dl class="dl-horizontal">
+  <dt>Verze</dt>
+  <dd>{$verze->nazev}</dd>
   <dt>Datum</dt>
   <dd>{$verze->datum|date:'%d.%m.%Y'}</dd>
-  {if $verze->pozn_verejna}
-    <dt>Veřejné poznámky</dt>
-    <dd>{!$verze->pozn_verejna|nl2br}</dd>
-  {/if}
-  {if $verze->pozn_skryta}
-    <dt>Skryté poznámky</dt>
-    <dd class="skryteInfo">{!$verze->pozn_skryta|nl2br}</dd>
-  {/if}
 </dl>
+
+<div n:if="$verze->pozn_verejna">{!$verze->pozn_verejna|texy}</div>
+<div n:if="$verze->pozn_skryta" class="skryteInfo">{!$verze->pozn_skryta|texy}</div>
 
 <h2>Testováno na</h2>
 <dl n:inner-foreach="$testeriVeVerzi as $tester"  class="dl-horizontal">
@@ -44,7 +41,9 @@
 </div>
 
 {snippet zmeny}
+<ul id="zmeny">
 {foreach $zmeny as $zmena}
   {include 'testy-zmena.latte', zmena => $zmena}
 {/foreach}
-{/snippet}
+</ul
+>{/snippet}

@@ -72,26 +72,32 @@ h1, h2, h3, h4, h5, h6, legend {
 }
 
 ul#zmeny {
-  padding-left: 20px;
+  padding-left: 15px;
 }
 .zmena {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+.zmena:hover {
+  background-color: #fcf8e3;
 }
 .zmena .moje {
-  color: #a94442;
+  color: #31708f;
   margin-right: 5px;
-}
-.zmena .btn-toolbar {
-  float: right;
+  font-size: 125%;
 }
 .zmena p {
   margin: 0;
 }
 
+.zmena ul.chyby li {
+  list-style-type: none;
+  margin-bottom: 5px;
+}
 
 /* znázornění stavu změny/chyby - funguje, nefunguje, čeká na otestování */
 .zmena .stav {
-  font-size: 250%;
+  font-size: 150%;
+  margin-right: 5px;
 }
 #frm-zmenaForm .radio {
   float: left;

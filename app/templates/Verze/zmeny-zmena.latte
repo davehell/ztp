@@ -1,5 +1,6 @@
+<a name="z{$zmena->id}"></a>
 <li class="zmena {if !$zmena->je_verejna}skryteInfo{/if}" data-id="{$zmena->id}">
-  <div n:if="$pohled == 'dev'" class="btn-toolbar">
+  <div n:if="$pohled == 'dev'" class="btn-toolbar pull-right">
     <div class="btn-group">
       <a n:href="Zmeny:zmena, $zmena->id" title="Upravit změnu" class="editaceZmeny btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
       <a n:href="Zmeny:zmena, 'verzeId' => $verzeId, 'predchudce' => $zmena->id" title="Přidat další změnu hned za tuto" class="novaZmenaDalsi btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
@@ -19,7 +20,5 @@
   <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
     {!$zmena->detail|texy}
   </div>
-
-  <a name="z{$zmena->id}"></a>
 </li>
 
