@@ -4,6 +4,23 @@
    * Version:   0.8 (2008-03-10)
 
 -------------------------------------------------------------- */
+@font-face {
+  font-family: LatinModernRoman;
+  src: url("../fonts/lmroman9-regular.otf") format("opentype");
+}
+
+/*@font-face {
+    font-family: 'LatinModernRoman';
+    src: url('../fonts/lmroman9-regular-webfont.eot');
+    src: url('../fonts/lmroman9-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/lmroman9-regular-webfont.woff2') format('woff2'),
+         url('../fonts/lmroman9-regular-webfont.woff') format('woff'),
+         url('../fonts/lmroman9-regular-webfont.ttf') format('truetype'),
+         url('../fonts/lmroman9-regular-webfont.svg#latin_modern_roman9_regular') format('svg')
+         ;
+    font-weight: normal;
+    font-style: normal;
+}*/
 
 body {
 width:100% !important;
@@ -11,10 +28,10 @@ margin:0 !important;
 padding:0 !important;
 line-height: 1.4;
 word-spacing:1.1pt;
-letter-spacing:0.2pt; font-family: Garamond,"Times New Roman", serif; color: #000; background: none; font-size: 12pt; }
+letter-spacing:0.2pt; font-family: LatinModernRoman,Garamond,"Times New Roman", serif; color: #000; background: none; font-size: 12pt; }
 
 /*Headings */
-h1,h2,h3,h4,h5,h6 { font-family: Helvetica, Arial, sans-serif; }
+h1,h2,h3,h4,h5,h6 { font-family: LatinModernRoman,Helvetica, Arial, sans-serif; }
 h1{font-size:19pt;}
 h2{font-size:17pt;}
 h3{font-size:15pt;}
