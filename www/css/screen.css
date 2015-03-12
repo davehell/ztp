@@ -117,7 +117,7 @@ textarea.form-control {
   font-weight: bold;
 }
 
-.uvodniStrana #sidebar form {
+.seznamVerzi #sidebar form {
   display: none;
 }
 .uvodniStrana h1, .uvodniStrana h2 {
@@ -128,5 +128,5 @@ textarea.form-control {
   padding-top: 10px;
 }
 .uvodniStrana ul {
-  padding-left: 20px;
+  padding-left: 15px;
 }
