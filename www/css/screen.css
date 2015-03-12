@@ -76,11 +76,21 @@ ul#zmeny {
   padding-left: 15px;
 }
 .zmena {
-  margin-bottom: 20px;
+  padding: 5px;
   page-break-inside: avoid;
+  position: relative;
+  margin-bottom: 10px;
 }
 .zmena:hover, .zmena:hover .skryteInfo {
   background-color: #fcf8e3;
+}
+.zmena .btn-toolbar.akce {
+  display: none;
+  position: absolute;
+  right: 5px;
+}
+.zmena:hover .btn-toolbar.akce {
+  display: block;
 }
 .zmena .moje {
   color: #31708f;
@@ -112,9 +122,6 @@ li.zmena.skryteInfo {
 }
 textarea.form-control {
   height: 100px;
-}
-.testeri .dropdown-menu a.active  {
-  font-weight: bold;
 }
 
 .seznamVerzi #sidebar form {

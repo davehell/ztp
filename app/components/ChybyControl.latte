@@ -8,8 +8,8 @@
 {if $chyby->count()}
 <ul class="chyby">
 {foreach $chyby as $chyba}
-  <li class="clearfix">
-    <div class="btn-toolbar pull-right">
+  <li>
+    <div class="btn-toolbar akce">
       {if $pohled == 'test'}
         <div class="btn-group">
           <a href="{plink Chyby:chyba, $chyba->id}" title="Upravit chybu" class="editaceChyby btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
