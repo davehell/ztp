@@ -8,8 +8,7 @@
   </div>
 
   <p>
-    {control stav, $zmena->je_ok}
-    <span n:if="$pohled == 'dev' && $zmena->autor->jmeno == $uziv" class="moje glyphicon glyphicon-user"></span>
+    <span n:if="$pohled == 'dev' && $zmena->autor->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tojo je moje změna"></span>
     {$zmena->autor->jmeno|upper} -
     {if $zmena->task}({$zmena->task}) {/if}{$zmena->typy_zmen->nazev}: <strong>{$zmena->uloha}</strong>
   </p>
@@ -23,7 +22,8 @@
     {control testeri, $zmena}
   {else}
     <p>
-      {if $zmena->tester}<span n:if="$pohled == 'test' && $zmena->tester->jmeno == $uziv" class="moje glyphicon glyphicon-user"></span>{/if}
+      {control stav, $zmena->je_ok}
+      {if $zmena->tester}<span n:if="$pohled == 'test' && $zmena->tester->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tuto změnu testuji já"></span>{/if}
       {if $zmena->tester}{$zmena->tester->jmeno|upper}: {/if}{$zmena->vysledek_testu}
     </p>
 

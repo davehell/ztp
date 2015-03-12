@@ -62,13 +62,14 @@ body {
 h1, h2, h3, h4, h5, h6, legend {
   font-family: "Roboto Slab","Georgia",Arial,sans-serif;
   font-weight: 700;
+  page-break-after: avoid;
 }
 
 /* texty, které se nezveřejňují ve finálním změnovém/testovacím protokolu */
 .skryteInfo {
   background-color: #eee;
-  border-left: 5px solid #ccc !important;
-  padding-left: 10px;
+  border-left: 5px solid #ccc;
+  padding: 5px 0 5px 10px;
 }
 
 ul#zmeny {
@@ -76,8 +77,9 @@ ul#zmeny {
 }
 .zmena {
   margin-bottom: 20px;
+  page-break-inside: avoid;
 }
-.zmena:hover {
+.zmena:hover, .zmena:hover .skryteInfo {
   background-color: #fcf8e3;
 }
 .zmena .moje {
@@ -88,7 +90,11 @@ ul#zmeny {
 .zmena p {
   margin: 0;
 }
-
+li.zmena.skryteInfo {
+  list-style-type: none;
+  margin-left: -15px;
+  padding-left: 10px;
+}
 .zmena ul.chyby li {
   list-style-type: none;
   margin-bottom: 5px;
@@ -98,6 +104,7 @@ ul#zmeny {
 .zmena .stav {
   font-size: 150%;
   margin-right: 5px;
+  top: 5px;
 }
 #frm-zmenaForm .radio {
   float: left;

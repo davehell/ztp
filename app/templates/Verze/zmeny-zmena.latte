@@ -11,7 +11,7 @@
   </div>
 
   <p>
-    <span n:if="$pohled == 'dev' && $zmena->autor->jmeno == $uziv" class="moje glyphicon glyphicon-user"></span>
+    <span n:if="$pohled == 'dev' && $zmena->autor->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tojo je moje změna"></span>
     {$zmena->autor->jmeno|upper} -
     {if $zmena->task}({$zmena->task}) {/if}{$zmena->typy_zmen->nazev}: <strong>{$zmena->uloha}</strong>
   </p>
