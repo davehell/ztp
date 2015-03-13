@@ -1,3 +1,20 @@
+/**
+ * odeslání formuláře pomocí ctrl + enter
+ */
+$.fn.enterKey = function (fnc, mod) {
+  return this.each(function () {
+    $(this).keypress(function (ev) {
+      var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+      if ((keycode == '13' || keycode == '10') && (!mod || ev[mod + 'Key'])) {
+          fnc.call(this, ev);
+      }
+    })
+  })
+}
+$('textarea').enterKey(function() {$(this).closest('form').submit(); }, 'ctrl');
+
+
+
 $(function () {
   $.nette.ext({
       load: function() {
