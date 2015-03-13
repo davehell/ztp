@@ -21,12 +21,13 @@
 
   {if $pohled == 'boss'}
     {control testeri, $zmena}
-  {else}
+  {/if}
     <p>
       {if $zmena->tester}<span n:if="$pohled == 'test' && $zmena->tester->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tuto změnu testuji já"></span>{/if}
       {if $zmena->tester}{$zmena->tester->jmeno|upper}: {/if}{$zmena->vysledek_testu}
     </p>
 
+  {if $pohled == 'dev' || $pohled == 'test'}
     {control chyby, $zmena->id}
   {/if}
 </li>
