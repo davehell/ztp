@@ -51,12 +51,6 @@ final class VerzePresenter extends BasePresenter
     parent::beforeRender();
   }
 
-    function actionPdf() {
-        $html = "<b>ahoj světe!</b>"; // HTML v UTF-8
-
-        // Jako 1. parament PDFResponse můžeme předat html v UTF8 nebo objekt implementující rozhraní ITemplate
-        $this->sendResponse(new PDFResponse($html));
-    }
 
   /**
    *
@@ -96,6 +90,9 @@ final class VerzePresenter extends BasePresenter
       $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
 
       $pdf = new PDFResponse($template);
+      $pdf->documentAuthor = "";
+      $pdf->documentTitle = ($template->testovaci ? 'Testovací' : 'Změnový') . ' protokol verze ' . $template->verze->nazev;
+      $pdf->outputDestination = PDFResponse::OUTPUT_DOWNLOAD;
 
       $this->sendResponse($pdf);
     }

@@ -30,7 +30,7 @@
     <li n:if="$zmena->typy_zmen->id == $typId">
       <p>{if $zmena->task}({$zmena->task}) {/if}<strong>{$zmena->uloha}</strong></p>
       {!$zmena->text|texy}
-      <p n:if="$testovaci" class="vysledekTestu">
+      <p n:if="$testovaci">
         {if $zmena->tester}{$zmena->tester->jmeno|upper}: {/if}{$zmena->vysledek_testu}
       </p>
     </li>
