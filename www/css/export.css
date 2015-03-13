@@ -1,6 +1,10 @@
+@page a4portrait {
+    sheet-size: A4;
+}
 body {
   font-size: 10pt;
   line-height: 1.2;
+  page: a4portrait;
 }
 h1 {
   font-size: 14pt;
@@ -31,5 +35,5 @@ h2 {
 }
 li {
   page-break-inside: avoid;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }

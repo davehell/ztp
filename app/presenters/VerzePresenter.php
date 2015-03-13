@@ -7,6 +7,7 @@ use App\Model\VerzeRepository,
     App\Model\ChybyRepository,
     App\Model\LideRepository,
     Nette\Application\UI\Form,
+    PdfResponse\PdfResponse,
     Nextras\Forms\Rendering\Bs3FormRenderer,
     ZTPException;
 
@@ -50,6 +51,12 @@ final class VerzePresenter extends BasePresenter
     parent::beforeRender();
   }
 
+    function actionPdf() {
+        $html = "<b>ahoj světe!</b>"; // HTML v UTF-8
+
+        // Jako 1. parament PDFResponse můžeme předat html v UTF8 nebo objekt implementující rozhraní ITemplate
+        $this->sendResponse(new PDFResponse($html));
+    }
 
   /**
    *
@@ -72,15 +79,34 @@ final class VerzePresenter extends BasePresenter
     $this->template->export = $this->getParameter('export');
   }
 
+  /**
+   * Pokud je v url zadán parametr format==pdf, vykreslí se pdf. Na renderExport se v tom případě nepokračuje.
+   */
+  public function actionExport($verzeId)
+  {
+    if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
+
+    if($this->getParameter('format') == "pdf") {
+      $template = $this->createTemplate()->setFile(__DIR__ . "/../templates/Verze/export.latte");
+
+      $template->verze = $this->vybratVerzi($verzeId);
+      $template->testovaci = ($this->getParameter('protokol') == 'testy');
+      $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($verzeId);
+      $template->typyZmen = $this->zmeny->seznamTypuZmen();
+      $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
+
+      $pdf = new PDFResponse($template);
+
+      $this->sendResponse($pdf);
+    }
+  }
 
   /**
    *
    */
   public function renderExport($verzeId)
   {
-    if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
     $this->template->verze = $this->vybratVerzi($verzeId);
-
     $this->template->testovaci = ($this->getParameter('protokol') == 'testy');
     $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($verzeId);
     $this->template->typyZmen = $this->zmeny->seznamTypuZmen();

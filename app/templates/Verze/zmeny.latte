@@ -1,11 +1,19 @@
 {block title}Změnový protokol - Verze {$verze->nazev}{/block}
 
 {block content}
-<h1>
-  Změnový protokol
-  <a n:if="$pohled == 'dev'" n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-  <a n:if="$pohled == 'boss'" n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a>
-</h1>
+<h1>  Změnový protokol</h1>
+
+<div n:if="$pohled == 'dev'" class="btn-toolbar">
+  <div class="btn-group">
+    <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
+  </div>
+</div>
+<div n:if="$pohled == 'boss'" class="btn-toolbar">
+  <div class="btn-group">
+    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Náhled</a>
+    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Uložení</a>
+  </div>
+</div>
 
 <dl class="dl-horizontal">
   <dt>Verze</dt>
@@ -18,10 +26,12 @@
   <dd {if $verze->pozn_skryta} class="skryteInfo"{/if}>{!$verze->pozn_skryta|texy}</dd>
 </dl>
 
-<h2>
-  Změny
-  <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
-</h2>
+<h2>Změny</h2>
+<div n:if="$pohled == 'dev'" class="btn-toolbar">
+  <div class="btn-group">
+    <a n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Přidat změnu</a>
+  </div>
+</div>
 
 <div n:if="$filtr" class="alert alert-info">
   Zobrazeny pouze změny
