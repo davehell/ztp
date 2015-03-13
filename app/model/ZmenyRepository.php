@@ -114,7 +114,7 @@ class ZmenyRepository extends Repository
    */
   public function testeriVeVerzi($verze)
   {
-    return $this->zmenyVeVerzi($verze)->select('DISTINCT tester_id')->where('tester_id IS NOT NULL')->order('tester.jmeno');
+    return $this->findAll()->where('verze_id', $verze)->select('DISTINCT tester_id')->where('tester_id IS NOT NULL')->order('tester.jmeno');
   }
 
   /**

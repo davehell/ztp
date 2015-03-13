@@ -29,7 +29,7 @@ h2 {
 .vysledekTestu {
   text-align: right;
 }
-.zmena {
+li {
   page-break-inside: avoid;
   margin-bottom: 10px;
 }

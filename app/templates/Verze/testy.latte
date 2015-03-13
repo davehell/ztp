@@ -16,7 +16,7 @@
 <div n:if="$verze->pozn_verejna">{!$verze->pozn_verejna|texy}</div>
 <div n:if="$verze->pozn_skryta" class="skryteInfo">{!$verze->pozn_skryta|texy}</div>
 
-<h2>Testováno na</h2>
+<h2>Testovací prostředí</h2>
 <dl n:inner-foreach="$testeriVeVerzi as $tester"  class="dl-horizontal">
   <dt>
     {$tester->tester->jmeno|upper}
