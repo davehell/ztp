@@ -31,16 +31,9 @@
           <a n:if="$pohled == 'dev'" n:href="Verze:info, null" title="Vytvořit novou verzi" class="novyProtokol pull-right btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
           <select name="verze" id="vyberVerze">
             <option value="">--- Vyber verzi ---</option>
-            <optgroup label="Bez data vydání">
-            {foreach $nevydaneVerze as $v}
+            {foreach $vsechnyVerze as $v}
               <option value="{$v->id}" {if $v->id == $verzeId}selected{/if}>{$v->nazev}</option>
             {/foreach}
-            </optgroup>
-            <optgroup label="Vydané">
-            {foreach $vydaneVerze as $v}
-              <option value="{$v->id}" {if $v->id == $verzeId}selected{/if}>{$v->nazev}</option>
-            {/foreach}
-            </optgroup>
           </select>
 
           <label>Osoba:</label>

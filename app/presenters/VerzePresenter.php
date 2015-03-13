@@ -70,7 +70,6 @@ final class VerzePresenter extends BasePresenter
   {
     $this->template->protokol = $this->getParameter('protokol');
     $this->template->export = $this->getParameter('export');
-    $this->template->seznamVerzi = $this->verze->vsechny();
   }
 
 

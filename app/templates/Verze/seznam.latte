@@ -2,14 +2,18 @@
 <h1 n:inner-block="title">{if $export}Export{else}Seznam{/if} {if $protokol == 'testy'}testovacích{else}změnových{/if} protokolů</h1>
 
 <ul>
-  {foreach $seznamVerzi as $v}
+  {foreach $vsechnyVerze as $v}
     <li>
+      {if $v->datum}
+        {$v->datum|date:'%d.%m.%Y'} -
+      {/if}
+
       {if $export}
-        <a n:href="Verze:export, $v->id, 'protokol' => $protokol">{$v->nazev}</a>
+        <a n:href="Verze:export, $v->id, 'protokol' => $protokol" title="Export verze {$v->nazev}">{$v->nazev}</a>
       {elseif $protokol == 'testy'}
-        <a n:href="Verze:testy, $v->id">{$v->nazev}</a>
+        <a n:href="Verze:testy, $v->id" title="Testovací protokol verze {$v->nazev}">{$v->nazev}</a>
       {else}
-        <a n:href="Verze:zmeny, $v->id">{$v->nazev}</a>
+        <a n:href="Verze:zmeny, $v->id" title="Změnový protokol verze {$v->nazev}">{$v->nazev}</a>
       {/if}
     </li>
   {/foreach}
