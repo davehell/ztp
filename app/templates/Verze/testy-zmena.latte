@@ -27,7 +27,7 @@
       {if $zmena->tester}{$zmena->tester->jmeno|upper}: {/if}{$zmena->vysledek_testu}
     </p>
 
-  {if $pohled == 'dev' || $pohled == 'test'}
+  {if ($pohled == 'dev' || $pohled == 'test') && $zmena->je_ok === 0}
     {control chyby, $zmena->id}
   {/if}
 </li>
