@@ -1,19 +1,32 @@
-{block title}Změnový protokol - Verze {$verze->nazev}{/block}
+{block title}
+  {if $pohled == 'dev'}Změny
+  {elseif $pohled == 'test'}Testy
+  {else}Verze
+  {/if}
+  {$verze->nazev}
+{/block}
 
 {block content}
-<h1>  Změnový protokol</h1>
+<h1 n:if="$pohled == 'dev'" >Změnový protokol</h1>
+<h1 n:if="$pohled == 'test'">Testovací protokol</h1>
+<h1 n:if="$pohled == 'boss'">Změny ve verzi {$verze->nazev}</h1>
 
-<div n:if="$pohled == 'dev'" class="btn-toolbar">
-  <div class="btn-group">
+<div class="btn-toolbar">
+  <div n:if="$pohled == 'dev'" class="btn-group">
     <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
-  </div>
-</div>
-<div n:if="$pohled == 'boss'" class="btn-toolbar">
-  <div class="btn-group">
     <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Náhled</a>
-    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Uložení</a>
+  </div>
+  <div n:if="$pohled == 'test'" class="btn-group">
+    <a n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Náhled</a>
+  </div>
+  <div n:if="$pohled == 'boss'" class="btn-group">
+    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Náhled změnový</a>
+    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Uložení změnový</a>
+    <a n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Náhled testovací</a>
+    <a n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Uložení testovací</a>
   </div>
 </div>
+
 
 <dl class="dl-horizontal">
   <dt>Verze</dt>
@@ -25,6 +38,21 @@
   <dt>Skryté poznámky</dt>
   <dd {if $verze->pozn_skryta} class="skryteInfo"{/if}>{!$verze->pozn_skryta|texy}</dd>
 </dl>
+
+
+{if $pohled == 'test'}
+  <h2>Testovací prostředí</h2>
+  <dl n:inner-foreach="$testeriVeVerzi as $tester"  class="dl-horizontal">
+    <dt>
+      {$tester->tester->jmeno|upper}
+    </dt>
+    <dd>
+      <a n:if="$pohled == 'test'" n:href="Verze:osoba, $tester->tester_id, $verzeId" title="Upravit testovací prostředí u {$tester->tester->jmeno|upper}" class="editaceTestera btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+      {$tester->tester->prostredi}
+    </dd>
+  </dl>
+{/if}
+
 
 <h2>Změny</h2>
 <div n:if="$pohled == 'dev'" class="btn-toolbar">
@@ -42,7 +70,50 @@
 {snippet zmeny}
 <ul id="zmeny" data-url="{link poradi!}">
 {foreach $zmeny as $zmena}
-  {include 'zmeny-zmena.latte', zmena => $zmena}
+
+  <a name="z{$zmena->id}"></a>
+  <li class="zmena {if !$zmena->je_verejna}skryteInfo{/if}" data-id="{$zmena->id}">
+    <div n:if="$pohled == 'dev'" class="btn-toolbar akce">
+      <div class="btn-group">
+        <a n:href="Zmeny:zmena, $zmena->id" title="Upravit změnu" class="editaceZmeny btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a n:href="Zmeny:zmena, 'verzeId' => $verzeId, 'predchudce' => $zmena->id" title="Přidat další změnu hned za tuto" class="novaZmenaDalsi btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
+        <button type="button" title="Posunout změnu nahoru" class="posunNahoru btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
+        <button type="button" title="Posunout změnu dolů" class="posunDolu btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></button>
+        <a n:href="Zmeny:smazat, $zmena->id" title=" Smazat tuto změnu" class="smazaniZmeny btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+      </div>
+    </div>
+    <div n:if="$pohled == 'test'" class="btn-toolbar akce">
+      <div class="btn-group">
+        <a n:href="Chyby:chyba, null, $zmena->id" title="Změna nefunguje správně" class="novaChyba btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+        <a n:href="Zmeny:test, $zmena->id" title="Bravo! Změna je v pořádku." class="zmenaFunguje btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+      </div>
+    </div>
+
+    <p n:if="$pohled == 'test' || $pohled == 'boss'">
+      {control stav, $zmena->je_ok}
+      {if $zmena->tester}Tester <span n:if="$pohled == 'test' && $zmena->tester->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tuto změnu testuji já"></span>{/if}
+      {if $zmena->tester}{$zmena->tester->jmeno|upper}: {/if}{$zmena->vysledek_testu}
+    </p>
+    <p>
+      <span n:if="$pohled == 'dev' && $zmena->autor->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tojo je moje změna"></span>
+      {$zmena->autor->jmeno|upper} - {$zmena->typy_zmen->nazev}
+      {if $zmena->task}({$zmena->task}) {/if}
+    </p>
+    <p>
+      <strong>{$zmena->uloha}</strong>
+    </p>
+    {!$zmena->text|texy}
+    <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
+      {!$zmena->detail|texy}
+    </div>
+
+    {if ($pohled == 'dev' || $pohled == 'test') && $zmena->je_ok === 0}
+      {control chyby, $zmena->id}
+    {/if}
+    {if $pohled == 'boss'}
+      {control testeri, $zmena}
+    {/if}
+  </li>
 {/foreach}
 </ul>
 {/snippet}

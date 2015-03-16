@@ -120,17 +120,13 @@ final class VerzePresenter extends BasePresenter
 
     $autor = $this->filtr == 'autor' ? $this->uzivId : null;
     if(!$autor) $this->template->filtr = '';
+
     $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId, $autor);
-  }
+    if($this->pohled == 'test' || $this->pohled == 'boss') {
+      $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
+    }
 
-  /**
-   * Testovací protokol
-   */
-  public function renderTesty($verzeId)
-  {
-    if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => 'testy'));
-    $this->template->verze = $this->vybratVerzi($verzeId);
-
+/*
     $autor  = $this->filtr == 'autor'  ? $this->uzivId : null;
     $tester = $this->filtr == 'tester' ? $this->uzivId : null;
 
@@ -150,9 +146,9 @@ final class VerzePresenter extends BasePresenter
       $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId, $autor, $tester);
       if(!$autor && !$tester) $this->template->filtr = '';
     }
-
-    $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
+ */
   }
+
 
   /**
    * Vytvoření nové verze / Editace informací o verzi
