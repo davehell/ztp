@@ -403,6 +403,6 @@ final class VerzePresenter extends BasePresenter
     }
 
     $this->flashMessage('Uloženo.', 'success');
-    $this->redirect('Verze:testy', $this->request->getCookie('verzeId'));
+    $this->redirect('Verze:zmeny', $this->request->getCookie('verzeId'));
   }
 }

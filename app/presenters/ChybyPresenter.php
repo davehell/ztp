@@ -75,7 +75,7 @@ final class ChybyPresenter extends BasePresenter
       $this->redirect('this');
     }
 
-    $this->redirect('Verze:testy#z' . $chyba->zmeny_id, $chyba->zmeny->verze_id);
+    $this->redirect('Verze:zmeny#z' . $chyba->zmeny_id, $chyba->zmeny->verze_id);
   }
 
  /**
@@ -124,7 +124,7 @@ final class ChybyPresenter extends BasePresenter
         $this->redirect('this');
       }
 
-      $this->redirect('Verze:testy#z' . $zmenaId, $verzeId);
+      $this->redirect('Verze:zmeny#z' . $zmenaId, $verzeId);
     }
     else { //nový záznam
       try {
@@ -134,7 +134,7 @@ final class ChybyPresenter extends BasePresenter
         $this->flashMessage('Chyba při ukládání.', 'danger');
         $this->redirect('this');
       }
-      $this->redirect('Verze:testy#z' . $zmenaId, $verzeId);
+      $this->redirect('Verze:zmeny#z' . $zmenaId, $verzeId);
     }
   }
 }

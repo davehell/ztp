@@ -131,7 +131,7 @@ final class ZmenyPresenter extends BasePresenter
       $this->redirect('this');
     }
 
-    $this->redirect('Verze:testy#z' . $zmenaId, $verzeId);
+    $this->redirect('Verze:zmeny#z' . $zmenaId, $verzeId);
   }
 
   /**

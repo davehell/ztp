@@ -11,7 +11,7 @@
       {if $export}
         <a n:href="Verze:export, $v->id, 'protokol' => $protokol" title="Export verze {$v->nazev}">{$v->nazev}</a>
       {elseif $protokol == 'testy'}
-        <a n:href="Verze:testy, $v->id" title="Testovací protokol verze {$v->nazev}">{$v->nazev}</a>
+        <a n:href="Verze:zmeny, $v->id" title="Testovací protokol verze {$v->nazev}">{$v->nazev}</a>
       {else}
         <a n:href="Verze:zmeny, $v->id" title="Změnový protokol verze {$v->nazev}">{$v->nazev}</a>
       {/if}
