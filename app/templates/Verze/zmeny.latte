@@ -14,16 +14,10 @@
 <div class="btn-toolbar">
   <div n:if="$pohled == 'dev'" class="btn-group">
     <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
-    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Náhled</a>
-  </div>
-  <div n:if="$pohled == 'test'" class="btn-group">
-    <a n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Náhled</a>
   </div>
   <div n:if="$pohled == 'boss'" class="btn-group">
-    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Náhled změnový</a>
-    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Uložení změnový</a>
-    <a n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span> Náhled testovací</a>
-    <a n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Uložení testovací</a>
+    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export změnového protokolu" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Změnový</a>
+    <a n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export testovacího protokolu" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Testovací</a>
   </div>
 </div>
 

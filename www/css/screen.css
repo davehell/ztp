@@ -46,10 +46,10 @@ body {
   margin-bottom: 10px;
   padding: 5px;
 }
-#sidebar #vyberPohledu, #sidebar #vyberProtokolu li {
+#sidebar #vyberPohledu, #sidebar li {
   margin-bottom: 10px;
 }
-#sidebar #vyberProtokolu a {
+#sidebar ul li a {
   color: #fff;
 }
 
