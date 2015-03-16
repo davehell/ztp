@@ -52,12 +52,7 @@ body {
 #sidebar #vyberProtokolu a {
   color: #fff;
 }
-#sidebar #vyberProtokolu a.btn {
-  color: #fff;
-}
-#sidebar #vyberProtokolu .filtry {
-  float: right;
-}
+
 
 h1, h2, h3, h4, h5, h6, legend {
   font-family: "Roboto Slab","Georgia",Arial,sans-serif;
@@ -72,7 +67,7 @@ h1 + .btn-toolbar, h2 + .btn-toolbar {
 .skryteInfo {
   background-color: #eee;
   border-left: 5px solid #ccc;
-  padding: 5px 0 5px 10px;
+  padding: 5px 5px 5px 10px;
 }
 
 ul#zmeny {
@@ -102,11 +97,6 @@ ul#zmeny {
 }
 .zmena p {
   margin: 0;
-}
-li.zmena.skryteInfo {
-  list-style-type: none;
-  margin-left: -15px;
-  padding-left: 10px;
 }
 .zmena ul.chyby li {
   list-style-type: none;

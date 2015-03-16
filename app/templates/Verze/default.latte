@@ -5,24 +5,23 @@
   <div class="col-sm-4">
     <h2 class="bg-success">vývojář</h2>
     <ul>
-      <li><a n:href="Verze:info, 'verzeId' => null" class="novyProtokol">založit nový změnový protokol</a></li>
+      <li><a n:href="Verze:info,  'pohled' => 'dev', 'verzeId' => null" class="novyProtokol">založit nový změnový protokol</a></li>
       <li><a n:href="Verze:zmeny, 'pohled' => 'dev', 'verzeId' => $verzeId">zapisovat do změnového protokolu</a></li>
-      <li><a n:href="Verze:testy, 'pohled' => 'dev', 'verzeId' => $verzeId">opravit nalezenou chybu</a></li>
+      <li><a n:href="Verze:zmeny, 'pohled' => 'dev', 'verzeId' => $verzeId">opravit nalezenou chybu</a></li>
     </ul>
   </div>
   <div class="col-sm-4">
     <h2 class="bg-info">tester</h2>
     <ul>
-      <li><a n:href="Verze:testy, 'pohled' => 'test', 'verzeId' => $verzeId">zapisovat do testovacího protokolu</a></li>
+      <li><a n:href="Verze:zmeny, 'pohled' => 'test', 'verzeId' => $verzeId">zapisovat do testovacího protokolu</a></li>
     </ul>
   </div>
   <div class="col-sm-4">
     <h2 class="bg-danger">boss</h2>
     <ul>
-      <li><a n:href="Verze:testy, 'filtr' => null, 'pohled' => 'boss', 'verzeId' => $verzeId">zobrazit testovací protokol</a></li>
-      <li><a n:href="Verze:testy, 'filtr' => 'bez-testera', 'pohled' => 'boss', 'verzeId' => $verzeId">přiřadit testera k novým změnám</a></li>
-      <li><a n:href="Verze:export, 'pohled' => 'boss', 'format' => 'pdf', 'verzeId' => $verzeId" target="_blank">exportovat změnový protokol</a></li>
-      <li><a n:href="Verze:export, 'pohled' => 'boss', 'format' => 'pdf', 'protokol' => 'testy', 'verzeId' => $verzeId" target="_blank">exportovat testovací protokol</a></li>
+      <li><a n:href="Verze:zmeny, 'filtr' => null, 'pohled' => 'boss', 'verzeId' => $verzeId">zobrazit testovací protokol</a></li>
+      <li><a n:href="Verze:zmeny, 'filtr' => 'bez-testera', 'pohled' => 'boss', 'verzeId' => $verzeId">přiřadit testera k novým změnám</a></li>
+      <li><a n:href="Verze:zmeny, 'filtr' => null, 'pohled' => 'boss', 'verzeId' => $verzeId">exportovat protokoly</a></li>
     </ul>
   </div>
 </div>

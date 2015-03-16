@@ -64,6 +64,11 @@
 <div n:if="$filtr" class="alert alert-info">
   Zobrazeny pouze změny
   {if $filtr == 'autor'} autora {$uziv|upper}
+  {elseif $filtr == 'autor-chyby'} autora {$uziv|upper}, které neprošly testováním
+  {elseif $filtr == 'tester'}, které testuje {$uziv|upper}
+  {elseif $filtr == 'tester-chyby'}, které neprošly testováním a testuje je {$uziv|upper}
+  {elseif $filtr == 'boss-chyby'}, které neprošly testováním
+  {elseif $filtr == 'bez-testera'}, které nemají přiřazeného testera
   {/if}
 </div>
 

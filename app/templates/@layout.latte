@@ -20,10 +20,10 @@
     <div class="row">
       <div class="col-sm-3">
       <div id="sidebar">
-        <h4><a n:href="Verze:default, 'uziv' => $uziv, 'filtr' => null" title="Úvodní stránka">Změnové a Testovací Protokoly</a></h4>
+        <h4><a n:href="Verze:default, 'filtr' => null" title="Úvodní stránka">Změnové a Testovací Protokoly</a></h4>
 
         {ifCurrent Verze:default}{else}
-        <form id="menuForm" action="{link this, 'uziv' => null, 'verzeId' => null}" method="get">
+        <form id="menuForm" action="{link this}" method="get">
           <input type="hidden" name="pohled" value="{$pohled}">
           <input type="hidden" name="filtr" value="{$filtr}">
 
@@ -53,32 +53,40 @@
             </div>
           </div>
 
-          <label>Protokol:</label>
+          <label>Filtr:</label>
           {snippet menu}
           <ul id="vyberProtokolu">
             <li>
-              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => null" title="Kompletní změnový protokol" id="zmenovyProtokol">Změnový</a>
-              <div class="filtry">
-                <a n:if="$autorovyZmeny !== null" n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'autor'"  title="Pouze změny autora {$uziv|upper}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> {$autorovyZmeny}</a>
-              </div>
+              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => null" title="Kompletní protokol">Všechny změny</a>
+            </li>
+            {if $pohled == 'dev'}
+            <li>
+              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'autor'" title="Pouze změny autora {$uziv|upper}">Jen moje</a>
+              <span class="badge">{$autorovyZmeny}</span>
             </li>
             <li>
-              <a n:href="Verze:testy, 'verzeId' => $verzeId, 'filtr' => null" title="Kompletní testovací protokol" id="testovaciProtokol">Testovací</a>
-              <div class="filtry">
-                {if $pohled == 'dev'}
-                  <a n:href="Verze:testy, 'verzeId' => $verzeId, 'filtr' => 'autor'" n:if="$uziv" title="Pouze změny autora {$uziv|upper}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> {$autorovyZmeny}</a>
-                  <a n:href="Verze:testy, 'verzeId' => $verzeId, 'filtr' => 'autor-chyby'" n:if="$neotestovaneZmeny !== null" title="Pouze změny autora {$uziv|upper}, které neprošly testováním" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</a>
-                {/if}
-                {if $pohled == 'test'}
-                  <a n:href="Verze:testy, 'verzeId' => $verzeId, 'filtr' => 'tester'" n:if="$uziv" title="Pouze změny, které testuje {$uziv|upper}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-user"></span> {$testerovyZmeny}</a>
-                  <a n:href="Verze:testy, 'verzeId' => $verzeId, 'filtr' => 'tester-chyby'" n:if="$neotestovaneZmeny !== null" title="Pouze změny, které neprošly testováním a testuje je {$uziv|upper}" class="btn btn-primary btn-xs"><span ><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</a>
-                {/if}
-                {if $pohled == 'boss'}
-                  <a n:href="Verze:testy, 'verzeId' => $verzeId, 'filtr' => 'bez-testera'" n:if="$zmenyBezTestera !== null" title="Pouze nové změny, které nemají přiřazeného testera" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-asterisk"></span> {$zmenyBezTestera}</a>
-                  <a n:href="Verze:testy, 'verzeId' => $verzeId, 'filtr' => 'boss-chyby'" n:if="$neotestovaneZmeny !== null" title="Pouze změny, které neprošly testováním" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span> {$neotestovaneZmeny}</a>
-                {/if}
-              </div>
+              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'autor-chyby'" title="Pouze změny autora {$uziv|upper}, které neprošly testováním">Jen moje neotestované</a>
+              <span class="badge">{$neotestovaneZmeny}</span>
             </li>
+            {elseif $pohled == 'test'}
+            <li>
+              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'tester'" title="Pouze změny, které testuje {$uziv|upper}">Jen moje</a>
+              <span class="badge">{$testerovyZmeny}</span>
+            </li>
+            <li>
+              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'tester-chyby'" title="Pouze změny, které neprošly testováním a testuje je {$uziv|upper}">Jen moje neotestované</a>
+              <span class="badge">{$neotestovaneZmeny}</span>
+            </li>
+            {elseif $pohled == 'boss'}
+            <li>
+              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'bez-testera'" title="Pouze nové změny, které nemají přiřazeného testera">Změny bez testera</a>
+              <span class="badge">{$zmenyBezTestera}</span>
+            </li>
+            <li>
+              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'boss-chyby'" title="Pouze změny, které neprošly testováním">Neotestované změny</a>
+              <span class="badge">{$neotestovaneZmeny}</span>
+            </li>
+            {/if}
           </ul>
           {/snippet}
         </form>

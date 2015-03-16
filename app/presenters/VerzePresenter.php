@@ -118,35 +118,35 @@ final class VerzePresenter extends BasePresenter
     if(!$verzeId) $this->redirect('Verze:seznam');
     $this->template->verze = $this->vybratVerzi($verzeId);
 
-    $autor = $this->filtr == 'autor' ? $this->uzivId : null;
-    if(!$autor) $this->template->filtr = '';
-
-    $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId, $autor);
     if($this->pohled == 'test' || $this->pohled == 'boss') {
       $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
     }
 
-/*
     $autor  = $this->filtr == 'autor'  ? $this->uzivId : null;
     $tester = $this->filtr == 'tester' ? $this->uzivId : null;
 
-    if($this->filtr == 'autor-chyby') {
-      $this->template->zmeny = $this->zmeny->neotestovane($verzeId, $this->uzivId);
+    if($this->filtr == 'autor') {
+      $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId, $this->uzivId, null);
+    }
+    else if($this->filtr == 'autor-chyby') {
+      $this->template->zmeny = $this->zmeny->neotestovane($verzeId, $this->uzivId, null);
+    }
+    else if($this->filtr == 'tester') {
+      $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId, null, $this->uzivId);
     }
     else if($this->filtr == 'tester-chyby') {
       $this->template->zmeny = $this->zmeny->neotestovane($verzeId, null, $this->uzivId);
     }
-    else if($this->filtr == 'boss-chyby') {
-      $this->template->zmeny = $this->zmeny->neotestovane($verzeId);
-    }
     else if($this->filtr == 'bez-testera') {
       $this->template->zmeny = $this->zmeny->bezTestera($verzeId);
     }
-    else {
-      $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId, $autor, $tester);
-      if(!$autor && !$tester) $this->template->filtr = '';
+    else if($this->filtr == 'boss-chyby') {
+      $this->template->zmeny = $this->zmeny->neotestovane($verzeId);
     }
- */
+    else {
+      $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId);
+    }
+
   }
 
 
