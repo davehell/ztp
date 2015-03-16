@@ -91,7 +91,7 @@
 
     <p n:if="$pohled == 'test' || $pohled == 'boss'">
       {control stav, $zmena->je_ok}
-      {if $zmena->tester}Tester <span n:if="$pohled == 'test' && $zmena->tester->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tuto změnu testuji já"></span>{/if}
+      {if $zmena->tester}<span n:if="$pohled == 'test' && $zmena->tester->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tuto změnu testuji já"></span>{/if}
       {if $zmena->tester}{$zmena->tester->jmeno|upper}: {/if}{$zmena->vysledek_testu}
     </p>
     <p>

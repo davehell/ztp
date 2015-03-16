@@ -1,10 +1,14 @@
+function zvyraznitZmenu (zmena) {
+  zmena.addClass( 'bg-danger' );
+  setTimeout(function() {zmena.removeClass('bg-danger')}, 5000);
+}
+
 $( document ).ready(function() {
   //barevné zvýraznění změny, která je zadána v url
   var hash = window.location.hash; //např.: "#z115"
   if (hash.substring(0, 2) == '#z') {
-    var el = $('.zmena[data-id="' + hash.substring(2) + '"]');
-    el.addClass( 'bg-danger' );
-    setTimeout(function() {el.removeClass('bg-danger')}, 5000);
+    var zmena = $('.zmena[data-id="' + hash.substring(2) + '"]');
+    zvyraznitZmenu(zmena);
   }
 });
 
@@ -60,6 +64,7 @@ $(function () {
    */
   $('.posunNahoru').click(function() {
     var zmena = $(this).closest('.zmena');
+    zvyraznitZmenu(zmena);
     var predchudce = zmena.prevAll('.zmena:first')
     if(predchudce.length) {
       predchudce.before(zmena);
@@ -72,6 +77,7 @@ $(function () {
    */
   $('.posunDolu').click(function() {
     var zmena = $(this).closest('.zmena');
+    zvyraznitZmenu(zmena);
     var naslednik = zmena.nextAll('.zmena:first')
     if(naslednik.length) {
       naslednik.after(zmena);
