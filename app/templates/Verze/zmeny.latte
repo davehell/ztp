@@ -7,20 +7,9 @@
 {/block}
 
 {block content}
-<h1 n:if="$pohled == 'dev'" >Změnový protokol</h1>
+<h1 n:if="$pohled == 'dev'" >Změnový protokol <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span></a></h1>
 <h1 n:if="$pohled == 'test'">Testovací protokol</h1>
 <h1 n:if="$pohled == 'boss'">Změny ve verzi {$verze->nazev}</h1>
-
-<div class="btn-toolbar">
-  <div n:if="$pohled == 'dev'" class="btn-group">
-    <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Upravit</a>
-  </div>
-  <div n:if="$pohled == 'boss'" class="btn-group">
-    <a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export změnového protokolu" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Změnový</a>
-    <a n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export testovacího protokolu" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Testovací</a>
-  </div>
-</div>
-
 
 <dl class="dl-horizontal">
   <dt>Verze</dt>
@@ -32,7 +21,6 @@
   <dt>Skryté poznámky</dt>
   <dd {if $verze->pozn_skryta} class="skryteInfo"{/if}>{!$verze->pozn_skryta|texy}</dd>
 </dl>
-
 
 {if $pohled == 'test'}
   <h2>Testovací prostředí</h2>
@@ -47,13 +35,7 @@
   </dl>
 {/if}
 
-
-<h2>Změny</h2>
-<div n:if="$pohled == 'dev'" class="btn-toolbar">
-  <div class="btn-group">
-    <a n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Přidat změnu</a>
-  </div>
-</div>
+<h2>Změny <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span></a></h2>
 
 <div n:if="$filtr" class="alert alert-info">
   Zobrazeny pouze změny

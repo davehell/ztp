@@ -57,7 +57,7 @@
           {snippet menu}
           <ul id="vyberProtokolu">
             <li>
-              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => null" title="Kompletní protokol">Všechny změny</a>
+              <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => null" title="Kompletní protokol" class="text-warning">Všechny změny</a>
             </li>
             {if $pohled == 'dev'}
             <li>
@@ -92,8 +92,14 @@
 
           <label>Náhled tisku:</label>
           <ul>
-            <li><a n:href="Verze:export, $verze->id, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled změnového protokolu">Změnový protokol</a></li>
-            <li><a n:href="Verze:export, $verze->id, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled testovacího protokolu">Testovací protokol</a></li>
+            <li>
+              <a n:href="Verze:export, $verzeId, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled změnového protokolu">Změnový protokol</a>
+              <a n:if="$pohled == 'boss'" n:href="Verze:export, $verzeId, 'protokol' => 'zmeny', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export změnového protokolu" class="export btn btn-primary "><span class="glyphicon glyphicon-floppy-save"></span></a>
+            </li>
+            <li>
+              <a n:href="Verze:export, $verzeId, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled testovacího protokolu">Testovací protokol</a>
+              <a n:if="$pohled == 'boss'" n:href="Verze:export, $verzeId, 'protokol' => 'testy', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Export testovacího protokolu" class="export btn btn-primary "><span class="glyphicon glyphicon-floppy-save"></span></a>
+            </li>
           </ul>
         </form>
         {/ifCurrent}
