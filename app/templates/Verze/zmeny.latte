@@ -72,12 +72,22 @@
 
     <p n:if="$pohled == 'test' || $pohled == 'boss'">
       {control stav, $zmena->je_ok}
-      {if $zmena->tester_id}<span n:if="$pohled == 'test' && $zmena->tester->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tuto změnu testuji já"></span>{/if}
-      {if $zmena->tester_id}{$zmena->tester->jmeno|upper}: {/if}{$zmena->vysledek_testu}
+      {if $zmena->tester_id}
+        {? $testerovo = $pohled == 'test' && $zmena->tester->jmeno == $uziv ?}
+        <span class="{if $testerovo}moje{/if}">
+          <span n:if="$testerovo" class="glyphicon glyphicon-user" title="Tuto změnu testuji já"></span>
+          {$zmena->tester->jmeno|upper}
+        </span>:
+      {/if}
+      {$zmena->vysledek_testu}
     </p>
     <p>
-      <span n:if="$pohled == 'dev' && $zmena->autor->jmeno == $uziv" class="moje glyphicon glyphicon-user" title="Tojo je moje změna"></span>
-      {$zmena->autor->jmeno|upper} - {$zmena->typy_zmen->nazev}
+      {? $autorovo = $pohled == 'dev' && $zmena->autor->jmeno == $uziv ?}
+      <span class="{if $autorovo}moje{/if}">
+        <span n:if="$autorovo" class="glyphicon glyphicon-user" title="Tojo je moje změna"></span>
+        {$zmena->autor->jmeno|upper}
+      </span>
+      - {$zmena->typy_zmen->nazev}
       {if $zmena->task}({$zmena->task}) {/if}
     </p>
     <p>

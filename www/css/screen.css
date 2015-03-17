@@ -90,9 +90,9 @@ ul#zmeny {
   display: block;
 }
 .zmena .moje {
+  background-color: #d9edf7;
   color: #31708f;
-  margin-right: 5px;
-  font-size: 125%;
+  padding: 2px 10px;
 }
 .zmena p {
   margin: 0;
