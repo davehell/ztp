@@ -34,12 +34,44 @@ $(function () {
   $.nette.ext({
       load: function() {
 
+        /**
+         * Zobrazení formuláře pro zadání výsledku testování změny.
+         */
+        $('button.zmenaFunguje').click(function(event) {
+          var zmena = $(this).closest('.zmena');
+          $('#frm-testForm-id').val(zmena.data('id'));
+          var vysledek = zmena.find('.vysledekTestu').html();
+          console.log(vysledek);
+          $('#frm-testForm-vysledek_testu').val(vysledek ? vysledek : 'bez připomínek');
+          $('#modalZmenaFunguje').modal('show');
+          zvyraznitZmenu(zmena);
+        });
+
+        /**
+         * Vyplnění pole pro výsledek textu na základě zvolené varianty ze seznamu.
+         */
+        $('#modalZmenaFunguje li button').click(function(event) {
+          var text = $(this).data('text');
+          $('#frm-testForm-vysledek_testu').val(text);
+        });
+      },
+      success: function(payload) {
+        //Po úspěšném zadání výsledku testování změny.
+        if(payload.akce == 'testFormSuccess') {
+          $('#modalZmenaFunguje').modal('hide');
+          var zmena = $('.zmena[data-id="' + payload.zmena + '"]');
+          zvyraznitZmenu(zmena);
+        }
+        if(payload.chyba) {
+          alert(payload.chyba);
+        }
       }
   });
   $.nette.init();
 
+
   /**
-   * Potvrzovací dialog při kliknutí na odkaz.
+   * Potvrzovací dialog při kliknutí na odkaz pro smazání.
    */
   $('.btn-danger').click(function(event) {
     event.preventDefault();
@@ -90,7 +122,7 @@ $(function () {
    */
   function ulozitPoradi() {
     var poradi = new Array();
-    var url = $('ul#zmeny').data('url')
+    var url = $('ul#zmeny').data('url');
     $( '.zmena' ).each(function() {
       poradi.push($(this).data('id'));
     });

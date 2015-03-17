@@ -409,4 +409,77 @@ final class VerzePresenter extends BasePresenter
     $this->flashMessage('Uloženo.', 'success');
     $this->redirect('Verze:zmeny', $this->request->getCookie('verzeId'));
   }
+
+
+  /**
+   * Formulář pro uložení výsledku testování změny
+   * @return Form
+   */
+  protected function createComponentTestForm()
+  {
+    $form = new Form;
+    $form->getElementPrototype()->class('ajax');
+
+    $form->addHidden('je_ok')
+      ->setDefaultValue(1);
+
+    $form->addHidden('id')
+      ->setAttribute('id', 'frm-testForm-id');
+
+    $form->addText('vysledek_testu', 'Výsledek testu')
+      ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 100);
+
+    $form->addSubmit('ok', 'Uložit');
+
+    $form->onSuccess[] = $this->testFormSuccess;
+
+    $form->setRenderer(new Bs3FormRenderer);
+
+    return $form;
+  }
+
+  /**
+   * Zpracování formuláře s výsledkem testování
+   * @param Form $form
+   */
+  public function testFormSuccess($form)
+  {
+    $values = $form->getValues();
+
+    $zmenaId = $values['id'];
+    $neopraveneChyby = $this->chyby->neopraveneChyby($zmenaId);
+
+    if ($this->isAjax()) {
+      $this->payload->akce = 'testFormSuccess';
+      $this->payload->zmena = $zmenaId;
+    }
+
+    if($neopraveneChyby) {
+      $chyba = 'Nemůžeš ukončit testování této změny, protože má neopravené chyby!';
+      if ($this->isAjax()) {
+        $this->payload->chyba = $chyba;
+        $this->terminate();
+      }
+      else {
+        $this->flashMessage($chyba, 'danger');
+        $this->redirect('this');
+      }
+    }
+    else {
+      try {
+        $this->zmeny->update($zmenaId, $values);
+      } catch (\Exception $e) {
+        $this->flashMessage('Chyba při ukládání.', 'danger');
+        $this->redirect('this');
+      }
+
+      if ($this->isAjax()) {
+        $this->invalidateControl('zmeny');
+        $this->invalidateControl('menu');
+      }
+      else {
+        $this->redirect('this');
+      }
+    }
+  }
 }

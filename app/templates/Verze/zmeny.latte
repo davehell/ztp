@@ -48,6 +48,7 @@
   {/if}
 </div>
 
+
 {snippet zmeny}
 <ul id="zmeny" data-url="{link poradi!}">
 {foreach $zmeny as $zmena}
@@ -66,7 +67,7 @@
     <div n:if="$pohled == 'test'" class="btn-toolbar akce">
       <div class="btn-group">
         <a n:href="Chyby:chyba, null, $zmena->id" title="Změna nefunguje správně" class="novaChyba btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-        <a n:href="Zmeny:test, $zmena->id" title="Bravo! Změna je v pořádku." class="zmenaFunguje btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+        <button type="button" title="Bravo! Změna je v pořádku." class="zmenaFunguje btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></button>
       </div>
     </div>
 
@@ -79,7 +80,7 @@
           {$zmena->tester->jmeno|upper}
         </span>:
       {/if}
-      {$zmena->vysledek_testu}
+      <span class="vysledekTestu">{$zmena->vysledek_testu}</span>
     </p>
     <p>
       {? $autorovo = $pohled == 'dev' && $zmena->autor->jmeno == $uziv ?}
@@ -108,4 +109,25 @@
 {/foreach}
 </ul>
 {/snippet}
+
+<div class="modal" id="modalZmenaFunguje">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        <h4 class="modal-title">Změna je v pořádku</h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li>bez připomínek       <button type="button" class="btn btn-default" title="Vybrat tuto variantu" data-text="bez připomínek"><span class="glyphicon glyphicon-check"></span></button></li>
+          <li>testováno na zakázce <button type="button" class="btn btn-default" title="Vybrat tuto variantu" data-text="testováno na zakázce"><span class="glyphicon glyphicon-check"></span></button></li>
+          <li>netestováno          <button type="button" class="btn btn-default" title="Vybrat tuto variantu" data-text="netestováno"><span class="glyphicon glyphicon-check"></span></button></li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        {control testForm}
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
