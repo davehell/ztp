@@ -156,16 +156,20 @@ final class ZmenyPresenter extends BasePresenter
       ->addRule(Form::PATTERN, 'Čísla tasku mohou obsahovat pouze číslice', '[0-9, ]*'); //jen číslice, čárky a mezery
 
     $form->addTextArea('uloha', 'Úloha')
-      ->addRule(Form::MAX_LENGTH, 'Úloha musí mít maximálně %d znaků', 1000);
+      ->setAttribute('placeholder', 'Název úlohy, které se změna týká')
+      ->addRule(Form::MAX_LENGTH, 'Úloha musí mít maximálně %d znaků', 1000)
+      ->setRequired('Zadej, které úlohy se změna týká');
 
     $form->addRadioList('typy_zmen_id', 'Typ', $this->zmeny->seznamTypuZmen())
-      ->setDefaultValue(1);
+      ->setRequired('Vyber typ změny');
 
     $form->addTextArea('text', 'Popis změny')
+      ->setAttribute('placeholder', 'Veřejný popis zobrazený ve změnovém protokolu')
       ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 1000)
       ->setRequired('Zadej popis změny');
 
     $form->addTextArea('detail', 'Skryté info')
+      ->setAttribute('placeholder', 'Neveřejné informace určené pouze pro testery')
       ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 1000);
 
     // $form->addMultiSelect('tagy', 'Štítky', $this->zmeny->seznamTagu())

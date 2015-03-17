@@ -316,9 +316,11 @@ final class VerzePresenter extends BasePresenter
     $form->addText('datum', 'Datum');
 
     $form->addTextArea('pozn_verejna', 'Veřejné poznámky')
+      ->setAttribute('placeholder', 'Poznámky k verzi zobrazené na začátku změnového protokolu')
       ->addRule(Form::MAX_LENGTH, 'Poznámka musí mít maximálně %d znaků', 1000);
 
     $form->addTextArea('pozn_skryta', 'Skryté poznámky')
+      ->setAttribute('placeholder', 'Neveřejné poznámky k verzi určené pouze pro testery')
       ->addRule(Form::MAX_LENGTH, 'Poznámka musí mít maximálně %d znaků', 1000);
 
     $form->addSubmit('ok', 'Uložit');
@@ -374,7 +376,9 @@ final class VerzePresenter extends BasePresenter
   {
     $form = new Form;
 
-    $form->addText('prostredi', 'Prostředí');
+    $form->addText('prostredi', 'Prostředí')
+      ->setAttribute('placeholder', 'Verze prohlížečů, na kterých se testuje');
+
     $form->addSubmit('ok', 'Uložit');
 
     $form->onSuccess[] = $this->osobaFormSuccess;

@@ -10,6 +10,10 @@
   <li class="active">{if $verze}Editace verze{else}Nová verze{/if}</li>
 </ol>
 
-{if $verze}<a n:href="smazat $verze->id" class="smazaniVerze btn btn-danger" title="Smazat tuto verzi"><span class="glyphicon glyphicon-trash"></span></a>{/if}
+<pre>
+  *text kurzívou* = <em>text kurzívou</em>
+  **tučný text** = <strong>tučný text</strong>
+</pre>
 
+{if $verze}<a n:href="smazat $verze->id" class="smazaniVerze btn btn-danger" title="Smazat tuto verzi"><span class="glyphicon glyphicon-trash"></span></a>{/if}
 {control infoForm}
