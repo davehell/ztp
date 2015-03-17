@@ -57,10 +57,10 @@
     <div n:if="$pohled == 'dev'" class="btn-toolbar akce">
       <div class="btn-group">
         <a n:href="Zmeny:zmena, $zmena->id" title="Upravit změnu" class="editaceZmeny btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-        <a n:href="Zmeny:zmena, 'verzeId' => $verzeId, 'predchudce' => $zmena->id" title="Přidat další změnu hned za tuto" class="novaZmenaDalsi btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
         <button type="button" title="Posunout změnu nahoru" class="posunNahoru btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
         <button type="button" title="Posunout změnu dolů" class="posunDolu btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></button>
         <a n:href="Zmeny:smazat, $zmena->id" title=" Smazat tuto změnu" class="smazaniZmeny btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+        <a n:href="Zmeny:zmena, 'verzeId' => $verzeId, 'predchudce' => $zmena->id" title="Přidat další změnu hned za tuto" class="novaZmenaDalsi btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
       </div>
     </div>
     <div n:if="$pohled == 'test'" class="btn-toolbar akce">

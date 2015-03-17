@@ -151,8 +151,9 @@ final class ZmenyPresenter extends BasePresenter
     $form->addCheckbox('je_verejna', 'Veřejná změna')
       ->setDefaultValue(true);
 
-    $form->addText('task', 'Číslo tasku')
-      ->addRule(Form::MAX_LENGTH, 'Task musí mít maximálně %d znaků', 50);
+    $form->addText('task', 'Čísla tasku')
+      ->addRule(Form::MAX_LENGTH, 'Task musí mít maximálně %d znaků', 50)
+      ->addRule(Form::PATTERN, 'Čísla tasku mohou obsahovat pouze číslice', '[0-9, ]*'); //jen číslice, čárky a mezery
 
     $form->addTextArea('uloha', 'Úloha')
       ->addRule(Form::MAX_LENGTH, 'Úloha musí mít maximálně %d znaků', 1000);
@@ -187,7 +188,10 @@ final class ZmenyPresenter extends BasePresenter
   public function zmenaFormSuccess($form)
   {
     $values = $form->getValues();
-    unset($values['tagy']);
+    //unset($values['tagy']);
+
+    $values['task'] = str_replace(' ', '', $values['task']); //odstranění mezer
+    $values['task'] = str_replace(',', ', ', $values['task']); //doplnění mezer za čárky
 
     $zmenaId = $this->getParameter('id');
     $verzeId = $values['verze_id'];
