@@ -1,6 +1,6 @@
 function zvyraznitZmenu (zmena) {
-  zmena.addClass( 'bg-info' );
-  setTimeout(function() {zmena.removeClass('bg-info')}, 5000);
+  zmena.addClass( 'zvyraznena' );
+  setTimeout(function() {zmena.removeClass('zvyraznena')}, 5000);
 }
 
 $( document ).ready(function() {

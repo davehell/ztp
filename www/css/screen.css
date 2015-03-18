@@ -81,6 +81,9 @@ ul#zmeny {
 .zmena:hover, .zmena:hover .skryteInfo {
   background-color: #fcf8e3;
 }
+.zmena.zvyraznena, .zmena.zvyraznena .skryteInfo {
+  background-color: #d9edf7;
+}
 .zmena .btn-toolbar.akce {
   display: none;
   position: absolute;
