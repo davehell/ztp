@@ -310,7 +310,7 @@ final class VerzePresenter extends BasePresenter
     $form = new Form;
 
     $form->addText('nazev', 'Název')
-      ->setAttribute('placeholder', '11.00 P1')
+      ->setAttribute('placeholder', 'např. 11.00 P1')
       ->setRequired('Zadej název verze');
 
     $form->addText('datum', 'Datum');

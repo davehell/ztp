@@ -4,16 +4,16 @@
 <ul>
   {foreach $vsechnyVerze as $v}
     <li>
-      {if $v->datum}
-        {$v->datum|date:'%d.%m.%Y'} -
+      {if $export}
+        <a n:href="Verze:export, $v->id, 'protokol' => $protokol" title="Export verze {$v->nazev}">verze {$v->nazev}</a>
+      {elseif $protokol == 'testy'}
+        <a n:href="Verze:zmeny, $v->id" title="Testovací protokol verze {$v->nazev}">verze {$v->nazev}</a>
+      {else}
+        <a n:href="Verze:zmeny, $v->id" title="Změnový protokol verze {$v->nazev}">verze {$v->nazev}</a>
       {/if}
 
-      {if $export}
-        <a n:href="Verze:export, $v->id, 'protokol' => $protokol" title="Export verze {$v->nazev}">{$v->nazev}</a>
-      {elseif $protokol == 'testy'}
-        <a n:href="Verze:zmeny, $v->id" title="Testovací protokol verze {$v->nazev}">{$v->nazev}</a>
-      {else}
-        <a n:href="Verze:zmeny, $v->id" title="Změnový protokol verze {$v->nazev}">{$v->nazev}</a>
+      {if $v->datum}
+        - {$v->datum|date:'%d.%m.%Y'}
       {/if}
     </li>
   {/foreach}
