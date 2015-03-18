@@ -15,14 +15,14 @@
   {block head}{/block}
 </head>
 
-<body class="{ifCurrent Verze:default}uvodniStrana{/ifCurrent}{ifCurrent Verze:seznam}seznamVerzi{/ifCurrent}">
+<body class="{ifCurrent Verze:default}uvodniStrana{/ifCurrent}">
   <div class="container">
     <div class="row">
       <div class="col-sm-3">
       <div id="sidebar">
         <h4><a n:href="Verze:default, 'filtr' => null" title="Úvodní stránka">Změnové a Testovací Protokoly</a></h4>
 
-        {ifCurrent Verze:default}{else}
+        {ifCurrent Verze:zmeny}
         <form id="menuForm" action="{link this}" method="get">
           <input type="hidden" name="pohled" value="{$pohled}">
           <input type="hidden" name="filtr" value="{$filtr}">
@@ -43,6 +43,7 @@
             <option value="{$jmeno}" {if $jmeno == $uziv}selected{/if}>{$jmeno|upper}</option>
             {/foreach}
           </select>
+        </form>
 
           <label>Pohled:</label>
           <div class="btn-toolbar" id="vyberPohledu">
@@ -101,8 +102,13 @@
               <a n:if="$pohled == 'boss'" n:href="Verze:export, $verzeId, 'protokol' => 'testy', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Uložení testovacího protokolu" class="export btn btn-primary "><span class="glyphicon glyphicon-floppy-save"></span></a>
             </li>
           </ul>
-        </form>
         {/ifCurrent}
+        <label>Vyhledávání:</label>
+        <ul>
+          <li>
+            <a n:href="Zmeny:hledat" title="Hledání ve změnových protokolech">Hledat změnu</a>
+          </li>
+        </ul>
       </div> <!-- #sidebar -->
       </div> <!-- .col-md-3 -->
       <div class="col-sm-9" id="main">

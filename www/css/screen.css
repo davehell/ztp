@@ -122,17 +122,14 @@ label.required:after {
   content:" *";
 }
 
-.seznamVerzi #sidebar form {
-  display: none;
-}
-.uvodniStrana h1, .uvodniStrana h2 {
+.uvodniStrana #main h1, .uvodniStrana #main h2 {
   text-align: center;
 }
-.uvodniStrana h2, .uvodniStrana li {
+.uvodniStrana #main h2, .uvodniStrana #main li {
   padding-bottom: 10px;
   padding-top: 10px;
 }
-.uvodniStrana ul {
+.uvodniStrana #main ul {
   padding-left: 15px;
 }
 

@@ -1,0 +1,31 @@
+{block content}
+<h1 n:inner-block="title">Vyhledávání</h1>
+
+<form class="form-inline" action="{link this}" method="get">
+  <div class="form-group">
+    <label for="text">Hledaný text</label>
+    <input type="search" class="form-control" name="text" id="text" value="{$text}">
+  </div>
+  <button type="submit" class="btn btn-primary">Hledat</button>
+</form>
+
+{if $text}
+<hr>
+
+<h2>Našlo se toto</h2>
+
+<p>Hledaný text: <mark>{$text}</mark></p>
+
+  {if count($vysledky)}
+    <ol n:inner-foreach="$vysledky as $vysledek">
+      <li>
+        <a n:href="Verze:zmeny#z$vysledek->zmena_id, $vysledek->verze_id" title="Zobrazit změnový protokol">verze {$vysledek->verze}</a>
+        <p>{!$vysledek->uloha|texy|ireplace:$text:"<mark>$text</mark>"}<p>
+        <p>{!$vysledek->text|texy|ireplace:$text:"<mark>$text</mark>"}<p>
+        <p>{!$vysledek->detail|texy|ireplace:$text:"<mark>$text</mark>"}<p>
+      </li>
+    </ol>
+  {else}
+    <p class="alert alert-info">Kde nic, tu nic. Nemáš tam překlep?</p>
+  {/if}
+{/if}

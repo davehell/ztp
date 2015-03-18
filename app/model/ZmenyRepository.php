@@ -100,12 +100,12 @@ class ZmenyRepository extends Repository
   }
 
   /**
-   * Změny ve verzi, které nemají přiřazeného testera
+   * Nově přidané změny do verze - nemají přiřazeného testera a nejsou ještě otestované
    * @return \Nette\Database\Table\Selection
    */
   public function bezTestera($verze)
   {
-    return $this->zmenyVeVerzi($verze)->where('tester_id IS NULL');
+    return $this->zmenyVeVerzi($verze)->where('tester_id IS NULL')->where('je_ok IS NULL');
   }
 
   /**
@@ -138,5 +138,21 @@ class ZmenyRepository extends Repository
     $values = array('je_ok' => $funguje);
     if(!$funguje) $values = array_merge($values, array('vysledek_testu' => ''));
     return $this->update($id, $values);
+  }
+
+
+  /**
+   * Změny, které obsahují hledaný výraz
+   * @return \Nette\Database\Table\Selection
+   */
+  public function vyhledavani($text)
+  {
+    $vyraz = '%' . $text . '%';
+    return $this->findAll()
+      ->select('zmeny.id AS zmena_id, zmeny.uloha, zmeny.text, zmeny.detail')
+      ->select('verze.nazev AS verze, verze.id AS verze_id')
+      ->where('uloha LIKE ? OR text LIKE ? OR detail LIKE ?', $vyraz, $vyraz, $vyraz)
+      ->order('verze.datum DESC')
+      ->limit(100);
   }
 }

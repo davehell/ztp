@@ -33,6 +33,14 @@ final class ZmenyPresenter extends BasePresenter
     parent::beforeRender();
   }
 
+  /**
+   *
+   */
+  public function renderHledat($text = null)
+  {
+    $this->template->vysledky = $text ? $this->zmeny->vyhledavani($text) : array();
+    $this->template->text = $text;
+  }
 
   /**
    *
