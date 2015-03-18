@@ -66,6 +66,14 @@ h1, h2, h3, h4, h5, h6, legend {
   padding: 5px 5px 5px 10px;
 }
 
+ul#vyberProtokolu {
+  margin-bottom: 20px;
+}
+ul#vyberProtokolu label {
+  padding: 10px 15px;
+  padding-left: 0;
+}
+
 ul#zmeny {
   padding-left: 15px;
 }

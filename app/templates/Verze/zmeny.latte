@@ -43,17 +43,38 @@
 
 <h2>Změny <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span></a></h2>
 
-<div n:if="$filtr" class="alert alert-info">
-  Zobrazeny pouze změny
-  {if $filtr == 'autor'} autora {$uziv|upper}
-  {elseif $filtr == 'autor-chyby'} autora {$uziv|upper}, které neprošly testováním
-  {elseif $filtr == 'tester'}, které testuje {$uziv|upper}
-  {elseif $filtr == 'tester-chyby'}, které neprošly testováním a testuje je {$uziv|upper}
-  {elseif $filtr == 'boss-chyby'}, které neprošly testováním
-  {elseif $filtr == 'bez-testera'}, které nemají přiřazeného testera
+<ul id="vyberProtokolu" class="nav nav-pills">
+  <li><label>Zobrazit:</label></li>
+  <li class="{if $filtr == ''}active{/if}">
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => null" title="Všechny změny v protokolu">Vše</a>
+  </li>
+  {if $pohled == 'dev' && $uziv}
+  <li class="{if $filtr == 'autor'}active{/if}">
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'autor'" title="Pouze změny autora {$uziv|upper}">Jen moje <span class="badge">{$autorovyZmeny}</span></a>
+  </li>
+  <li class="{if $filtr == 'autor-chyby'}active{/if}">
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'autor-chyby'" title="Pouze změny autora {$uziv|upper}, které neprošly testováním">Jen moje neotestované <span class="badge">{$neotestovaneZmeny}</span></a>
+  </li>
+  {elseif $pohled == 'test' && $uziv}
+  <li class="{if $filtr == 'tester'}active{/if}">
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'tester'" title="Pouze změny, které testuje {$uziv|upper}">Jen moje <span class="badge">{$testerovyZmeny}</span></a>
+  </li>
+  <li class="{if $filtr == 'tester-chyby'}active{/if}">
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'tester-chyby'" title="Pouze změny, které neprošly testováním a testuje je {$uziv|upper}">Jen moje neotestované <span class="badge">{$neotestovaneZmeny}</span></a>
+  </li>
+  {elseif $pohled == 'boss'}
+  <li class="{if $filtr == 'bez-testera'}active{/if}">
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'bez-testera'" title="Pouze nové změny, které nemají přiřazeného testera">Změny bez testera <span class="badge">{$zmenyBezTestera}</span></a>
+  </li>
+  <li class="{if $filtr == 'boss-chyby'}active{/if}">
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'boss-chyby'" title="Pouze změny, které neprošly testováním">Neotestované změny <span class="badge">{$neotestovaneZmeny}</span></a>
+  </li>
   {/if}
-</div>
+</ul>
 
+<div n:if="count($zmeny) == 0" class="alert alert-info">
+  Kde nic, tu nic.
+</div>
 
 {snippet zmeny}
 <ul id="zmeny" data-url="{link poradi!}">
