@@ -12,6 +12,17 @@ body {
   background-color: #fcfcfc;
   padding-bottom: 15px;
   padding-top: 15px;
+  z-index: 2000;
+}
+#sidebar {
+  background-color: #343131;
+  bottom: 0;
+  color: #e6e6e6;
+  left: 0;
+  padding: 10px;
+  position: fixed;
+  top: 0;width: 292.5px;
+  z-index: 1000;
 }
 /* odkaz na uvodni stranku */
 #sidebar h4 {
@@ -26,18 +37,6 @@ body {
 }
 #sidebar h4 a:hover, #sidebar h4 a:active, #sidebar h4 a:focus {
   text-decoration: none;
-}
-
-#sidebar {
-  position: fixed;
-  width: 292.5px;
-  left: 0;
-  top: 0;
-}
-#sidebar {
-  background-color: #343131;
-  color: #e6e6e6;
-  padding: 10px;
 }
 #sidebar select {
   color: #000;
