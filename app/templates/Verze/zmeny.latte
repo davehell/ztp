@@ -23,16 +23,22 @@
 </dl>
 
 {if $pohled == 'test'}
-  <h2>Testovací prostředí</h2>
-  <dl n:inner-foreach="$testeriVeVerzi as $tester"  class="dl-horizontal">
-    <dt>
-      {$tester->tester->jmeno|upper}
-    </dt>
-    <dd>
-      <a n:if="$pohled == 'test'" n:href="Verze:osoba, $tester->tester_id, $verzeId" title="Upravit testovací prostředí u {$tester->tester->jmeno|upper}" class="editaceTestera btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
-      {$tester->tester->prostredi}
-    </dd>
-  </dl>
+  <h2>
+    Testovací prostředí
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseProstredi"><span class="glyphicon glyphicon-pencil"></span></button>
+  </h2>
+
+  <div class="collapse" id="collapseProstredi">
+    <dl n:inner-foreach="$testeriVeVerzi as $tester"  class="dl-horizontal">
+      <dt>
+        {$tester->tester->jmeno|upper}
+      </dt>
+      <dd>
+        <a n:if="$pohled == 'test'" n:href="Verze:osoba, $tester->tester_id, $verzeId" title="Upravit testovací prostředí u {$tester->tester->jmeno|upper}" class="editaceTestera btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+        {$tester->tester->prostredi}
+      </dd>
+    </dl>
+  </div>
 {/if}
 
 <h2>Změny <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span></a></h2>
