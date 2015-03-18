@@ -2,6 +2,7 @@
 <h1 n:inner-block="title">Vyhledávání</h1>
 
 <form class="form-inline" action="{link this}" method="get">
+  <input type="hidden" name="pohled" value="{$pohled}">
   <div class="form-group">
     <label for="text">Hledaný text</label>
     <input type="search" class="form-control" name="text" id="text" value="{$text}">
@@ -19,7 +20,7 @@
   {if count($vysledky)}
     <ol n:inner-foreach="$vysledky as $vysledek">
       <li>
-        <a n:href="Verze:zmeny#z$vysledek->zmena_id, $vysledek->verze_id" title="Zobrazit změnový protokol">verze {$vysledek->verze}</a>
+        <a n:href="Verze:zmeny#z$vysledek->zmena_id, $vysledek->verze_id, 'pohled' => $pohled" title="Zobrazit změnový protokol">verze {$vysledek->verze}</a>
         <p>{!$vysledek->uloha|texy|ireplace:$text:"<mark>$text</mark>"}<p>
         <p>{!$vysledek->text|texy|ireplace:$text:"<mark>$text</mark>"}<p>
         <p>{!$vysledek->detail|texy|ireplace:$text:"<mark>$text</mark>"}<p>
