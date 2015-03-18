@@ -5,7 +5,7 @@
   {foreach $vsechnyVerze as $v}
     <li>
       {if $export}
-        <a n:href="Verze:export, $v->id, 'protokol' => $protokol" title="Export verze {$v->nazev}">verze {$v->nazev}</a>
+        <a n:href="Verze:export, 'id' => array($v->id), 'protokol' => $protokol" title="Export verze {$v->nazev}">verze {$v->nazev}</a>
       {elseif $protokol == 'testy'}
         <a n:href="Verze:zmeny, $v->id" title="Testovací protokol verze {$v->nazev}">verze {$v->nazev}</a>
       {else}

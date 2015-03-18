@@ -96,7 +96,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     }
     $this->verzeId = $id;
     $this->aktualizaceMenu();
-    $this->response->setCookie('verzeId', $this->verzeId, '100 days');
+    $this->response->setCookie('verzeId', $id, '100 days');
 
     return $verze;
   }

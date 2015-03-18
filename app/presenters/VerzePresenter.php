@@ -75,19 +75,29 @@ final class VerzePresenter extends BasePresenter
 
   /**
    * Pokud je v url zadán parametr format==pdf, vykreslí se pdf. Na renderExport se v tom případě nepokračuje.
+   * Pokud je zadáno více ID verzí, zobrazí se změny ze všech verzí. Do hlavičky se použijí údaje z první zadané verze.,
    */
-  public function actionExport($verzeId)
+  public function actionExport($id = array(), $protokol, $format)
   {
-    if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
+    //musí být zadána aspoň jedna verze
+    if(!count($id)) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
 
-    if($this->getParameter('format') == "pdf") {
+    //všechny zadané verze musí existovat
+    foreach ($id as $verzeId) {
+      $verze = $this->verze->get($verzeId);
+      if(!$verze) {
+        throw new \Nette\Application\BadRequestException('Neexistující verze');
+      }
+    }
+
+    if($format == "pdf") {
       $template = $this->createTemplate()->setFile(__DIR__ . "/../templates/Verze/export.latte");
 
-      $template->verze = $this->vybratVerzi($verzeId);
-      $template->testovaci = ($this->getParameter('protokol') == 'testy');
-      $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($verzeId);
+      $template->verze = $this->verze->get($id[0]);
+      $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($id);
+      $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($id);
+      $template->testovaci = ($protokol == 'testy');
       $template->typyZmen = $this->zmeny->seznamTypuZmen();
-      $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
 
       $pdf = new PDFResponse($template);
       $pdf->documentAuthor = "";
@@ -99,16 +109,17 @@ final class VerzePresenter extends BasePresenter
   }
 
   /**
-   *
+   * Export protokolů.
    */
-  public function renderExport($verzeId)
+  public function renderExport($id = array(), $protokol)
   {
-    $this->template->verze = $this->vybratVerzi($verzeId);
-    $this->template->testovaci = ($this->getParameter('protokol') == 'testy');
-    $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($verzeId);
+    $this->template->verze = $this->verze->get($id[0]);
+    $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($id);
+    $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($id);
+    $this->template->testovaci = ($protokol == 'testy');
     $this->template->typyZmen = $this->zmeny->seznamTypuZmen();
-    $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);
   }
+
 
   /**
    * Změnový protokol
