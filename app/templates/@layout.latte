@@ -39,8 +39,8 @@
           <label>Osoba:</label>
           <select name="uziv" id="vyberUzivatele">
             <option value="">--- Vyber osobu ---</option>
-            {foreach $lide as $id => $jmeno}
-            <option value="{$jmeno}" {if $jmeno == $uziv}selected{/if}>{$jmeno|upper}</option>
+            {foreach $lide as $clovek}
+            <option value="{$clovek->jmeno}" {if $clovek->jmeno == $uziv}selected{/if}>{$clovek->jmeno|upper}</option>
             {/foreach}
           </select>
         </form>

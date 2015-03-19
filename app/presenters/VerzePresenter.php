@@ -293,7 +293,7 @@ final class VerzePresenter extends BasePresenter
 
     if ($this->isAjax()) {
       $this->invalidateControl('zmeny');
-      $this->invalidateControl('menu');
+      $this->invalidateControl('filtr');
     }
   }
 
@@ -303,9 +303,7 @@ final class VerzePresenter extends BasePresenter
    */
   protected function createComponentTesteri()
   {
-    $lide = $this->lide->aktivniLide();
-
-    $testeri = new \TesteriControl($lide);
+    $testeri = new \TesteriControl($this->lide->aktivniLide());
     $testeri->onPrirazeni[] = $this->prirazeniTestera;
     $testeri->redrawControl();
     return $testeri;
@@ -325,7 +323,7 @@ final class VerzePresenter extends BasePresenter
 
     if ($this->isAjax()) {
       $this->invalidateControl('zmeny');
-      $this->invalidateControl('menu');
+      $this->invalidateControl('filtr');
     }
   }
 
@@ -507,7 +505,7 @@ final class VerzePresenter extends BasePresenter
 
       if ($this->isAjax()) {
         $this->invalidateControl('zmeny');
-        $this->invalidateControl('menu');
+        $this->invalidateControl('filtr');
       }
       else {
         $this->redirect('this');

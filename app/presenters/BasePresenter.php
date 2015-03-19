@@ -115,7 +115,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
   public function beforeRender()
   {
-    $this->template->lide          = $this->lide->seznamLidi();
+    $this->template->lide          = $this->lide->aktivniLide();
     $this->template->vsechnyVerze  = $this->verze->vsechny();
 
     $this->aktualizaceMenu();

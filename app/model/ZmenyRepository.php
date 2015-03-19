@@ -126,7 +126,7 @@ class ZmenyRepository extends Repository
    */
   public function bezTestera($verze)
   {
-    return $this->zmenyVeVerzi($verze)->where('tester_id IS NULL')->where('je_ok IS NULL');
+    return $this->neotestovane($verze)->where('tester_id IS NULL');
   }
 
   /**

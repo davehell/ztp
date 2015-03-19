@@ -43,8 +43,8 @@
 
 <h2>Změny <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></h2>
 
+{snippet filtr}
 <ul n:if="$pocetVsechZmen > 0" id="vyberProtokolu" class="nav nav-tabs">
-
   <li class="{if $filtr == ''}active{/if}">
     <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => null" title="Všechny změny v protokolu">Všechny</a>
   </li>
@@ -60,26 +60,27 @@
     <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'tester'" title="Pouze změny, které testuje {$uziv|upper}">Jen moje <span class="label label-default">{$pocetTesterovychZmen}</span></a>
   </li>
   <li class="{if $filtr == 'tester-chyby'}active{/if}">
-    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'tester-chyby'" title="Pouze změny, které neprošly testováním a testuje je {$uziv|upper}">Jen moje neotestované <span class="label label-default">{$pocetNeotestovanychZmen}</span></a>
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'tester-chyby'" title="Pouze změny, které neprošly testováním a testuje je {$uziv|upper}">Jen moje neotestované <span class="label label-{if $pocetNeotestovanychZmen == 0}default{else}danger{/if}">{$pocetNeotestovanychZmen}</span></a>
   </li>
   {elseif $pohled == 'boss'}
   <li class="{if $filtr == 'bez-testera'}active{/if}">
-    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'bez-testera'" title="Pouze nové změny, které nemají přiřazeného testera">Změny bez testera <span class="label label-default">{$pocetZmenBezTestera}</span></a>
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'bez-testera'" title="Pouze nové změny, které nemají přiřazeného testera">Změny bez testera <span class="label label-{if $pocetZmenBezTestera == 0}default{else}danger{/if}">{$pocetZmenBezTestera}</span></a>
   </li>
   <li class="{if $filtr == 'boss-chyby'}active{/if}">
-    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'boss-chyby'" title="Pouze změny, které neprošly testováním">Neotestované změny <span class="label label-default">{$pocetNeotestovanychZmen}</span></a>
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => 'boss-chyby'" title="Pouze změny, které neprošly testováním">Neotestované změny <span class="label label-{if $pocetNeotestovanychZmen == 0}default{else}danger{/if}">{$pocetNeotestovanychZmen}</span></a>
   </li>
   {/if}
 </ul>
+{/snippet}
 
+{snippet zmeny}
 <div n:if="count($zmeny) == 0" class="alert alert-info text-center">
   Ve verzi {if $pocetVsechZmen > 0}žádné takové{else}zatím žádné{/if} změny nejsou.
 </div>
 
-{snippet zmeny}
 <ul id="zmeny" data-url="{link poradi!}">
 {foreach $zmeny as $zmena}
-  {cache $uziv . $pohled . $zmena->id, tags => ["zmena/$zmena->id", "verze/$verzeId"]}
+  {cache $uziv . $pohled . $filtr . $zmena->id, tags => ["zmena/$zmena->id", "verze/$verzeId"]}
   <a name="z{$zmena->id}"></a>
   <li class="zmena {if !$zmena->je_verejna}skryteInfo{/if}" data-id="{$zmena->id}">
     <div n:if="$pohled == 'dev'" class="btn-toolbar akce">

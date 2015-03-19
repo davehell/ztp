@@ -104,7 +104,7 @@ final class ZmenyPresenter extends BasePresenter
     $form->addCheckbox('je_verejna', 'Veřejná změna')
       ->setDefaultValue(true);
 
-    $form->addText('task', 'Čísla tasku')
+    $form->addText('task', 'Čísla tasků')
       ->addRule(Form::MAX_LENGTH, 'Task musí mít maximálně %d znaků', 50)
       ->addRule(Form::PATTERN, 'Čísla tasku mohou obsahovat pouze číslice', '[0-9, ]*'); //jen číslice, čárky a mezery
 
