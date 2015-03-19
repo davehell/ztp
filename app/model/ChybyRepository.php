@@ -25,8 +25,6 @@ class ChybyRepository extends Repository
    */
   public function nastavOk($id, $opraveno)
   {
-    $chyba = $this->get($id);
-    if(!$chyba) throw new \ZtpException("Neexistující chyba");
     return $this->update($id, array('je_ok' => $opraveno));
   }
 

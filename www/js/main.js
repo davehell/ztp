@@ -33,6 +33,17 @@ $('textarea').enterKey(function() {$(this).closest('form').submit(); }, 'ctrl');
 $(function () {
   $.nette.ext({
       load: function() {
+        /**
+         * Potvrzovací dialog při kliknutí na odkaz pro smazání.
+         */
+        $('.btn-danger').click(function(event) {
+          event.preventDefault();
+          var url = $(this).attr('href');
+          var confirm_box = confirm('Opravdu?');
+          if(confirm_box) {
+            window.location = url;
+          }
+        });
 
         /**
          * Zobrazení formuláře pro zadání výsledku testování změny.
@@ -41,7 +52,6 @@ $(function () {
           var zmena = $(this).closest('.zmena');
           $('#frm-testForm-id').val(zmena.data('id'));
           var vysledek = zmena.find('.vysledekTestu').html();
-          console.log(vysledek);
           $('#frm-testForm-vysledek_testu').val(vysledek ? vysledek : 'bez připomínek');
           $('#modalZmenaFunguje').modal('show');
           zvyraznitZmenu(zmena);
@@ -69,18 +79,6 @@ $(function () {
   });
   $.nette.init();
 
-
-  /**
-   * Potvrzovací dialog při kliknutí na odkaz pro smazání.
-   */
-  $('.btn-danger').click(function(event) {
-    event.preventDefault();
-    var url = $(this).attr('href');
-    var confirm_box = confirm('Opravdu?');
-    if(confirm_box) {
-      window.location = url;
-    }
-  });
 
   /**
    * Po výběru verze v select boxu v menu se otevře stránka s danou verzí.

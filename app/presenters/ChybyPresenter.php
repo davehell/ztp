@@ -7,11 +7,12 @@ use App\Model\ZmenyRepository,
     App\Model\ChybyRepository,
     Nette\Application\UI\Form,
     Nextras\Forms\Rendering\Bs3FormRenderer,
+    Nette\Caching\Cache,
     ZTPException;
 
 
 /**
- * Mrazak presenter.
+ * Verze presenter.
  */
 final class ChybyPresenter extends BasePresenter
 {
@@ -75,6 +76,10 @@ final class ChybyPresenter extends BasePresenter
       $this->redirect('this');
     }
 
+    $this->cache->clean([
+      Cache::TAGS => array("zmena/$chyba->zmeny_id"),
+    ]);
+
     $this->redirect('Verze:zmeny#z' . $chyba->zmeny_id, $chyba->zmeny->verze_id);
   }
 
@@ -115,6 +120,10 @@ final class ChybyPresenter extends BasePresenter
     $zmena = $this->zmeny->get($zmenaId);
     if(!$zmena) throw new \Nette\Application\BadRequestException("Neexistující změna");
     $verzeId = $zmena->verze_id;
+
+    $this->cache->clean([
+      Cache::TAGS => array("zmena/$zmenaId"),
+    ]);
 
     if($id) { //editace
       try {

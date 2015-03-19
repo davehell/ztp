@@ -12,9 +12,8 @@ use App\Model\VerzeRepository,
     Nette\Caching\Cache,
     ZTPException;
 
-
 /**
- * Mrazak presenter.
+ * Verze presenter.
  */
 final class VerzePresenter extends BasePresenter
 {
@@ -226,6 +225,10 @@ final class VerzePresenter extends BasePresenter
       $this->redirect('Verze:zmeny');
     }
 
+    $this->cache->clean([
+      Cache::TAGS => array("verze/$verzeId"),
+    ]);
+
     $this->flashMessage('Smazáno.' , 'success');
     $this->redirect('Verze:seznam', array('verzeId' => null));
   }
@@ -265,6 +268,13 @@ final class VerzePresenter extends BasePresenter
     //pokud vývojář opraví chybu, nastaví se jí příznak, že čeká na otestování
     if($this->pohled == 'dev' && $opraveno) $opraveno = null;
 
+    $chyba = $this->chyby->get($id);
+    if(!$chyba) throw new \Nette\Application\BadRequestException("Neexistující chyba");
+
+    $this->cache->clean([
+      Cache::TAGS => array("zmena/$chyba->zmeny_id"),
+    ]);
+
     try {
       $this->chyby->nastavOk($id, $opraveno);
     } catch (\Exception $e) {
@@ -273,8 +283,6 @@ final class VerzePresenter extends BasePresenter
 
     //u změny existuje neopravená chyba - takže i celá změna musí být označena jako nefunkční
     if(!$opraveno) {
-      $chyba = $this->chyby->get($id);
-      if(!$chyba) throw new \Nette\Application\BadRequestException("Neexistující chyba");
       try {
         $this->zmeny->nastavOk($chyba->zmeny_id, false);
       } catch (\Exception $e) {
@@ -491,6 +499,10 @@ final class VerzePresenter extends BasePresenter
         $this->flashMessage('Chyba při ukládání.', 'danger');
         $this->redirect('this');
       }
+
+      $this->cache->clean([
+        Cache::TAGS => array("zmena/$zmenaId"),
+      ]);
 
       if ($this->isAjax()) {
         $this->invalidateControl('zmeny');

@@ -6,6 +6,7 @@ use App\Model\ZmenyRepository,
     App\Model\ChybyRepository,
     Nette\Application\UI\Form,
     Nextras\Forms\Rendering\Bs3FormRenderer,
+    Nette\Caching\Cache,
     ZTPException;
 
 
@@ -77,6 +78,10 @@ final class ZmenyPresenter extends BasePresenter
       $this->flashMessage('Chyba při mazání.', 'danger');
       $this->redirect('Verze:zmeny', $zmena->verze_id);
     }
+
+    $this->cache->clean([
+      Cache::TAGS => array("zmena/$id"),
+    ]);
 
     $this->flashMessage('Smazáno.' , 'success');
     $this->redirect('Verze:zmeny', $zmena->verze_id);
@@ -156,6 +161,10 @@ final class ZmenyPresenter extends BasePresenter
         $this->flashMessage('Chyba při ukládání.', 'danger');
         $this->redirect('this');
       }
+
+      $this->cache->clean([
+        Cache::TAGS => array("zmena/$zmenaId"),
+      ]);
 
       $this->redirect('Verze:zmeny#z' . $zmenaId, $verzeId);
     }
