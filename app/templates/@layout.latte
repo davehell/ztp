@@ -57,12 +57,12 @@
         <label>Export:</label>
         <ul>
           <li>
-            <a n:href="Verze:export, 'id' => array($verzeId), 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled změnového protokolu">Změnový protokol</a>
-            <a n:if="$pohled == 'boss'" n:href="Verze:export, 'id' => array($verzeId), 'protokol' => 'zmeny', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Uložení změnového protokolu" class="export btn btn-primary "><span class="glyphicon glyphicon-floppy-save"></span></a>
+            <a n:href="Verze:export, $verzeId, 'protokol' => 'zmeny', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled změnového protokolu">Změnový protokol</a>
+            <a n:if="$pohled == 'boss'" n:href="Verze:export, $verzeId, 'protokol' => 'zmeny', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Uložení změnového protokolu" class="export btn btn-primary "><span class="glyphicon glyphicon-floppy-save"></span></a>
           </li>
           <li>
-            <a n:href="Verze:export, 'id' => array($verzeId), 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled testovacího protokolu">Testovací protokol</a>
-            <a n:if="$pohled == 'boss'" n:href="Verze:export, 'id' => array($verzeId), 'protokol' => 'testy', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Uložení testovacího protokolu" class="export btn btn-primary "><span class="glyphicon glyphicon-floppy-save"></span></a>
+            <a n:href="Verze:export, $verzeId, 'protokol' => 'testy', 'pohled' => null, 'filtr' => null" target="_blank" title="Náhled testovacího protokolu">Testovací protokol</a>
+            <a n:if="$pohled == 'boss'" n:href="Verze:export, $verzeId, 'protokol' => 'testy', 'format' => 'pdf', 'pohled' => null, 'filtr' => null" target="_blank" title="Uložení testovacího protokolu" class="export btn btn-primary "><span class="glyphicon glyphicon-floppy-save"></span></a>
           </li>
         </ul>
         {/ifCurrent}

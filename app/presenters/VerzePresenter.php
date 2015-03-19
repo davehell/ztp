@@ -76,15 +76,18 @@ final class VerzePresenter extends BasePresenter
   /**
    * Pokud je v url zadán parametr format==pdf, vykreslí se pdf. Na renderExport se v tom případě nepokračuje.
    * Pokud je zadáno více ID verzí, zobrazí se změny ze všech verzí. Do hlavičky se použijí údaje z první zadané verze.,
+   * @param  [string] $id       listing ID verzí oddělený čárkami
    */
-  public function actionExport($id = array(), $protokol, $format)
+  public function actionExport($verzeId, $protokol, $format)
   {
     //musí být zadána aspoň jedna verze
-    if(!count($id)) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
+    if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
+
+    $seznamVerzi = explode(',', $verzeId);
 
     //všechny zadané verze musí existovat
-    foreach ($id as $verzeId) {
-      $verze = $this->verze->get($verzeId);
+    foreach ($seznamVerzi as $verze) {
+      $verze = $this->verze->get($verze);
       if(!$verze) {
         throw new \Nette\Application\BadRequestException('Neexistující verze');
       }
@@ -93,9 +96,9 @@ final class VerzePresenter extends BasePresenter
     if($format == "pdf") {
       $template = $this->createTemplate()->setFile(__DIR__ . "/../templates/Verze/export.latte");
 
-      $template->verze = $this->verze->get($id[0]);
-      $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($id);
-      $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($id);
+      $template->verze = $this->verze->get($seznamVerzi[0]);
+      $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi);
+      $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($seznamVerzi);
       $template->testovaci = ($protokol == 'testy');
       $template->typyZmen = $this->zmeny->seznamTypuZmen();
 
@@ -111,11 +114,12 @@ final class VerzePresenter extends BasePresenter
   /**
    * Export protokolů.
    */
-  public function renderExport($id = array(), $protokol)
+  public function renderExport($verzeId, $protokol)
   {
-    $this->template->verze = $this->verze->get($id[0]);
-    $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($id);
-    $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($id);
+    $seznamVerzi = explode(',', $verzeId);
+    $this->template->verze = $this->verze->get($seznamVerzi[0]);
+    $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi);
+    $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($seznamVerzi);
     $this->template->testovaci = ($protokol == 'testy');
     $this->template->typyZmen = $this->zmeny->seznamTypuZmen();
   }
