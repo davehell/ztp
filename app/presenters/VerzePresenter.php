@@ -132,6 +132,7 @@ final class VerzePresenter extends BasePresenter
   {
     if(!$verzeId) $this->redirect('Verze:seznam');
     $this->template->verze = $this->vybratVerzi($verzeId);
+    $this->template->pocetVsechZmen = $this->zmeny->pocetZmenVeVerzi($verzeId);
 
     if($this->pohled == 'test' || $this->pohled == 'boss') {
       $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($verzeId);

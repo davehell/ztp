@@ -7,7 +7,7 @@
 {/block}
 
 {block content}
-<h1 n:if="$pohled == 'dev'" >Změnový protokol <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span></a></h1>
+<h1 n:if="$pohled == 'dev'" >Změnový protokol <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></h1>
 <h1 n:if="$pohled == 'test'">Testovací protokol</h1>
 <h1 n:if="$pohled == 'boss'">Změny ve verzi {$verze->nazev}</h1>
 
@@ -41,12 +41,12 @@
   </div>
 {/if}
 
-<h2>Změny <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span></a></h2>
+<h2>Změny <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></h2>
 
-<ul id="vyberProtokolu" class="nav nav-pills">
+<ul n:if="$pocetVsechZmen > 0" id="vyberProtokolu" class="nav nav-pills">
   <li><label>Zobrazit:</label></li>
   <li class="{if $filtr == ''}active{/if}">
-    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => null" title="Všechny změny v protokolu">Vše</a>
+    <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => null" title="Všechny změny v protokolu">Všechny</a>
   </li>
   {if $pohled == 'dev' && $uziv}
   <li class="{if $filtr == 'autor'}active{/if}">
@@ -72,8 +72,8 @@
   {/if}
 </ul>
 
-<div n:if="count($zmeny) == 0" class="alert alert-info">
-  V této verzi {if $filtr == ''}zatím žádné{else}žádné takové{/if} změny nejsou.
+<div n:if="count($zmeny) == 0" class="alert alert-info text-center">
+  Ve verzi {if $pocetVsechZmen > 0}žádné takové{else}zatím žádné{/if} změny nejsou.
 </div>
 
 {snippet zmeny}
@@ -87,7 +87,6 @@
         <a n:href="Zmeny:zmena, $zmena->id" title="Upravit změnu" class="editaceZmeny btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
         <button type="button" title="Posunout změnu nahoru" class="posunNahoru btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
         <button type="button" title="Posunout změnu dolů" class="posunDolu btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></button>
-        <a n:href="Zmeny:smazat, $zmena->id" title=" Smazat tuto změnu" class="smazaniZmeny btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
         <a n:href="Zmeny:zmena, 'verzeId' => $verzeId, 'predchudce' => $zmena->id" title="Přidat další změnu hned za tuto" class="novaZmenaDalsi btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
       </div>
     </div>

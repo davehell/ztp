@@ -1,5 +1,7 @@
 {block content}
-<h1 n:inner-block="title">{if $zmena}Editace změny{else}Nová změna{/if}</h1>
+<h1 n:inner-block="title">{if $zmena}Editace změny{else}Nová změna{/if}
+{if $zmena}<a n:href="Zmeny:smazat, $zmena->id" title=" Smazat tuto změnu" class="smazaniZmeny btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>{/if}
+</h1>
 
 <ol class="breadcrumb">
   <li><a n:href="Verze:zmeny $verze->id">Verze {$verze->nazev}</a></li>
