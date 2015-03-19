@@ -79,7 +79,7 @@
 {snippet zmeny}
 <ul id="zmeny" data-url="{link poradi!}">
 {foreach $zmeny as $zmena}
-
+  {cache $uziv . $pohled . $zmena->id, tags => ['zmena/' . $zmena->id]}
   <a name="z{$zmena->id}"></a>
   <li class="zmena {if !$zmena->je_verejna}skryteInfo{/if}" data-id="{$zmena->id}">
     <div n:if="$pohled == 'dev'" class="btn-toolbar akce">
@@ -133,6 +133,7 @@
       {control testeri, $zmena}
     {/if}
   </li>
+  {/cache}
 {/foreach}
 </ul>
 {/snippet}

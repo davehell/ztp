@@ -9,6 +9,7 @@ use App\Model\VerzeRepository,
     Nette\Application\UI\Form,
     PdfResponse\PdfResponse,
     Nextras\Forms\Rendering\Bs3FormRenderer,
+    Nette\Caching\Cache,
     ZTPException;
 
 
@@ -126,7 +127,7 @@ final class VerzePresenter extends BasePresenter
 
 
   /**
-   * Změnový protokol
+   * Seznam změn ve verzi
    */
   public function renderZmeny($verzeId)
   {
@@ -161,7 +162,6 @@ final class VerzePresenter extends BasePresenter
     else {
       $this->template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId);
     }
-
   }
 
 
@@ -309,6 +309,10 @@ final class VerzePresenter extends BasePresenter
     } catch (\Exception $e) {
       $this->flashMessage('Chyba při přiřazení testera.', 'danger');
     }
+
+    $this->cache->clean([
+      Cache::TAGS => array("zmena/$zmenaId"),
+    ]);
 
     if ($this->isAjax()) {
       $this->invalidateControl('zmeny');

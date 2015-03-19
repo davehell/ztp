@@ -5,7 +5,9 @@ namespace App\Presenters;
 use Nette,
     App\Model\LideRepository,
     App\Model\VerzeRepository,
-    App\Model\ZmenyRepository;
+    App\Model\ZmenyRepository,
+    Nette\Caching\Cache,
+    Nette\Caching\IStorage;
 
 
 /**
@@ -30,6 +32,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
    * @inject
    */
   public $zmeny;
+
+  /**
+   * @inject
+   * @var IStorage
+   */
+  public $storage;
+
+  public $cache;
 
   /** @persistent */
   public $pohled = 'dev';
@@ -69,6 +79,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
   public function startup()
   {
     parent::startup();
+
+    $this->cache = new Cache($this->storage);
 
     //pokud nejsou parametry v url, načtou se z cookie
     if(!$this->uziv) $this->uziv    = $this->request->getCookie('uziv');
