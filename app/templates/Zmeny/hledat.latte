@@ -13,20 +13,20 @@
 {if $text}
 <hr>
 
-<h2>Našlo se toto</h2>
+<h2>Výsledek hledání</h2>
 
 <p>Hledaný text: <mark>{$text}</mark></p>
 
   {if count($vysledky)}
     <ol n:inner-foreach="$vysledky as $vysledek">
       <li>
-        <a n:href="Verze:zmeny#z$vysledek->zmena_id, $vysledek->verze_id, 'pohled' => $pohled" title="Zobrazit změnový protokol">verze {$vysledek->verze}</a>
+        <a n:href="Verze:zmeny#z$vysledek->zmena_id, $vysledek->verze_id, 'pohled' => $pohled" title="Zobrazit tento protokol">verze {$vysledek->verze}</a>
         <p>{!$vysledek->uloha|texy|ireplace:$text:"<mark>$text</mark>"}<p>
         <p>{!$vysledek->text|texy|ireplace:$text:"<mark>$text</mark>"}<p>
         <p>{!$vysledek->detail|texy|ireplace:$text:"<mark>$text</mark>"}<p>
       </li>
     </ol>
   {else}
-    <p class="alert alert-info">Kde nic, tu nic. Nemáš tam překlep?</p>
+    <div class="alert alert-info">Nenašla se žádná odpovídající změna.</div>
   {/if}
 {/if}

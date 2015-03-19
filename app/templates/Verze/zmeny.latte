@@ -73,7 +73,7 @@
 </ul>
 
 <div n:if="count($zmeny) == 0" class="alert alert-info">
-  Kde nic, tu nic.
+  V této verzi {if $filtr == ''}zatím žádné{else}žádné takové{/if} změny nejsou.
 </div>
 
 {snippet zmeny}
