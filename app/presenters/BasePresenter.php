@@ -119,21 +119,21 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     $this->template->verzeId = $this->verzeId;
     $this->template->filtr   = $this->filtr;
 
-    $this->template->zmenyBezTestera   = null;
-    $this->template->neotestovaneZmeny = null;
-    $this->template->autorovyZmeny     = null;
-    $this->template->testerovyZmeny    = null;
+    $this->template->pocetZmenBezTestera     = null;
+    $this->template->pocetNeotestovanychZmen = null;
+    $this->template->pocetAutorovychZmen     = null;
+    $this->template->pocetTesterovychZmen    = null;
     if($this->verzeId && $this->uzivId && $this->pohled == 'dev') {
-      $this->template->autorovyZmeny = $this->zmeny->zmenyVeVerzi($this->verzeId, $this->uzivId)->count();
-      $this->template->neotestovaneZmeny = $this->zmeny->neotestovane($this->verzeId, $this->uzivId)->count();
+      $this->template->pocetAutorovychZmen = $this->zmeny->pocetZmenVeVerzi($this->verzeId, $this->uzivId);
+      $this->template->pocetNeotestovanychZmen = $this->zmeny->pocetNeotestovanych($this->verzeId, $this->uzivId);
     }
     if($this->verzeId && $this->uzivId && $this->pohled == 'test') {
-      $this->template->testerovyZmeny = $this->zmeny->zmenyVeVerzi($this->verzeId, null, $this->uzivId)->count();
-      $this->template->neotestovaneZmeny = $this->zmeny->neotestovane($this->verzeId, null, $this->uzivId)->count();
+      $this->template->pocetTesterovychZmen = $this->zmeny->pocetZmenVeVerzi($this->verzeId, null, $this->uzivId);
+      $this->template->pocetNeotestovanychZmen = $this->zmeny->pocetNeotestovanych($this->verzeId, null, $this->uzivId);
     }
     if($this->verzeId && $this->pohled == 'boss') {
-      $this->template->zmenyBezTestera = $this->zmeny->bezTestera($this->verzeId)->count();
-      $this->template->neotestovaneZmeny = $this->zmeny->neotestovane($this->verzeId)->count();
+      $this->template->pocetZmenBezTestera = $this->zmeny->pocetBezTestera($this->verzeId);
+      $this->template->pocetNeotestovanychZmen = $this->zmeny->pocetNeotestovanych($this->verzeId);
     }
   }
 }

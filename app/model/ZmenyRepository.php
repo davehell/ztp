@@ -45,6 +45,18 @@ class ZmenyRepository extends Repository
   }
 
   /**
+   * Počet všech změny v dané verzi
+   * @param  $verze  ID verze
+   * @param  $autor  ID autora. Pouze ty změny, kterých je autorem.
+   * @param  $tester ID testera. Pouze ty změny, které testuje.
+   * @return int
+   */
+  public function pocetZmenVeVerzi($verze, $autor = null, $tester = null)
+  {
+    return $this->zmenyVeVerzi($verze, $autor, $tester)->count('*');
+  }
+
+  /**
    * Pouze veřejné změny v dané verzi
    * @param  $verze  ID verze
    * @return \Nette\Database\Table\Selection
@@ -100,12 +112,30 @@ class ZmenyRepository extends Repository
   }
 
   /**
+   * Počet změn ve verzi, které ještě nejsou otestované (buď je v nich chyba, nebo ještě testování nezačalo)
+   * @return int
+   */
+  public function pocetNeotestovanych($verze, $autor = null, $tester = null)
+  {
+    return $this->neotestovane($verze, $autor, $tester)->count('*');
+  }
+
+  /**
    * Nově přidané změny do verze - nemají přiřazeného testera a nejsou ještě otestované
    * @return \Nette\Database\Table\Selection
    */
   public function bezTestera($verze)
   {
     return $this->zmenyVeVerzi($verze)->where('tester_id IS NULL')->where('je_ok IS NULL');
+  }
+
+  /**
+   * Počet nově přidaných změn do verze - nemají přiřazeného testera a nejsou ještě otestované
+   * @return int
+   */
+  public function pocetBezTestera($verze)
+  {
+    return $this->bezTestera($verze)->count('*');
   }
 
   /**
