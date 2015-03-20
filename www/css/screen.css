@@ -99,10 +99,14 @@ ul#zmeny {
 .zmena:hover .btn-toolbar.akce {
   display: block;
 }
-.zmena .moje {
+.zmena .jmeno {
+  display: inline-block;
+  width: 7em;
+}
+.zmena .jmeno.moje {
   background-color: #d9edf7;
   color: #31708f;
-  padding: 2px 10px;
+  padding: 2px;
 }
 .zmena p {
   margin: 0;
