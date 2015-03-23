@@ -67,12 +67,15 @@
         </ul>
         {/ifCurrent}
 
+        {ifCurrent Zmeny:hledat}{else}
         <label>Vyhledávání:</label>
-        <ul>
-          <li>
-            <a n:href="Zmeny:hledat, 'pohled' => $pohled" title="Hledání ve změnových protokolech">Hledat změnu</a>
-          </li>
-        </ul>
+        <form class="form-inline" action="{link Zmeny:hledat}" method="get">
+          <input type="hidden" name="pohled" value="{$pohled}">
+          <input type="search" class="form-control" name="text" id="text" value="">
+          <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+        </form>
+        {/ifCurrent}
+
       </div> <!-- #sidebar -->
       </div> <!-- .col-md-3 -->
       <div class="col-sm-9" id="main">
