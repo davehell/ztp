@@ -12,7 +12,7 @@
   <dd>{$verze->datum|date:'%d.%m.%Y'}</dd>
 </dl>
 
-<div n:if="$verze->pozn_verejna">{!$verze->pozn_verejna|texy}</div>
+<div n:if="$verze->pozn_verejna && !$testovaci">{!$verze->pozn_verejna|texy}</div>
 
 {if $testovaci}
 <h2>Testovací prostředí:</h2>
