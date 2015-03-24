@@ -154,3 +154,28 @@ label.required:after {
 #frm-infoForm-pozn_skryta {
   height: 200px;
 }
+
+
+.twitter-typeahead {
+  width: 100%;
+}
+.twitter-typeahead .tt-hint {
+  color: #999
+}
+.twitter-typeahead .tt-dropdown-menu {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  margin-top: 5px;
+  padding: 8px 0;
+  width: 100%;
+}
+.twitter-typeahead .tt-suggestion {
+  padding: 3px 12px;
+}
+.twitter-typeahead .tt-suggestion.tt-cursor {
+  background-color: #0097cf;
+  color: #fff;
+}
+

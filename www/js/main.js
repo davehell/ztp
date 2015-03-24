@@ -125,3 +125,24 @@ $(function () {
   });
   $.nette.init();
 });
+
+/**
+ * Našeptávání názvů úloh
+ */
+var ulohy = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('nazev'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: {
+    url: '../ulohy.json',
+    // the json file contains an array of strings, but the Bloodhound suggestion engine expects JavaScript objects so this converts all of those strings
+    filter: function(list) {
+      return $.map(list, function(uloha) { return { nazev: uloha }; });
+    }
+  }
+});
+ulohy.initialize(); // kicks off the loading/processing of `local` and `prefetch`
+$('#frm-zmenaForm-uloha').typeahead(null, {
+  name: 'ulohy',
+  displayKey: 'nazev',
+  source: ulohy.ttAdapter() // `ttAdapter` wraps the suggestion engine in an adapter that is compatible with the typeahead jQuery plugin
+});

@@ -108,7 +108,7 @@ final class ZmenyPresenter extends BasePresenter
       ->addRule(Form::MAX_LENGTH, 'Task musí mít maximálně %d znaků', 50)
       ->addRule(Form::PATTERN, 'Čísla tasku mohou obsahovat pouze číslice', '[0-9, ]*'); //jen číslice, čárky a mezery
 
-    $form->addTextArea('uloha', 'Úloha')
+    $form->addText('uloha', 'Úloha')
       ->setAttribute('placeholder', 'Název úlohy, které se změna týká')
       ->addRule(Form::MAX_LENGTH, 'Úloha musí mít maximálně %d znaků', 1000)
       ->setRequired('Zadej, které úlohy se změna týká');

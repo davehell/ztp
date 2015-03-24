@@ -4,7 +4,8 @@
 		"nette/nette": "~2.3.0",
 		"dg/adminer-custom": "~1.6",
 		"nextras/forms": "~1.4",
-		"jkuchar/pdfresponse": "dev-master"
+		"jkuchar/pdfresponse": "dev-master",
+		"peci1/suggestinput": "~2.1.1"
 	},
 	"require-dev": {
 		"nette/tester": "~1.3",
