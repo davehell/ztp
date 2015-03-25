@@ -1,5 +1,6 @@
+{block content}
 <h1>
-  {block content}
+  {block title}
   {if $verze}Editace verze{else}Nová verze{/if}
   {/block}
   {if $verze}<a n:href="smazat $verze->id" class="smazaniVerze btn btn-danger" title="Smazat tuto verzi"><span class="glyphicon glyphicon-trash"></span></a>{/if}
