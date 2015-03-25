@@ -134,6 +134,7 @@ var ulohy = new Bloodhound({
   queryTokenizer: Bloodhound.tokenizers.whitespace,
   prefetch: {
     url: '../ulohy.json',
+    ttl: 60000,
     // the json file contains an array of strings, but the Bloodhound suggestion engine expects JavaScript objects so this converts all of those strings
     filter: function(list) {
       return $.map(list, function(uloha) { return { nazev: uloha }; });
