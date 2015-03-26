@@ -17,9 +17,9 @@
   <dt>Datum</dt>
   <dd>{$verze->datum|date:'%d.%m.%Y'}</dd>
   <dt>Veřejné poznámky</dt>
-  <dd>{!$verze->pozn_verejna|texy}</dd>
+  <dd>{!$verze->pozn_verejna|texy|vlna}</dd>
   <dt>Skryté poznámky</dt>
-  <dd {if $verze->pozn_skryta} class="skryteInfo"{/if}>{!$verze->pozn_skryta|texy}</dd>
+  <dd {if $verze->pozn_skryta} class="skryteInfo"{/if}>{!$verze->pozn_skryta|texy|vlna}</dd>
 </dl>
 
 {if $pohled == 'test'}
@@ -123,9 +123,9 @@
     <p>
       <strong>{$zmena->uloha}</strong>
     </p>
-    {!$zmena->text|texy}
+    {!$zmena->text|texy|vlna}
     <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
-      {!$zmena->detail|texy}
+      {!$zmena->detail|texy|vlna}
     </div>
 
     {if ($pohled == 'dev' || $pohled == 'test') && $zmena->je_ok === 0}
