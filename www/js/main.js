@@ -147,3 +147,4 @@ $('#frm-zmenaForm-uloha').typeahead(null, {
   displayKey: 'nazev',
   source: ulohy.ttAdapter() // `ttAdapter` wraps the suggestion engine in an adapter that is compatible with the typeahead jQuery plugin
 });
+$('.tt-hint').removeAttr('data-nette-rules'); //typeahead zkopíruje původní textové pole včetně všech atributů (kromě ID) a přidá mu třídu .tt-hint. NetteForms ale toto pole neumí zvalidovat, protože při vytvoření formulařé v něm nebylo.
