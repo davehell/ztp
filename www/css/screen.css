@@ -4,9 +4,14 @@
 body {
   background-color: #efefef;
   color: #404040;
-  font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 15px;
   font-weight: normal;
+}
+h1, h2, h3, h4, h5, h6, legend {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  page-break-after: avoid;
 }
 #main {
   background-color: #fcfcfc;
@@ -53,11 +58,7 @@ body {
 #sidebar ul li a.export {
   margin-left: 20px;
 }
-h1, h2, h3, h4, h5, h6, legend {
-  font-family: "Roboto Slab","Georgia",Arial,sans-serif;
-  font-weight: 700;
-  page-break-after: avoid;
-}
+
 
 /* texty, které se nezveřejňují ve finálním změnovém/testovacím protokolu */
 .skryteInfo {
