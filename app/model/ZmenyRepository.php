@@ -39,6 +39,12 @@ class ZmenyRepository extends Repository
   public function zmenyVeVerzi($verze, $autor = null, $tester = null)
   {
     $zmeny = $this->findAll()->where('verze_id', $verze)->order('poradi ASC');
+//
+// $selection->where(':book:book_tags.tag.name', 'PHP')
+//           ->group('author.id')
+//           ->having('COUNT(:book:book_tags.tag.id) > 0');
+
+
     if($autor) $zmeny = $zmeny->where('autor_id', $autor);
     if($tester) $zmeny = $zmeny->where('tester_id', $tester);
     return $zmeny;
