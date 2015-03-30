@@ -116,7 +116,12 @@ ul#zmeny {
   list-style-type: none;
   margin-bottom: 5px;
 }
-
+.zmena .novaZmenaDalsi {
+  margin-left: -15px;
+}
+.zmena.skryteInfo .novaZmenaDalsi {
+  margin-left: -20px;
+}
 /* znázornění stavu změny/chyby - funguje, nefunguje, čeká na otestování */
 .zmena .stav {
   font-size: 150%;

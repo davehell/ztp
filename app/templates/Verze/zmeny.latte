@@ -41,7 +41,7 @@
   </div>
 {/if}
 
-<h2>Změny <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></h2>
+<h2>Změny</h2>
 
 {snippet filtr}
 <ul n:if="$pocetVsechZmen > 0" id="vyberProtokolu" class="nav nav-tabs">
@@ -78,6 +78,10 @@
   Ve verzi {if $pocetVsechZmen > 0}žádné takové{else}zatím žádné{/if} změny nejsou.
 </div>
 
+<p class="text-center">
+  <a n:if="$pohled == 'dev'" n:href="Zmeny:zmena, 'verzeId' => $verze->id" title="Přidat novou změnu na začátek protokolu" class="novaZmena btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+</p>
+
 <ul id="zmeny" data-url="{link poradi!}">
 {foreach $zmeny as $zmena}
   {cache $uziv . $pohled . $filtr . $zmena->id, tags => ["zmena/$zmena->id", "verze/$verzeId"]}
@@ -88,7 +92,6 @@
         <a n:href="Zmeny:zmena, $zmena->id" title="Upravit změnu" class="editaceZmeny btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
         <button type="button" title="Posunout změnu nahoru" class="posunNahoru btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
         <button type="button" title="Posunout změnu dolů" class="posunDolu btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></button>
-        <a n:href="Zmeny:zmena, 'verzeId' => $verzeId, 'predchudce' => $zmena->id" title="Přidat další změnu hned za tuto" class="novaZmenaDalsi btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a>
       </div>
     </div>
     <div n:if="$pohled == 'test'" class="btn-toolbar akce">
@@ -134,6 +137,10 @@
     {if $pohled == 'boss'}
       {control testeri, $zmena}
     {/if}
+
+    <p n:if="$pohled == 'dev'" class="text-center">
+      <a n:href="Zmeny:zmena, 'verzeId' => $verzeId, 'predchudce' => $zmena->id" title="Přidat další změnu hned za tuto" class="novaZmenaDalsi btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+    </p>
   </li>
   {/cache}
 {/foreach}
