@@ -153,14 +153,6 @@ label.required:after {
   padding-left: 15px;
 }
 
-#frm-zmenaForm-text,
-#frm-zmenaForm-detail,
-#frm-chybaForm-text,
-#frm-infoForm-pozn_verejna,
-#frm-infoForm-pozn_skryta {
-  height: 200px;
-}
-
 
 .twitter-typeahead {
   width: 100%;
