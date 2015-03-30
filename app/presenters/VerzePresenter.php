@@ -84,6 +84,7 @@ final class VerzePresenter extends BasePresenter
     if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
 
     $seznamVerzi = explode(',', $verzeId);
+    $vsechnyVerze = array(); //může se exportovat i více protokolů najednou
 
     //všechny zadané verze musí existovat
     foreach ($seznamVerzi as $verze) {
@@ -91,12 +92,13 @@ final class VerzePresenter extends BasePresenter
       if(!$verze) {
         throw new \Nette\Application\BadRequestException('Neexistující verze');
       }
+      $vsechnyVerze[] = $verze;
     }
 
     if($format == "pdf") {
       $template = $this->createTemplate()->setFile(__DIR__ . "/../templates/Verze/export.latte");
 
-      $template->verze = $this->verze->get($seznamVerzi[0]);
+      $template->verze = $vsechnyVerze;
       $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi);
       $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($seznamVerzi);
       $template->testovaci = ($protokol == 'testy');
@@ -104,7 +106,7 @@ final class VerzePresenter extends BasePresenter
 
       $pdf = new PDFResponse($template);
       $pdf->documentAuthor = "";
-      $pdf->documentTitle = ($template->testovaci ? 'Testovací' : 'Změnový') . ' protokol verze ' . $template->verze->nazev;
+      $pdf->documentTitle = ($template->testovaci ? 'Testovací' : 'Změnový') . ' protokol verze ' . $vsechnyVerze[0]->nazev;
       $pdf->outputDestination = PDFResponse::OUTPUT_DOWNLOAD;
 
       $this->sendResponse($pdf);
@@ -117,11 +119,15 @@ final class VerzePresenter extends BasePresenter
   public function renderExport($verzeId, $protokol)
   {
     $seznamVerzi = explode(',', $verzeId);
-    $this->template->verze = $this->verze->get($seznamVerzi[0]);
+    $this->template->verze = array();
+    foreach($seznamVerzi as $verzeId) {
+      $this->template->verze[] = $this->verze->get($verzeId);
+    }
     $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi);
     $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($seznamVerzi);
     $this->template->testovaci = ($protokol == 'testy');
     $this->template->typyZmen = $this->zmeny->seznamTypuZmen();
+    $this->template->title = $this->template->verze[0]->nazev;
   }
 
 
