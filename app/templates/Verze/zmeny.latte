@@ -122,6 +122,12 @@
       </span>
       {$zmena->typy_zmen->nazev}
       {if $zmena->task}({$zmena->task}){/if}
+
+    {foreach $zmena->related('zmeny_tagy') as $tag}
+      <span class="label label-default podnik{$tag->typy_tagu->podnik}">{$tag->typy_tagu->nazev}</span>{sep} {/sep}
+    {/foreach}
+
+
     </p>
     <p>
       <strong>{$zmena->uloha}</strong>

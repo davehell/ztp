@@ -59,6 +59,7 @@ final class ZmenyPresenter extends BasePresenter
       $zmena = $this->zmeny->get($id);
       if(!$zmena) throw new \Nette\Application\BadRequestException("Neexistující změna");
       $this['zmenaForm']->setDefaults($zmena);
+      $this['zmenaForm']->setDefaults(array('tagy' => $this->zmeny->tagyProZmenu($id)));
       $this->template->zmena = $zmena;
       $this->template->verze = $this->vybratVerzi($zmena->verze_id);
     }
@@ -125,8 +126,7 @@ final class ZmenyPresenter extends BasePresenter
       ->setAttribute('placeholder', 'Neveřejné informace určené pouze pro testery')
       ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 1000);
 
-    // $form->addMultiSelect('tagy', 'Štítky', $this->zmeny->seznamTagu())
-    //   ->setDefaultValue("energis");
+    $form->addMultiSelect('tagy', 'Štítky', $this->zmeny->seznamTagu());
 
     $form->addSubmit('ok', 'Uložit');
 
@@ -145,7 +145,6 @@ final class ZmenyPresenter extends BasePresenter
   public function zmenaFormSuccess($form)
   {
     $values = $form->getValues();
-    //unset($values['tagy']);
 
     $values['task'] = str_replace(' ', '', $values['task']); //odstranění mezer
     $values['task'] = str_replace(',', ', ', $values['task']); //doplnění mezer za čárky
@@ -153,6 +152,9 @@ final class ZmenyPresenter extends BasePresenter
     $zmenaId = $this->getParameter('id');
     $verzeId = $values['verze_id'];
     $predchudce = $this->getParameter('predchudce');
+
+    $tagy = $values['tagy'];
+    unset($values['tagy']);
 
     if($zmenaId) { //editace
       try {
@@ -165,8 +167,6 @@ final class ZmenyPresenter extends BasePresenter
       $this->cache->clean([
         Cache::TAGS => array("zmena/$zmenaId"),
       ]);
-
-      $this->redirect('Verze:zmeny#z' . $zmenaId, $verzeId);
     }
     else { //nový záznam
       //pokud se nová změna má umístit za nějakou existující, potřebujeme znát pořadí změn ve verzi
@@ -181,9 +181,11 @@ final class ZmenyPresenter extends BasePresenter
         $this->redirect('this');
       }
 
+      $zmenaId = $z->id;
+
       if($predchudce) {
         //umístěni nové změny za jejího předchůdce
-        array_splice($poradi, array_search($predchudce, $poradi) + 1, 0, $z->id);
+        array_splice($poradi, array_search($predchudce, $poradi) + 1, 0, $zmenaId);
         try {
           $this->zmeny->aktualizovatPoradiZmen($poradi);
         } catch (\Exception $e) {
@@ -191,9 +193,23 @@ final class ZmenyPresenter extends BasePresenter
           $this->redirect('this');
         }
       }
-
-      $this->redirect('Verze:zmeny#z' . $z->id, $verzeId);
     }
+
+    //uložení tagů ke změně
+    //převedení multiselectu se štítky do podoby vzhodné pro uložení do db
+		$arr = array();
+		foreach($tagy as $key => $idTagu) {
+			$arr[$key]['zmeny_id'] = $zmenaId;
+      $arr[$key]['typy_tagu_id'] = $idTagu;
+		}
+    try {
+      $this->zmeny->aktualizaceTagu($zmenaId, $arr);
+    } catch (\Exception $e) {
+      $this->flashMessage('Chyba při ukládání štítků.', 'danger');
+      $this->redirect('this');
+    }
+
+    $this->redirect('Verze:zmeny#z' . $zmenaId, $verzeId);
   }
 
 }

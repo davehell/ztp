@@ -26,7 +26,7 @@ class ZmenyRepository extends Repository
    */
   public function seznamTagu()
   {
-    return $this->database->table('typy_tagu')->fetchPairs('nazev', 'nazev');
+    return $this->database->table('typy_tagu')->fetchPairs('id', 'nazev');
   }
 
   /**
@@ -170,6 +170,30 @@ class ZmenyRepository extends Repository
     return $this->update($id, $values);
   }
 
+  /**
+   * Zjištění tagů náležejících k dané změně
+   */
+  public function tagyProZmenu($id)
+  {
+    return $this->database->table('zmeny_tagy')->where('zmeny_id', $id)->fetchPairs('typy_tagu_id', 'typy_tagu_id');
+  }
+
+  /**
+   * Uložení tagů náležejících k dané změně
+   */
+  public function aktualizaceTagu($id, $tagy)
+  {
+    try {
+      $this->beginTransaction();
+      $this->database->table('zmeny_tagy')->where('zmeny_id', $id)->delete();
+      if(count($tagy)) $this->database->table('zmeny_tagy')->insert($tagy);
+      $this->commitTransaction();
+    }
+    catch(\Exception $e) {
+      $this->rollbackTransaction();
+      throw $e;
+    }
+  }
 
   /**
    * Změny, které obsahují hledaný výraz
