@@ -16,8 +16,10 @@ h1, h2, h3, h4, h5, h6, legend {
 #main {
   background-color: #fcfcfc;
   padding-bottom: 15px;
-  padding-top: 15px;
   z-index: 2000;
+}
+#main > .alert {
+  margin-top: 15px;
 }
 #sidebar {
   background-color: #343131;
