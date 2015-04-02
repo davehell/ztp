@@ -123,11 +123,13 @@
       {$zmena->typy_zmen->nazev}
       {if $zmena->task}({$zmena->task}){/if}
 
-    {foreach $zmena->related('zmeny_tagy') as $tag}
-      <span class="label label-default podnik{$tag->tagy->podnik}">{$tag->tagy->nazev}</span>{sep} {/sep}
-    {/foreach}
+      {foreach $zmena->related('zmeny_tagy') as $tag}
+        <span class="label label-default podnik{$tag->tagy->podnik}">{$tag->tagy->nazev}</span>{sep} {/sep}
+      {/foreach}
 
-
+      {if $pohled == 'dev' && $zmena->tester_id}
+        - tester {$zmena->tester->jmeno|upper}
+      {/if}
     </p>
     <p>
       <strong>{$zmena->uloha}</strong>
