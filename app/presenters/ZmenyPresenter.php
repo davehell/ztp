@@ -126,7 +126,7 @@ final class ZmenyPresenter extends BasePresenter
       ->setAttribute('placeholder', 'Neveřejné informace určené pouze pro testery')
       ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 1000);
 
-    $form->addMultiSelect('tagy', 'Jen pro podniky', $this->zmeny->seznamTagu());
+    $form->addCheckboxList('tagy', 'Jen pro podnik', $this->zmeny->seznamTagu());
 
     $form->addSubmit('ok', 'Uložit');
 

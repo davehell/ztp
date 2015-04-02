@@ -133,7 +133,7 @@ ul#zmeny {
 .label.podnik25 {
   background-color: #990099;
 }
-#frm-zmenaForm .radio {
+#frm-zmenaForm .radio, #frm-zmenaForm .checkbox {
   float: left;
   margin-right: 10px;
 }
