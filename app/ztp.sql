@@ -5,7 +5,6 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-CREATE DATABASE `ztp` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_czech_ci */;
 USE `ztp`;
 
 DROP TABLE IF EXISTS `chyby`;
@@ -51,16 +50,16 @@ INSERT INTO `lide` (`id`, `jmeno`, `prostredi`, `je_aktivni`, `je_tester`) VALUE
 (17,	'kpe',	'',	1,	0),
 (18,	'hba',	'',	1,	1);
 
-DROP TABLE IF EXISTS `typy_tagu`;
-CREATE TABLE `typy_tagu` (
+DROP TABLE IF EXISTS `tagy`;
+CREATE TABLE `tagy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `podnik` varchar(10) COLLATE utf8_czech_ci NOT NULL,
   `nazev` varchar(30) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `typy_tagu` (`id`, `nazev`) VALUES
-(1,	'energis'),
-(2,	'rwe');
+INSERT INTO `tagy` (`id`, `podnik`, `nazev`) VALUES
+(2,	'25',	'rwe');
 
 DROP TABLE IF EXISTS `typy_zmen`;
 CREATE TABLE `typy_zmen` (
@@ -97,7 +96,7 @@ CREATE TABLE `zmeny` (
   `uloha` varchar(1000) COLLATE utf8_czech_ci NOT NULL COMMENT 'kterých úloh se změna týká',
   `typy_zmen_id` int(11) NOT NULL,
   `text` text COLLATE utf8_czech_ci NOT NULL COMMENT 'popis změny, který se objeví ve změnovém i testovacím protokolu',
-  `detail` text CHARACTER SET utf16 COLLATE utf16_czech_ci NOT NULL COMMENT 'podrobné informace určené pro testery',
+  `detail` text COLLATE utf8_czech_ci NOT NULL COMMENT 'podrobné informace určené pro testery',
   `tester_id` int(11) DEFAULT NULL COMMENT 'null - tester ještě není přiřazený',
   `je_ok` tinyint(4) DEFAULT NULL COMMENT '1 - funguje správně, 0 - existuje neopravená chyba, null - zatím netestováno',
   `vysledek_testu` varchar(100) COLLATE utf8_czech_ci NOT NULL COMMENT 'výsledek testování',
@@ -117,13 +116,13 @@ DROP TABLE IF EXISTS `zmeny_tagy`;
 CREATE TABLE `zmeny_tagy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `zmeny_id` int(11) NOT NULL,
-  `typy_tagu_id` int(11) NOT NULL,
+  `tagy_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `typy_tagu_id` (`typy_tagu_id`),
+  KEY `typy_tagu_id` (`tagy_id`),
   KEY `zmeny_id` (`zmeny_id`),
-  CONSTRAINT `zmeny_tagy_ibfk_2` FOREIGN KEY (`typy_tagu_id`) REFERENCES `typy_tagu` (`id`),
+  CONSTRAINT `zmeny_tagy_ibfk_4` FOREIGN KEY (`tagy_id`) REFERENCES `tagy` (`id`),
   CONSTRAINT `zmeny_tagy_ibfk_3` FOREIGN KEY (`zmeny_id`) REFERENCES `zmeny` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2015-03-17 12:55:07
+-- 2015-04-02 05:18:35

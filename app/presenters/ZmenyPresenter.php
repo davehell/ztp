@@ -200,7 +200,7 @@ final class ZmenyPresenter extends BasePresenter
 		$arr = array();
 		foreach($tagy as $key => $idTagu) {
 			$arr[$key]['zmeny_id'] = $zmenaId;
-      $arr[$key]['typy_tagu_id'] = $idTagu;
+      $arr[$key]['tagy_id'] = $idTagu;
 		}
     try {
       $this->zmeny->aktualizaceTagu($zmenaId, $arr);

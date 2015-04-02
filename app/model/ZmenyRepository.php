@@ -26,7 +26,7 @@ class ZmenyRepository extends Repository
    */
   public function seznamTagu()
   {
-    return $this->database->table('typy_tagu')->fetchPairs('id', 'nazev');
+    return $this->database->table('tagy')->fetchPairs('id', 'nazev');
   }
 
   /**
@@ -181,7 +181,7 @@ class ZmenyRepository extends Repository
    */
   public function tagyProZmenu($id)
   {
-    return $this->database->table('zmeny_tagy')->where('zmeny_id', $id)->fetchPairs('typy_tagu_id', 'typy_tagu_id');
+    return $this->database->table('zmeny_tagy')->where('zmeny_id', $id)->fetchPairs('tagy_id', 'tagy_id');
   }
 
   /**
