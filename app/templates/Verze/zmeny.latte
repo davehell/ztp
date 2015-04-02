@@ -1,9 +1,9 @@
 {block title}
-  {if $pohled == 'dev'}Změny
-  {elseif $pohled == 'test'}Testy
+  {if $pohled == 'dev'}Změny verze
+  {elseif $pohled == 'test'}Testy verze
   {else}Verze
   {/if}
-  verze {$verze->nazev}
+  {$verze->nazev}
 {/block}
 
 {block content}
