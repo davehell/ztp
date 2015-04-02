@@ -5,6 +5,9 @@ $( document ).ready(function() {
     var zmena = $('.zmena[data-id="' + hash.substring(2) + '"]');
     zvyraznitZmenu(zmena);
   }
+
+  //vložení storno tlačítka za submit tlačítko ve formulářích
+  $("#frm-zmenaForm :submit, #frm-chybaForm :submit, #frm-infoForm :submit").after( $("#stornoBtn") );
 });
 
 /**

@@ -16,8 +16,15 @@
 </ol>
 
 {control infoForm}
+{if $verze}
+  <a n:href="Verze:zmeny $verze->id" id="stornoBtn" class="btn btn-default">Storno</a>
+{else}
+  <a n:href="Verze:seznam" id="stornoBtn" class="btn btn-default">Storno</a>
+{/if}
 
 <pre>
+  <strong>Nápověda</strong>
+  Odstavce oddělovat prázdným řádkem.
   *text kurzívou* = <em>text kurzívou</em>
   **tučný text** = <strong>tučný text</strong>
 </pre>
