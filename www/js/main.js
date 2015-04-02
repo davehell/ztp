@@ -76,26 +76,6 @@ function ulozitPoradi() {
   $.get(url, { seznam: poradi.join() });
 }
 
-/**
- * Zobrazení formuláře pro zadání výsledku testování změny.
- */
-$('button.zmenaFunguje').click(function(event) {
-  var zmena = $(this).closest('.zmena');
-  $('#frm-testForm-id').val(zmena.data('id'));
-  var vysledek = zmena.find('.vysledekTestu').html();
-  $('#frm-testForm-vysledek_testu').val(vysledek ? vysledek : 'bez připomínek');
-  $('#modalZmenaFunguje').modal('show');
-  zvyraznitZmenu(zmena);
-});
-
-/**
- * Vyplnění pole pro výsledek textu na základě zvolené varianty ze seznamu.
- */
-$('#modalZmenaFunguje li button').click(function(event) {
-  var text = $(this).data('text');
-  $('#frm-testForm-vysledek_testu').val(text);
-});
-
 $(function () {
   $.nette.ext({
     load: function() {
@@ -109,6 +89,26 @@ $(function () {
         if(confirm_box) {
           window.location = url;
         }
+      });
+
+      /**
+       * Zobrazení formuláře pro zadání výsledku testování změny.
+       */
+      $('button.zmenaFunguje').click(function(event) {
+        var zmena = $(this).closest('.zmena');
+        $('#frm-testForm-id').val(zmena.data('id'));
+        var vysledek = zmena.find('.vysledekTestu').html();
+        $('#frm-testForm-vysledek_testu').val(vysledek ? vysledek : 'bez připomínek');
+        $('#modalZmenaFunguje').modal('show');
+        zvyraznitZmenu(zmena);
+      });
+
+      /**
+       * Vyplnění pole pro výsledek textu na základě zvolené varianty ze seznamu.
+       */
+      $('#modalZmenaFunguje li button').click(function(event) {
+        var text = $(this).data('text');
+        $('#frm-testForm-vysledek_testu').val(text);
       });
     },
     success: function(payload) {
