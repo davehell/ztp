@@ -139,7 +139,7 @@
       {!$zmena->detail|texy|vlna}
     </div>
 
-    {if ($pohled == 'dev' || $pohled == 'test') && $zmena->je_ok === 0}
+    {if ($pohled == 'dev' || $pohled == 'test')}
       {control chyby, $zmena->id}
     {/if}
     {if $pohled == 'boss'}
