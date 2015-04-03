@@ -28,4 +28,12 @@ class LideRepository extends Repository
   {
     return $this->aktivniLide()->fetchPairs('id', 'jmeno');
   }
+
+  /**
+   * U všech lidí nastaví příznak, že nemají vyplněno testovací prostředí.
+   */
+  public function odebratProstredi()
+  {
+    return $this->findAll()->update(array('je_zadano_prostredi' => false));
+  }
 }

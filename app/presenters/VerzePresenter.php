@@ -197,10 +197,10 @@ final class VerzePresenter extends BasePresenter
    */
   public function renderOsoba($id, $verzeId = null)
   {
-    $osoba = $this->lide->get($id);
-    if(!$osoba) throw new \Nette\Application\BadRequestException("Neexistující osoba");
-    $this->template->osoba = $osoba;
-    $this['osobaForm']->setDefaults($osoba);
+    $clovek = $this->lide->get($id);
+    if(!$clovek) throw new \Nette\Application\BadRequestException("Neexistující osoba");
+    $this->template->clovek = $clovek;
+    $this['osobaForm']->setDefaults($clovek);
 
     //zapamatuju si verzi, abych se po odeslání formuláře mohl vrátit do správného protokolu
     if($verzeId) {
@@ -384,6 +384,7 @@ final class VerzePresenter extends BasePresenter
     if($id) { //editace
       try {
         $this->verze->update($id, $values);
+
       } catch (\Exception $e) {
         $this->flashMessage('Chyba při ukládání.', 'danger');
         $this->redirect('this');
@@ -395,6 +396,7 @@ final class VerzePresenter extends BasePresenter
     else { //nový záznam
       try {
         $verze = $this->verze->insert($values);
+        $this->lide->odebratProstredi();
       } catch (\Exception $e) {
         $this->flashMessage('Chyba při ukládání.', 'danger');
         $this->redirect('this');
@@ -433,6 +435,7 @@ final class VerzePresenter extends BasePresenter
   public function osobaFormSuccess($form)
   {
     $values = $form->getValues();
+    $values['je_zadano_prostredi'] = true;
 
     $id = $this->getParameter('id');
 

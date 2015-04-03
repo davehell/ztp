@@ -53,6 +53,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
   public $verzeId;
   public $uzivId;
   public $texy;
+  public $osoba;
 
   protected $request;
   protected $response;
@@ -87,15 +88,15 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     $this->cache = new Cache($this->storage);
 
     //pokud nejsou parametry v url, načtou se z cookie
-    if(!$this->uziv) $this->uziv    = $this->request->getCookie('uziv');
+    if(!$this->uziv) $this->uziv = $this->request->getCookie('uziv');
     $this->uziv = strtolower($this->uziv);
     if($this->uziv) {
-      $clovek = $this->lide->getBy(array('jmeno' => $this->uziv));
-      if(!$clovek) {
+      $this->osoba = $this->lide->getBy(array('jmeno' => $this->uziv));
+      if(!$this->osoba) {
         $this->response->setCookie('uziv', '', '-1');
         throw new \Nette\Application\BadRequestException('Neexistující osoba');
       }
-      $this->uzivId = $clovek->id;
+      $this->uzivId = $this->osoba->id;
       $this->response->setCookie('uziv', $this->uziv, '100 days');
     }
   }
@@ -131,6 +132,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     $this->template->uziv    = $this->uziv;
     $this->template->uzivId  = $this->uzivId;
+    $this->template->osoba   = $this->osoba;
     $this->template->pohled  = $this->pohled;
     $this->template->verzeId = $this->verzeId;
     $this->template->filtr   = $this->filtr;
