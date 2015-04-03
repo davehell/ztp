@@ -463,7 +463,7 @@ final class VerzePresenter extends BasePresenter
     $form->addHidden('id')
       ->setAttribute('id', 'frm-testForm-id');
 
-    $form->addText('vysledek_testu', 'Výsledek testu')
+    $form->addText('vysledek_testu', 'Jiný výsledek')
       ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 100);
 
     $form->addSubmit('ok', 'Uložit');

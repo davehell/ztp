@@ -25,7 +25,9 @@ $.fn.enterKey = function (fnc, mod) {
 }
 $('textarea').enterKey(function() {$(this).closest('form').submit(); }, 'ctrl');
 
-
+/**
+ * Zvýraznění jedné změny v seznamu všech změn.
+ */
 function zvyraznitZmenu (zmena) {
   zmena.addClass( 'zvyraznena' );
   setTimeout(function() {zmena.removeClass('zvyraznena')}, 5000);
@@ -101,17 +103,19 @@ $(function () {
         var zmena = $(this).closest('.zmena');
         $('#frm-testForm-id').val(zmena.data('id'));
         var vysledek = zmena.find('.vysledekTestu').html();
-        $('#frm-testForm-vysledek_testu').val(vysledek ? vysledek : 'bez připomínek');
+        $('#frm-testForm-vysledek_testu').val(vysledek);
         $('#modalZmenaFunguje').modal('show');
         zvyraznitZmenu(zmena);
       });
 
       /**
-       * Vyplnění pole pro výsledek textu na základě zvolené varianty ze seznamu.
+       * Vyplnění pole pro výsledek textu na základě zvolené varianty ze seznamu a odeslání formuláře.
        */
       $('#modalZmenaFunguje li button').click(function(event) {
         var text = $(this).data('text');
         $('#frm-testForm-vysledek_testu').val(text);
+        $('#frm-testForm :submit').click();
+        $('#modalZmenaFunguje').modal('hide');
       });
     },
     success: function(payload) {

@@ -97,7 +97,7 @@
     <div n:if="$pohled == 'test'" class="btn-toolbar akce">
       <div class="btn-group">
         <a n:href="Chyby:chyba, null, $zmena->id" title="Změna nefunguje správně" class="novaChyba btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-        <button type="button" title="Bravo! Změna je v pořádku." class="zmenaFunguje btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+        <button type="button" title="Bravo! Změna prošla testováním." class="zmenaFunguje btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></button>
       </div>
     </div>
 
@@ -160,17 +160,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-        <h4 class="modal-title">Změna je v pořádku</h4>
+        <h4 class="modal-title">Změna prošla testováním</h4>
       </div>
       <div class="modal-body">
-        <ul>
-          <li>bez připomínek       <button type="button" class="btn btn-default" title="Vybrat tuto variantu" data-text="bez připomínek"><span class="glyphicon glyphicon-check"></span></button></li>
-          <li>testováno na zakázce <button type="button" class="btn btn-default" title="Vybrat tuto variantu" data-text="testováno na zakázce"><span class="glyphicon glyphicon-check"></span></button></li>
-          <li>netestováno          <button type="button" class="btn btn-default" title="Vybrat tuto variantu" data-text="netestováno"><span class="glyphicon glyphicon-check"></span></button></li>
+        <ul class="list-group">
+          <li class="list-group-item clearfix">bez připomínek       <button type="button" class="btn btn-primary pull-right" title="Uložit tuto variantu" data-text="bez připomínek"><span class="glyphicon glyphicon-ok"></span></button></li>
+          <li class="list-group-item clearfix">testováno na zakázce <button type="button" class="btn btn-primary pull-right" title="Uložit tuto variantu" data-text="testováno na zakázce"><span class="glyphicon glyphicon-ok"></span></button></li>
+          <li class="list-group-item clearfix">netestováno          <button type="button" class="btn btn-primary pull-right" title="Uložit tuto variantu" data-text="netestováno"><span class="glyphicon glyphicon-ok"></span></button></li>
+          <li class="list-group-item clearfix">{control testForm}</li>
         </ul>
-      </div>
-      <div class="modal-footer">
-        {control testForm}
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
