@@ -24,31 +24,33 @@ CREATE TABLE `lide` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `jmeno` varchar(10) COLLATE utf8_czech_ci NOT NULL,
   `prostredi` varchar(100) COLLATE utf8_czech_ci NOT NULL COMMENT 'popis testovacího prostředí (prohlížeč)',
+  `je_zadano_prostredi` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'příznak, jestli tester vyplnil své prostředí',
   `je_aktivni` tinyint(4) NOT NULL DEFAULT '1',
   `je_tester` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `jmeno` (`jmeno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-INSERT INTO `lide` (`id`, `jmeno`, `prostredi`, `je_aktivni`, `je_tester`) VALUES
-(1,	'dhe',	'FF ESR 24.7.0',	1,	0),
-(2,	'mma',	'FF ESR 31.4',	1,	1),
-(3,	'dku',	'Internet Explorer 11.0.9600',	1,	1),
-(4,	'jbo',	'',	1,	0),
-(5,	'jsv',	'',	1,	0),
-(6,	'tmo',	'',	1,	0),
-(7,	'jhb',	'',	1,	0),
-(8,	'vma',	'',	1,	0),
-(9,	'mkr',	'',	1,	0),
-(10,	'lbu',	'',	1,	0),
-(11,	'pso',	'FF 35.0',	1,	1),
-(12,	'mha',	'FF ESR 31.5.0',	1,	1),
-(13,	'jpe',	'FF ESR 31.3.0',	1,	1),
-(14,	'mpi',	'FF 36.0',	1,	1),
-(15,	'bpi',	'',	1,	1),
-(16,	'mvo',	'',	1,	0),
-(17,	'kpe',	'',	1,	0),
-(18,	'hba',	'',	1,	1);
+TRUNCATE `lide`;
+INSERT INTO `lide` (`id`, `jmeno`, `prostredi`, `je_zadano_prostredi`, `je_aktivni`, `je_tester`) VALUES
+(1,	'dhe',	'FF ESR 24.7.0',	0,	1,	0),
+(2,	'mma',	'FF ESR 31.4',	1,	1,	1),
+(3,	'dku',	'Internet Explorer 11.0.9600',	0,	1,	1),
+(4,	'jbo',	'',	0,	1,	0),
+(5,	'jsv',	'',	0,	1,	0),
+(6,	'tmo',	'',	0,	1,	0),
+(7,	'jhb',	'',	0,	1,	0),
+(8,	'vma',	'',	0,	1,	0),
+(9,	'mkr',	'',	0,	1,	0),
+(10,	'lbu',	'',	0,	1,	0),
+(11,	'pso',	'FF 35.0',	0,	1,	1),
+(12,	'mha',	'FF ESR 31.5.0',	0,	1,	1),
+(13,	'jpe',	'FF ESR 31.3.0',	0,	1,	1),
+(14,	'mpi',	'FF 36.0',	0,	1,	1),
+(15,	'bpi',	'',	0,	1,	1),
+(16,	'mvo',	'',	0,	1,	0),
+(17,	'kpe',	'',	0,	1,	0),
+(18,	'hba',	'',	0,	1,	1);
 
 DROP TABLE IF EXISTS `tagy`;
 CREATE TABLE `tagy` (
@@ -58,8 +60,9 @@ CREATE TABLE `tagy` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+TRUNCATE `tagy`;
 INSERT INTO `tagy` (`id`, `podnik`, `nazev`) VALUES
-(2,	'25',	'rwe');
+(2,	'25',	'RWE');
 
 DROP TABLE IF EXISTS `typy_zmen`;
 CREATE TABLE `typy_zmen` (
@@ -69,6 +72,7 @@ CREATE TABLE `typy_zmen` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+TRUNCATE `typy_zmen`;
 INSERT INTO `typy_zmen` (`id`, `nazev`, `zkratka`) VALUES
 (1,	'Přidáno',	'add'),
 (2,	'Změněno',	'mod'),
@@ -81,6 +85,7 @@ CREATE TABLE `verze` (
   `datum` date DEFAULT NULL,
   `pozn_verejna` text COLLATE utf8_czech_ci NOT NULL,
   `pozn_skryta` text COLLATE utf8_czech_ci NOT NULL,
+  `je_zamcena` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
@@ -120,9 +125,9 @@ CREATE TABLE `zmeny_tagy` (
   PRIMARY KEY (`id`),
   KEY `typy_tagu_id` (`tagy_id`),
   KEY `zmeny_id` (`zmeny_id`),
-  CONSTRAINT `zmeny_tagy_ibfk_4` FOREIGN KEY (`tagy_id`) REFERENCES `tagy` (`id`),
-  CONSTRAINT `zmeny_tagy_ibfk_3` FOREIGN KEY (`zmeny_id`) REFERENCES `zmeny` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `zmeny_tagy_ibfk_3` FOREIGN KEY (`zmeny_id`) REFERENCES `zmeny` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `zmeny_tagy_ibfk_4` FOREIGN KEY (`tagy_id`) REFERENCES `tagy` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2015-04-02 05:18:35
+-- 2015-04-03 12:36:26
