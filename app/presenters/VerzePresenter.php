@@ -226,6 +226,20 @@ final class VerzePresenter extends BasePresenter
   }
 
   /**
+   * Zamčení/Odemčení verze pro úpravy
+   */
+  public function handleZamceni($verzeId, $zamek)
+  {
+    $this->verze->zamknout($verzeId, $zamek);
+    try {
+      $this->verze->zamknout($verzeId, $zamek);
+    } catch (\Exception $e) {
+      $this->flashMessage('Chyba při zamykání verze.', 'danger');
+    }
+    $this->redirect('this');
+  }
+
+  /**
    * Smazání verze
    */
   public function actionSmazat($verzeId)

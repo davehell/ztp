@@ -1,3 +1,13 @@
+{block scripts}
+{if $verze->je_zamcena}
+  <script>
+  $( document ).ready(function() {
+    $('#main .btn').hide();
+  });
+  </script>
+{/if}
+{/block}
+
 {block title}
   {if $pohled == 'dev'}Změny verze
   {elseif $pohled == 'test'}Testy verze
@@ -9,7 +19,9 @@
 {block content}
 <h1 n:if="$pohled == 'dev'" >Změnový protokol <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></h1>
 <h1 n:if="$pohled == 'test'">Testovací protokol</h1>
-<h1 n:if="$pohled == 'boss'">Změny ve verzi {$verze->nazev}</h1>
+<h1 n:if="$pohled == 'boss'">Změny ve verzi {$verze->nazev} <a n:href="zamceni!, 'verzeId' => $verze->id, 'zamek' => true" title="Zamčení verze pro úpravy" class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span></a></h1>
+
+<div n:if="$verze->je_zamcena" class="alert alert-danger">Tato verze je uzamčena pro úpravy! <a n:if="$pohled == 'boss'" n:href="zamceni!, 'verzeId' => $verze->id, 'zamek' => false" title="Odemčení verze pro úpravy">Odemknout</a></div>
 
 <dl class="dl-horizontal">
   <dt>Verze</dt>
