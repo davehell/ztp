@@ -139,6 +139,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     $this->template->pocetNeotestovanychZmen = null;
     $this->template->pocetAutorovychZmen     = null;
     $this->template->pocetTesterovychZmen    = null;
+    $this->template->tagyVeVerzi = null;
     if($this->verzeId && $this->uzivId && $this->pohled == 'dev') {
       $this->template->pocetAutorovychZmen = $this->zmeny->pocetZmenVeVerzi($this->verzeId, $this->uzivId);
       $this->template->pocetNeotestovanychZmen = $this->zmeny->pocetNeotestovanych($this->verzeId, $this->uzivId);
@@ -150,6 +151,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     if($this->verzeId && $this->pohled == 'boss') {
       $this->template->pocetZmenBezTestera = $this->zmeny->pocetBezTestera($this->verzeId);
       $this->template->pocetNeotestovanychZmen = $this->zmeny->pocetNeotestovanych($this->verzeId);
+      $this->template->tagyVeVerzi = $this->zmeny->tagyVeVerzi($this->verzeId);
     }
   }
 }

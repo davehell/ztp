@@ -77,8 +77,11 @@ final class VerzePresenter extends BasePresenter
    * Pokud je v url zadán parametr format==pdf, vykreslí se pdf. Na renderExport se v tom případě nepokračuje.
    * Pokud je zadáno více ID verzí, zobrazí se změny ze všech verzí. Do hlavičky se použijí údaje z první zadané verze.,
    * @param  [string] $id       listing ID verzí oddělený čárkami
+   * @param  [string] $protokol "testy" | "zmeny"
+   * @param  [string] $format   "pdf"
+   * @param  [string] $tag      ID tagu podniku
    */
-  public function actionExport($verzeId, $protokol, $format)
+  public function actionExport($verzeId, $protokol, $format, $tag = null)
   {
     //musí být zadána aspoň jedna verze
     if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
@@ -99,14 +102,16 @@ final class VerzePresenter extends BasePresenter
       $template = $this->createTemplate()->setFile(__DIR__ . "/../templates/Verze/export.latte");
 
       $template->verze = $vsechnyVerze;
-      $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi);
+      $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi, $tag);
       $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($seznamVerzi);
       $template->testovaci = ($protokol == 'testy');
       $template->typyZmen = $this->zmeny->seznamTypuZmen();
 
       $pdf = new PDFResponse($template);
       $pdf->documentAuthor = "";
-      $pdf->documentTitle = ($template->testovaci ? 'Testovací' : 'Změnový') . ' protokol verze ' . $vsechnyVerze[0]->nazev;
+      $pdf->documentTitle = "";
+      if($tag) $pdf->documentTitle .= $tag . ' ';
+      $pdf->documentTitle .= ($template->testovaci ? 'Testovací' : 'Změnový') . ' protokol verze ' . $vsechnyVerze[0]->nazev;
       $pdf->outputDestination = PDFResponse::OUTPUT_DOWNLOAD;
 
       $this->sendResponse($pdf);
@@ -116,14 +121,14 @@ final class VerzePresenter extends BasePresenter
   /**
    * Export protokolů.
    */
-  public function renderExport($verzeId, $protokol)
+  public function renderExport($verzeId, $protokol, $tag)
   {
     $seznamVerzi = explode(',', $verzeId);
     $this->template->verze = array();
     foreach($seznamVerzi as $verzeId) {
       $this->template->verze[] = $this->verze->get($verzeId);
     }
-    $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi);
+    $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi, $tag);
     $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($seznamVerzi);
     $this->template->testovaci = ($protokol == 'testy');
     $this->template->typyZmen = $this->zmeny->seznamTypuZmen();

@@ -39,11 +39,6 @@ class ZmenyRepository extends Repository
   public function zmenyVeVerzi($verze, $autor = null, $tester = null)
   {
     $zmeny = $this->findAll()->where('verze_id', $verze)->order('poradi ASC');
-//
-// $selection->where(':book:book_tags.tag.name', 'PHP')
-//           ->group('author.id')
-//           ->having('COUNT(:book:book_tags.tag.id) > 0');
-
 
     if($autor) $zmeny = $zmeny->where('autor_id', $autor);
     if($tester) $zmeny = $zmeny->where('tester_id', $tester);
@@ -63,13 +58,31 @@ class ZmenyRepository extends Repository
   }
 
   /**
-   * Pouze veřejné změny v dané verzi
+   * Pouze veřejné změny v dané verzi - využití pro exporty protokolů.
+   * @param  $verze  ID verze
+   * @param  $tag    ID tagu podniku
+   * @return \Nette\Database\Table\Selection
+   */
+  public function verejneZmenyVeVerzi($verze, $tag = null)
+  {
+    $zmeny = $this->zmenyVeVerzi($verze)->where('je_verejna', true);
+    if($tag === null) { //změny, které nemají žadný tag
+      $zmeny = $zmeny->where(':zmeny_tagy.tagy.id ?', null);
+    }
+    else { //změny, které nemají žadný tag nebo mají zadaný nějaký tag
+      $zmeny = $zmeny->where(':zmeny_tagy.tagy.id ? OR :zmeny_tagy.tagy.id ?', null, $tag);
+    }
+    return $zmeny;
+  }
+
+  /**
+   * Všechny druhy tagů použitých u změn ve verzi.
    * @param  $verze  ID verze
    * @return \Nette\Database\Table\Selection
    */
-  public function verejneZmenyVeVerzi($verze)
+  public function tagyVeVerzi($verze)
   {
-    return $this->zmenyVeVerzi($verze)->where('je_verejna', true);
+    return $this->zmenyVeVerzi($verze)->where(':zmeny_tagy.tagy.id IS NOT NULL')->select(':zmeny_tagy.tagy.*')->group(':zmeny_tagy.tagy.id');
   }
 
   /**
