@@ -484,43 +484,31 @@ final class VerzePresenter extends BasePresenter
     $values = $form->getValues();
 
     $zmenaId = $values['id'];
-    $neopraveneChyby = $this->chyby->neopraveneChyby($zmenaId);
 
     if ($this->isAjax()) {
       $this->payload->akce = 'testFormSuccess';
       $this->payload->zmena = $zmenaId;
     }
 
-    if($neopraveneChyby) {
-      $chyba = 'Nemůžeš ukončit testování této změny, protože má neopravené chyby!';
-      if ($this->isAjax()) {
-        $this->payload->chyba = $chyba;
-        $this->terminate();
-      }
-      else {
-        $this->flashMessage($chyba, 'danger');
-        $this->redirect('this');
-      }
+
+    try {
+      $this->chyby->nastavVseOpraveno($zmenaId);
+      $this->zmeny->update($zmenaId, $values);
+    } catch (\Exception $e) {
+      $this->flashMessage('Chyba při ukládání.', 'danger');
+      $this->redirect('this');
+    }
+
+    $this->cache->clean([
+      Cache::TAGS => array("zmena/$zmenaId"),
+    ]);
+
+    if ($this->isAjax()) {
+      $this->invalidateControl('zmeny');
+      $this->invalidateControl('filtr');
     }
     else {
-      try {
-        $this->zmeny->update($zmenaId, $values);
-      } catch (\Exception $e) {
-        $this->flashMessage('Chyba při ukládání.', 'danger');
-        $this->redirect('this');
-      }
-
-      $this->cache->clean([
-        Cache::TAGS => array("zmena/$zmenaId"),
-      ]);
-
-      if ($this->isAjax()) {
-        $this->invalidateControl('zmeny');
-        $this->invalidateControl('filtr');
-      }
-      else {
-        $this->redirect('this');
-      }
+      $this->redirect('this');
     }
   }
 }

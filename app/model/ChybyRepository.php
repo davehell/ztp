@@ -13,6 +13,7 @@ class ChybyRepository extends Repository
 
   /**
    * Všechny chyby u dané změny
+   * @param  $zmena  ID změny
    * @return \Nette\Database\Table\Selection
    */
   public function chybyVeZmene($zmena)
@@ -22,6 +23,8 @@ class ChybyRepository extends Repository
 
   /**
    * Nastaví chybě příznak, jestli je / není opravena
+   * @param  $id        ID chyba
+   * @param  $opraveno  true | false
    */
   public function nastavOk($id, $opraveno)
   {
@@ -29,11 +32,11 @@ class ChybyRepository extends Repository
   }
 
   /**
-   * Vrací počet neopravených chyb u změny
-   * @return int
+   * Všem chybám u změny nastaví příznak, že jsou opravené
+   * @param  $zmena     ID zmeny
    */
-  public function neopraveneChyby($zmena)
+  public function nastavVseOpraveno($zmena)
   {
-    return $this->chybyVeZmene($zmena)->where('je_ok = ? OR je_ok IS NULL', 0)->count();
+    return $this->chybyVeZmene($zmena)->update(array('je_ok' => true));
   }
 }
