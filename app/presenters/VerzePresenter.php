@@ -79,9 +79,9 @@ final class VerzePresenter extends BasePresenter
    * @param  [string] $id       listing ID verzí oddělený čárkami
    * @param  [string] $protokol "testy" | "zmeny"
    * @param  [string] $format   "pdf"
-   * @param  [string] $tag      ID tagu podniku
+   * @param  [string] $podnik   číslo podniku (pro filtrování na základě tagu)
    */
-  public function actionExport($verzeId, $protokol, $format, $tag = null)
+  public function actionExport($verzeId, $protokol, $format, $podnik = null)
   {
     //musí být zadána aspoň jedna verze
     if(!$verzeId) $this->redirect('Verze:seznam', array('protokol' => $this->getParameter('protokol'), 'export' => true));
@@ -98,19 +98,19 @@ final class VerzePresenter extends BasePresenter
       $vsechnyVerze[] = $verze;
     }
 
-    if($format == "pdf") {
-      $template = $this->createTemplate()->setFile(__DIR__ . "/../templates/Verze/export.latte");
+    if($format == 'pdf') {
+      $template = $this->createTemplate()->setFile(__DIR__ . '/../templates/Verze/export.latte');
 
       $template->verze = $vsechnyVerze;
-      $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi, $tag);
+      $template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi, $podnik);
       $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($seznamVerzi);
       $template->testovaci = ($protokol == 'testy');
       $template->typyZmen = $this->zmeny->seznamTypuZmen();
 
       $pdf = new PDFResponse($template);
-      $pdf->documentAuthor = "";
-      $pdf->documentTitle = "";
-      if($tag) $pdf->documentTitle .= $tag . ' ';
+      $pdf->documentAuthor = '';
+      $pdf->documentTitle = '';
+      if($podnik) $pdf->documentTitle .= 'podnik ' . $podnik . ' ';
       $pdf->documentTitle .= ($template->testovaci ? 'Testovací' : 'Změnový') . ' protokol verze ' . $vsechnyVerze[0]->nazev;
       $pdf->outputDestination = PDFResponse::OUTPUT_DOWNLOAD;
 
@@ -121,14 +121,14 @@ final class VerzePresenter extends BasePresenter
   /**
    * Export protokolů.
    */
-  public function renderExport($verzeId, $protokol, $tag)
+  public function renderExport($verzeId, $protokol, $podnik)
   {
     $seznamVerzi = explode(',', $verzeId);
     $this->template->verze = array();
     foreach($seznamVerzi as $verzeId) {
       $this->template->verze[] = $this->verze->get($verzeId);
     }
-    $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi, $tag);
+    $this->template->zmeny = $this->zmeny->verejneZmenyVeVerzi($seznamVerzi, $podnik);
     $this->template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($seznamVerzi);
     $this->template->testovaci = ($protokol == 'testy');
     $this->template->typyZmen = $this->zmeny->seznamTypuZmen();
@@ -141,15 +141,15 @@ final class VerzePresenter extends BasePresenter
    */
   public function actionZmeny($verzeId, $format)
   {
-    if($format == "pdf") {
+    if($format == 'pdf') {
       $this->setLayout("export");
-      $template = $this->createTemplate()->setFile(__DIR__ . "/../templates/Verze/zmeny.latte");
+      $template = $this->createTemplate()->setFile(__DIR__ . '/../templates/Verze/zmeny.latte');
 
       $template->verze = $this->vybratVerzi($verzeId);
       $template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId);
 
       $pdf = new PDFResponse($template);
-      $pdf->documentAuthor = "";
+      $pdf->documentAuthor = '';
       $pdf->documentTitle = 'Změny verze ' . $template->verze->nazev;
       $pdf->outputDestination = PDFResponse::OUTPUT_DOWNLOAD;
 

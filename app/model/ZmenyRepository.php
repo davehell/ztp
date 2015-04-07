@@ -59,18 +59,20 @@ class ZmenyRepository extends Repository
 
   /**
    * Pouze veřejné změny v dané verzi - využití pro exporty protokolů.
-   * @param  $verze  ID verze
-   * @param  $tag    ID tagu podniku
+   * @param  $verze   ID verze
+   * @param  $podnik  číslo podniku
    * @return \Nette\Database\Table\Selection
    */
-  public function verejneZmenyVeVerzi($verze, $tag = null)
+  public function verejneZmenyVeVerzi($verze, $podnik = null)
   {
     $zmeny = $this->zmenyVeVerzi($verze)->where('je_verejna', true);
-    if($tag === null) { //změny, které nemají žadný tag
+    if($podnik === null) { //změny, které nemají žadný tag
       $zmeny = $zmeny->where(':zmeny_tagy.tagy.id ?', null);
     }
     else { //změny, které nemají žadný tag nebo mají zadaný nějaký tag
-      $zmeny = $zmeny->where(':zmeny_tagy.tagy.id ? OR :zmeny_tagy.tagy.id ?', null, $tag);
+      $tag = $this->database->table('tagy')->where('podnik', $podnik)->fetch();
+      if(!$tag) throw new \ZTPException('Neexistující tag');
+      $zmeny = $zmeny->where(':zmeny_tagy.tagy.id ? OR :zmeny_tagy.tagy.id ?', null, $tag->id);
     }
     return $zmeny;
   }
@@ -172,7 +174,7 @@ class ZmenyRepository extends Repository
   public function priraditTestera($zmenaId, $testerId)
   {
     $zmena = $this->get($zmenaId);
-    if(!$zmena) throw new \ZtpException("Neexistující změna");
+    if(!$zmena) throw new \ZTPException("Neexistující změna");
     if($zmena->tester == $testerId) $testerId = null; //odebrání testera od změny
     return $this->update($zmenaId, array('tester_id' => $testerId));
   }
@@ -183,7 +185,7 @@ class ZmenyRepository extends Repository
   public function nastavOk($id, $funguje)
   {
     $zmena = $this->get($id);
-    if(!$zmena) throw new \ZtpException("Neexistující změna");
+    if(!$zmena) throw new \ZTPException("Neexistující změna");
     $values = array('je_ok' => $funguje);
     if(!$funguje) $values = array_merge($values, array('vysledek_testu' => ''));
     return $this->update($id, $values);
