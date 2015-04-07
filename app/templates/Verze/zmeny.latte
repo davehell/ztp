@@ -3,6 +3,7 @@
   <script>
   $( document ).ready(function() {
     $('#main .btn').hide();
+    $('#main .btn.ulozeniZmen').show();
   });
   </script>
 {/if}
@@ -20,7 +21,7 @@
 {if $pohled == 'dev'}
   <h1>Změnový protokol
   <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
-  <a n:href="zmeny $verze->id, 'pdf'" title="Uložit přehled změn ve verzi" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a>
+  <a n:href="zmeny $verze->id, 'pdf'" title="Uložit přehled změn ve verzi" class="ulozeniZmen btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a>
   </h1>
 {/if}
 
