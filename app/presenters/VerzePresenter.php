@@ -137,7 +137,29 @@ final class VerzePresenter extends BasePresenter
 
 
   /**
-   * Seznam změn ve verzi
+   * Export přehledu změn ve verzi. Pouze pracovní dokument - ne oficiální protokol (protože obsahuje i skryté položky).
+   */
+  public function actionZmeny($verzeId, $format)
+  {
+    if($format == "pdf") {
+      $this->setLayout("export");
+      $template = $this->createTemplate()->setFile(__DIR__ . "/../templates/Verze/zmeny.latte");
+
+      $template->verze = $this->vybratVerzi($verzeId);
+      $template->zmeny = $this->zmeny->zmenyVeVerzi($verzeId);
+
+      $pdf = new PDFResponse($template);
+      $pdf->documentAuthor = "";
+      $pdf->documentTitle = 'Změny verze ' . $template->verze->nazev;
+      $pdf->outputDestination = PDFResponse::OUTPUT_DOWNLOAD;
+
+      $this->sendResponse($pdf);
+    }
+  }
+
+
+  /**
+   * Přehled změn ve verzi
    */
   public function renderZmeny($verzeId)
   {

@@ -36,7 +36,7 @@ function zvyraznitZmenu (zmena) {
 /**
  * Po výběru verze v select boxu v menu se otevře stránka s danou verzí.
  */
-$('#menuForm #vyberVerze, #menuForm #vyberUzivatele, #menuForm #vyberProtokolu').change(function(event) {
+$('#menuForm #vyberVerze, #menuForm #vyberUzivatele').change(function(event) {
   var id = $( this ).val();
   if(!id) return;
   $('#menuForm').submit();

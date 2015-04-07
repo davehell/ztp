@@ -17,7 +17,13 @@
 {/block}
 
 {block content}
-<h1 n:if="$pohled == 'dev'" >Změnový protokol <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a></h1>
+{if $pohled == 'dev'}
+  <h1>Změnový protokol
+  <a n:href="info $verze->id" title="Upravit informace o verzi" class="editaceVerze btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+  <a n:href="zmeny $verze->id, 'pdf'" title="Uložit přehled změn ve verzi" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save"></span></a>
+  </h1>
+{/if}
+
 <h1 n:if="$pohled == 'test'">Testovací protokol</h1>
 <h1 n:if="$pohled == 'boss'">Změny ve verzi {$verze->nazev} <a n:href="zamceni!, 'verzeId' => $verze->id, 'zamek' => true" title="Zamčení verze pro úpravy" class="btn btn-primary"><span class="glyphicon glyphicon-lock"></span></a></h1>
 
@@ -57,7 +63,7 @@
 <h2>Změny</h2>
 
 {snippet filtr}
-<ul n:if="$pocetVsechZmen > 0" id="vyberProtokolu" class="nav nav-tabs">
+<ul n:if="$pocetVsechZmen > 0" id="filtrZmen" class="nav nav-tabs">
   <li class="{if $filtr == ''}active{/if}">
     <a n:href="Verze:zmeny, 'verzeId' => $verzeId, 'filtr' => null" title="Všechny změny v protokolu">Všechny</a>
   </li>

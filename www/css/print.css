@@ -65,9 +65,11 @@ tr {page-break-inside: avoid;}
 
 
 #sidebar,
+#filtrZmen,
 .btn-toolbar,
 hr,
-.btn
+.btn,
+.modal
 {display:none;}
 
 p {
@@ -91,4 +93,8 @@ p {
 .dl-horizontal dd:after {
   content: " ";
   display: table;
+}
+.skryteInfo {
+  border-left: 5px solid #ccc;
+  padding: 5px 5px 5px auto;
 }

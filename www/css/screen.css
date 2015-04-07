@@ -60,21 +60,11 @@ h1, h2, h3, h4, h5, h6, legend {
 #sidebar ul li a.export {
   margin-left: 20px;
 }
-
-
 /* texty, které se nezveřejňují ve finálním změnovém/testovacím protokolu */
 .skryteInfo {
   background-color: #eee;
   border-left: 5px solid #ccc;
   padding: 5px 5px 5px 10px;
-}
-
-ul#vyberProtokolu {
-  margin-bottom: 20px;
-}
-ul#vyberProtokolu label {
-  padding: 10px 15px;
-  padding-left: 0;
 }
 
 ul#zmeny {
@@ -121,7 +111,8 @@ ul#zmeny {
 .zmena .novaZmenaDalsi {
   margin-left: -15px;
 }
-.zmena.skryteInfo .novaZmenaDalsi {
+/* u skryté změny musí být tlačítko pro přidání nové změny posunuto tak, aby bylo zarovanáno pod tlačítky u změn, kterou nejsou skryté */
+.zmena.skryteInfo .btn.novaZmenaDalsi {
   margin-left: -20px;
 }
 /* znázornění stavu změny/chyby - funguje, nefunguje, čeká na otestování */
