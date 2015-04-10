@@ -11,6 +11,7 @@ use Nette\Object,
  */
 abstract class Repository extends Object
 {
+  const PDO_DUPLICATE_ENTRY = 23000;
 
   /** @var NDatabase */
   protected $database;

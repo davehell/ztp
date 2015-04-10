@@ -33,9 +33,9 @@ CREATE TABLE `lide` (
 
 TRUNCATE `lide`;
 INSERT INTO `lide` (`id`, `jmeno`, `prostredi`, `je_zadano_prostredi`, `je_aktivni`, `je_tester`) VALUES
-(1,	'dhe',	'FF ESR 24.7.0',	0,	1,	0),
-(2,	'mma',	'FF ESR 31.4',	1,	1,	1),
-(3,	'dku',	'Internet Explorer 11.0.9600',	0,	1,	1),
+(1,	'dhe',	'',	0,	1,	0),
+(2,	'mma',	'',	1,	1,	1),
+(3,	'dku',	'',	0,	1,	1),
 (4,	'jbo',	'',	0,	1,	0),
 (5,	'jsv',	'',	0,	1,	0),
 (6,	'tmo',	'',	0,	1,	0),
@@ -43,10 +43,10 @@ INSERT INTO `lide` (`id`, `jmeno`, `prostredi`, `je_zadano_prostredi`, `je_aktiv
 (8,	'vma',	'',	0,	1,	0),
 (9,	'mkr',	'',	0,	1,	0),
 (10,	'lbu',	'',	0,	1,	0),
-(11,	'pso',	'FF 35.0',	0,	1,	1),
-(12,	'mha',	'FF ESR 31.5.0',	0,	1,	1),
-(13,	'jpe',	'FF ESR 31.3.0',	0,	1,	1),
-(14,	'mpi',	'FF 36.0',	0,	1,	1),
+(11,	'pso',	'',	0,	1,	1),
+(12,	'mha',	'',	0,	1,	1),
+(13,	'jpe',	'',	0,	1,	1),
+(14,	'mpi',	'',	0,	1,	1),
 (15,	'bpi',	'',	0,	1,	1),
 (16,	'mvo',	'',	0,	1,	0),
 (17,	'kpe',	'',	0,	1,	0),
@@ -86,7 +86,8 @@ CREATE TABLE `verze` (
   `pozn_verejna` text COLLATE utf8_czech_ci NOT NULL,
   `pozn_skryta` text COLLATE utf8_czech_ci NOT NULL,
   `je_zamcena` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nazev` (`nazev`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 

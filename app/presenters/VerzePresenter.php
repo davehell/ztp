@@ -420,25 +420,32 @@ final class VerzePresenter extends BasePresenter
     if($id) { //editace
       try {
         $this->verze->update($id, $values);
-
-      } catch (\Exception $e) {
+        $this->flashMessage('Uloženo.', 'success');
+        $this->redirect('zmeny', $id);
+      } catch(\PDOException $e) {
+        if($e->getCode() == \App\Model\Repository::PDO_DUPLICATE_ENTRY) {
+          $form['nazev']->addError('Verze s tímto názvem už existuje!');
+          $this->flashMessage('Neuloženo. Oprav chyby ve formuláři.', 'danger');
+        }
+        else throw $e;
+      } catch (\Nette\InvalidStateException $e) {
         $this->flashMessage('Chyba při ukládání.', 'danger');
-        $this->redirect('this');
       }
-
-      $this->flashMessage('Uloženo.', 'success');
-      $this->redirect('zmeny', $id);
     }
     else { //nový záznam
       try {
         $verze = $this->verze->insert($values);
         $this->lide->odebratProstredi();
-      } catch (\Exception $e) {
+        $this->redirect('zmeny', $verze->id);
+      } catch(\PDOException $e) {
+        if($e->getCode() == \App\Model\Repository::PDO_DUPLICATE_ENTRY) {
+          $form['nazev']->addError('Verze s tímto názvem už existuje!');
+          $this->flashMessage('Neuloženo. Oprav chyby ve formuláři.', 'danger');
+        }
+        else throw $e;
+      } catch (\Nette\InvalidStateException $e) {
         $this->flashMessage('Chyba při ukládání.', 'danger');
-        $this->redirect('this');
       }
-
-      $this->redirect('zmeny', $verze->id);
     }
   }
 
