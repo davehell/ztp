@@ -15,7 +15,11 @@
 </ol>
 
 {control zmenaForm}
+{if $zmena}
 <a n:href="Verze:zmeny#z$zmena->id $verze->id" id="stornoBtn" class="btn btn-default">Storno</a>
+{else}
+<a n:href="Verze:zmeny $verze->id" id="stornoBtn" class="btn btn-default">Storno</a>
+{/if}
 
 <pre>
   <strong>Nápověda</strong>
