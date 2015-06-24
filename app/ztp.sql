@@ -50,7 +50,10 @@ INSERT INTO `lide` (`id`, `jmeno`, `prostredi`, `je_zadano_prostredi`, `je_aktiv
 (15,	'bpi',	'',	0,	1,	1),
 (16,	'mvo',	'',	0,	1,	0),
 (17,	'kpe',	'',	0,	1,	0),
-(18,	'hba',	'',	0,	1,	1);
+(18,	'hba',	'',	0,	1,	1),
+(19,  'vzu',  '', 0,  1,  0),
+(20,  'vne',  '', 0,  1,  0),
+(21,  'pvr',  '', 0,  1,  0);
 
 DROP TABLE IF EXISTS `tagy`;
 CREATE TABLE `tagy` (
