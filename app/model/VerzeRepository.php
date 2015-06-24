@@ -17,7 +17,7 @@ class VerzeRepository extends Repository
    */
   public function vsechny()
   {
-    return $this->findAll()->order('datum')->order('id');
+    return $this->findAll()->order('nazev DESC');
   }
 
   /**
