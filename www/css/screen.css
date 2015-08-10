@@ -104,6 +104,12 @@ ul#zmeny {
 .zmena p {
   margin: 0;
 }
+.zmena .text p {
+  margin-bottom: 10px;
+}
+.zmena .text li {
+  margin-bottom: 5px;
+}
 .zmena ul.chyby li {
   list-style-type: none;
   margin-bottom: 5px;

@@ -10,7 +10,7 @@ h2 {
   page-break-after: avoid;
 }
 p {
-  margin: 0;
+  margin: 0 0 10px 0;
 }
 ul {
   padding-left: 15px;
@@ -29,4 +29,10 @@ h2 {
 li {
   page-break-inside: avoid;
   margin-bottom: 20px;
+}
+li li {
+  margin-bottom: 5px;
+}
+li p:first-child {
+  margin-bottom: 0;
 }

@@ -154,9 +154,12 @@
     <p>
       <strong>{$zmena->uloha}</strong>
     </p>
-    {!$zmena->text|texy|vlna}
-    <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
-      {!$zmena->detail|texy|vlna}
+
+    <div class="text">
+      {!$zmena->text|texy|vlna}
+      <div n:if="$zmena->detail" class="{if $zmena->je_verejna}skryteInfo{/if}">
+        {!$zmena->detail|texy|vlna}
+      </div>
     </div>
 
     {if ($pohled == 'dev' || $pohled == 'test')}
