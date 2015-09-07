@@ -111,7 +111,7 @@ final class VerzePresenter extends BasePresenter
       $pdf->documentAuthor = '';
       $pdf->documentTitle = '';
       if($podnik) $pdf->documentTitle .= 'podnik ' . $podnik . ' ';
-      $pdf->documentTitle .= ($template->testovaci ? 'Testovací' : 'Změnový') . ' protokol verze ' . $vsechnyVerze[0]->nazev;
+      $pdf->documentTitle .= 'webenergis ' . ($template->testovaci ? 'testy' : 'zmeny') . ' ' . $vsechnyVerze[0]->nazev;
       $pdf->outputDestination = PDFResponse::OUTPUT_DOWNLOAD;
 
       $this->sendResponse($pdf);
