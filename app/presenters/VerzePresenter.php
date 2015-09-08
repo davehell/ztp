@@ -106,12 +106,21 @@ final class VerzePresenter extends BasePresenter
       $template->testeriVeVerzi = $this->zmeny->testeriVeVerzi($seznamVerzi);
       $template->testovaci = ($protokol == 'testy');
       $template->typyZmen = $this->zmeny->seznamTypuZmen();
+      $jeMyEne = !(strpos($vsechnyVerze[0]->nazev, 'my') === false);
 
       $pdf = new PDFResponse($template);
       $pdf->documentAuthor = '';
       $pdf->documentTitle = '';
-      if($podnik) $pdf->documentTitle .= 'podnik ' . $podnik . ' ';
-      $pdf->documentTitle .= 'webenergis ' . ($template->testovaci ? 'testy' : 'zmeny') . ' ' . $vsechnyVerze[0]->nazev;
+
+      if($jeMyEne) {
+        $pdf->documentTitle .= ($podnik ? $podnik : 'myEnergis');
+      }
+      else {
+        if($podnik) $pdf->documentTitle .= 'podnik ' . $podnik . ' ';
+        $pdf->documentTitle .= 'webenergis';
+      }
+
+      $pdf->documentTitle .= ' ' . ($template->testovaci ? 'testy' : 'zmeny') . ' ' . $vsechnyVerze[0]->nazev;
       $pdf->outputDestination = PDFResponse::OUTPUT_DOWNLOAD;
 
       $this->sendResponse($pdf);

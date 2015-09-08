@@ -58,14 +58,15 @@ INSERT INTO `lide` (`id`, `jmeno`, `prostredi`, `je_zadano_prostredi`, `je_aktiv
 DROP TABLE IF EXISTS `tagy`;
 CREATE TABLE `tagy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `podnik` varchar(10) COLLATE utf8_czech_ci NOT NULL,
+  `podnik` varchar(30) COLLATE utf8_czech_ci NOT NULL,
   `nazev` varchar(30) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 TRUNCATE `tagy`;
 INSERT INTO `tagy` (`id`, `podnik`, `nazev`) VALUES
-(2,	'25',	'RWE');
+(2,	'25',	'RWE'),
+(3, 'myenergisplus', 'myEnergis Plus');
 
 DROP TABLE IF EXISTS `typy_zmen`;
 CREATE TABLE `typy_zmen` (
