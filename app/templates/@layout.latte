@@ -29,6 +29,7 @@
 
           <label>Verze:</label>
           <a n:if="$pohled == 'dev'" n:href="Verze:info, null" title="Vytvořit novou verzi" class="novyProtokol pull-right btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+          <a n:href="Verze:seznam" title="Seznam všech verzí" class="pull-right btn btn-primary btn-xs"><span class="glyphicon glyphicon-list"></span></a>
           <select name="verze" id="vyberVerze">
             <option value="">--- Vyber verzi ---</option>
             {foreach $vsechnyVerze as $v}
