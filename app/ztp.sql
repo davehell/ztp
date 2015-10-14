@@ -7,6 +7,8 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 USE `ztp`;
 
+GRANT ALL PRIVILEGES ON `table`.* To 'user'@'hostname' IDENTIFIED BY 'password';
+
 DROP TABLE IF EXISTS `chyby`;
 CREATE TABLE `chyby` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
