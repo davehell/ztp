@@ -1,4 +1,4 @@
-set datestamp=%DATE:~11%-%DATE:~7,2%-%DATE:~3,2%
+set datestamp=%DATE:~6%-%DATE:~3,2%-%DATE:~0,2%
 set datestamp=%datestamp: =0%
 set timestamp=%TIME:~0,2%-%TIME:~3,2%
 set timestamp=%timestamp: =0%
