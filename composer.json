@@ -1,13 +1,8 @@
 {
 	"require": {
-		"php": ">= 5.3.7",
+		"php": ">= 5.3.3",
 		"nette/nette": "~2.3.1",
-		"dg/adminer-custom": "~1.6",
 		"nextras/forms": "~1.4",
 		"jkuchar/pdfresponse": "dev-master"
-	},
-	"require-dev": {
-		"nette/tester": "~1.3",
-		"codeception/codeception": "*"
 	}
 }
