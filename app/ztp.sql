@@ -7,7 +7,7 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 USE `ztp`;
 
-GRANT ALL PRIVILEGES ON `table`.* To 'user'@'hostname' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON `ztp-ostra`.* To 'ztp'@'localhost' IDENTIFIED BY 'password';
 
 DROP TABLE IF EXISTS `chyby`;
 CREATE TABLE `chyby` (
