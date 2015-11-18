@@ -46,7 +46,7 @@
     Testovací prostředí
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseProstredi" title="Upravit ifnormace o prostředí, ve kterém testeři testují"><span class="glyphicon glyphicon-pencil"></span></button>
   </h2>
-  <div n:if="$osoba->je_tester && !$osoba->je_zadano_prostredi" class="alert alert-warning">Nezapomeň vyplnit své aktuální testovací prostředí!</div>
+  <div n:if="$osoba && $osoba->je_tester && !$osoba->je_zadano_prostredi" class="alert alert-warning">Nezapomeň vyplnit své aktuální testovací prostředí!</div>
 
   <div class="collapse" id="collapseProstredi">
     <dl n:inner-foreach="$testeriVeVerzi as $tester"  class="dl-horizontal">
