@@ -11,7 +11,7 @@
   <dt>Verze: </dt>
   <dd>{$jednaVerze->nazev}</dd>
   <dt>Datum: </dt>
-  <dd>{$jednaVerze->datum|date:'%d.%m.%Y'}</dd>
+  <dd>{$jednaVerze->datum|date:'j. n. Y'}</dd>
 </dl>
 
 <div n:if="$jednaVerze->pozn_verejna && !$testovaci">{!$jednaVerze->pozn_verejna|texy|vlna}</div>
