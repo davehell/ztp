@@ -4,7 +4,7 @@
    * Version:   0.8 (2008-03-10)
 
 -------------------------------------------------------------- */
-body {
+body, #main {
 width:100% !important;
 margin:0 !important;
 padding:0 !important;
