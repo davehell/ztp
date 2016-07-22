@@ -137,7 +137,7 @@ ul#zmeny {
   float: left;
   margin-right: 10px;
 }
-#frm-zmenaForm #stornoBtn, #frm-chybaForm #stornoBtn, #frm-infoForm #stornoBtn {
+#frm-zmenaForm #stornoBtn, #frm-zmenaTesterForm #stornoBtn, #frm-chybaForm #stornoBtn, #frm-infoForm #stornoBtn {
   margin-left: 15px;
 }
 textarea.form-control {

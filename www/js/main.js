@@ -7,7 +7,7 @@ $( document ).ready(function() {
   }
 
   //vložení storno tlačítka za submit tlačítko ve formulářích
-  $("#frm-zmenaForm :submit, #frm-chybaForm :submit, #frm-infoForm :submit").after( $("#stornoBtn") );
+  $("#frm-zmenaForm :submit, #frm-zmenaTesterForm :submit, #frm-chybaForm :submit, #frm-infoForm :submit").after( $("#stornoBtn") );
 });
 
 /**

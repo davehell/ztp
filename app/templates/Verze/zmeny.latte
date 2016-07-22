@@ -116,6 +116,7 @@
     </div>
     <div n:if="$pohled == 'test'" class="btn-toolbar akce">
       <div class="btn-group">
+        <a n:href="Zmeny:zmena, $zmena->id" title="Upravit změnu" class="editaceZmeny btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
         <a n:href="Chyby:chyba, null, $zmena->id" title="Změna nefunguje správně" class="novaChyba btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span></a>
         <button type="button" title="Bravo! Změna prošla testováním." class="zmenaFunguje btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span></button>
       </div>

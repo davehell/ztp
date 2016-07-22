@@ -60,6 +60,7 @@ final class ZmenyPresenter extends BasePresenter
       if(!$zmena) throw new \Nette\Application\BadRequestException("Neexistující změna");
       $this['zmenaForm']->setDefaults($zmena);
       $this['zmenaForm']->setDefaults(array('tagy' => $this->zmeny->tagyProZmenu($id)));
+      $this['zmenaTesterForm']->setDefaults($zmena); //osekaný změnový formulář pro testera
       $this->template->zmena = $zmena;
       $this->template->verze = $this->vybratVerzi($zmena->verze_id);
     }
@@ -139,6 +140,35 @@ final class ZmenyPresenter extends BasePresenter
 
 
   /**
+   * Formulář pro editaci stávající změny testerem.
+   * Tester může u změny upravit jen skryté info.
+   * @return Form
+   */
+  protected function createComponentZmenaTesterForm()
+  {
+    $form = new Form;
+
+    $form->addHidden('verze_id');
+
+    $form->addTextArea('text', 'Popis změny')
+      ->setAttribute('placeholder', 'Veřejný popis zobrazený ve změnovém protokolu')
+      ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 1000)
+      ->setDisabled(true);
+
+    $form->addTextArea('detail', 'Skryté info')
+      ->setAttribute('placeholder', 'Neveřejné informace určené pouze pro testery')
+      ->addRule(Form::MAX_LENGTH, 'Text musí mít maximálně %d znaků', 1000);
+
+    $form->addSubmit('ok', 'Uložit');
+
+    $form->onSuccess[] = $this->zmenaFormSuccess;
+
+    $form->setRenderer(new Bs3FormRenderer);
+
+    return $form;
+  }
+
+  /**
    * Zpracování formuláře s informacemi o změně
    * @param Form $form
    */
@@ -146,15 +176,21 @@ final class ZmenyPresenter extends BasePresenter
   {
     $values = $form->getValues();
 
-    $values['task'] = str_replace(' ', '', $values['task']); //odstranění mezer
-    $values['task'] = str_replace(',', ', ', $values['task']); //doplnění mezer za čárky
+    //pěkné naformátování seznamu s čísly tasků
+    if(isset($values['task'])) {
+      $values['task'] = str_replace(' ', '', $values['task']); //odstranění mezer
+      $values['task'] = str_replace(',', ', ', $values['task']); //doplnění mezer za čárky
+    }
 
     $zmenaId = $this->getParameter('id');
     $verzeId = $values['verze_id'];
     $predchudce = $this->getParameter('predchudce');
 
-    $tagy = $values['tagy'];
-    unset($values['tagy']);
+    $tagy = array();
+    if(isset($values['task'])) {
+      $tagy = $values['tagy'];
+      unset($values['tagy']);
+    }
 
     if($zmenaId) { //editace
       try {
