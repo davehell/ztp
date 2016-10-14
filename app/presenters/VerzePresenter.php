@@ -338,15 +338,6 @@ final class VerzePresenter extends BasePresenter
       $this->flashMessage('Problém při úpravě chyby.', 'danger');
     }
 
-    //u změny existuje neopravená chyba - takže i celá změna musí být označena jako nefunkční
-    if(!$opraveno) {
-      try {
-        $this->zmeny->nastavOk($chyba->zmeny_id, false);
-      } catch (\Exception $e) {
-        $this->flashMessage('Problém při úpravě změny.', 'danger');
-      }
-    }
-
     if ($this->isAjax()) {
       $this->invalidateControl('zmeny');
       $this->invalidateControl('filtr');
