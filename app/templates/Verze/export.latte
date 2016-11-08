@@ -14,7 +14,7 @@
   <dd>{$jednaVerze->datum|date:'j. n. Y'}</dd>
 </dl>
 
-<div n:if="$jednaVerze->pozn_verejna && !$testovaci">{!$jednaVerze->pozn_verejna|texy|vlna}</div>
+<div n:if="$jednaVerze->pozn_verejna && !$testovaci">{!$jednaVerze->pozn_verejna|vlna|texy}</div>
 
 {if $testovaci}
 <h2>Testovací prostředí:</h2>
@@ -31,7 +31,7 @@
 {foreach $zmeny as $zmena}
 <li n:if="$zmena->verze_id == $jednaVerze->id && $zmena->typy_zmen->id == $typId">
 <p>{if $zmena->task}({$zmena->task}) {/if}<strong>{$zmena->uloha}</strong></p>
-{!$zmena->text|texy|vlna}
+{!$zmena->text|vlna|texy}
 <p n:if="$testovaci">
 {if $zmena->tester_id}{$zmena->tester->jmeno|upper}: {/if}{$zmena->vysledek_testu}
 </p>
