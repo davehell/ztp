@@ -104,7 +104,6 @@
 
 <ul id="zmeny" data-url="{link poradi!}">
 {foreach $zmeny as $zmena}
-  {cache $uziv . $pohled . $filtr . $zmena->id, tags => ["zmena/$zmena->id", "verze/$verzeId"]}
   <a name="z{$zmena->id}"></a>
   <li class="zmena {if !$zmena->je_verejna}skryteInfo{/if}" data-id="{$zmena->id}">
     <div n:if="$pohled == 'dev'" class="btn-toolbar akce">
@@ -174,7 +173,6 @@
       <a n:href="Zmeny:zmena, 'verzeId' => $verzeId, 'predchudce' => $zmena->id" title="Přidat další změnu hned za tuto" class="novaZmenaDalsi btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
     </p>
   </li>
-  {/cache}
 {/foreach}
 </ul>
 {/snippet}
